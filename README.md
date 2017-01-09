@@ -1,6 +1,6 @@
 # ADV-DAM
 
-Advanced version of project over here: https://github.com/UndyingJellyfish/Logic-SIMP-DAM-new
+Advanced version of project over here: https://github.com/UndyingJellyfish/SIMP-DAM-new
 
 __TO-DO LIST:__
 * Add options menu, giving the possibility of a board reset and custom sprites for game pieces, also allows to change a player's name
