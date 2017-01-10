@@ -13,19 +13,21 @@ public class CheckerPiece {
     private int Jumps;
     private int Identifier;
     private Point Location;
+    public boolean superPiece;
 
 
     // constructors
-    public CheckerPiece(Player owner, int jump, int id, Point place) {
+    public CheckerPiece(Player owner, int jump, int id, Point place, boolean superPiece) {
         this.Owner = owner;
         this.Jumps = jump;
         this.Identifier = id;
         this.Location = place;
+        this.superPiece = superPiece;
 
     }
 
     public CheckerPiece(Player owner, int jump, int id) {
-        this(owner, jump, id, new Point(0, 0));
+        this(owner, jump, id, new Point(0, 0), false);
     }
 
     public CheckerPiece(Player owner, int jump) {
@@ -75,6 +77,12 @@ public class CheckerPiece {
         this.Location.y = p.y;
     }
 
+    /*public boolean setUpgraded() {
+
+    }*/
+
+
+
 
     // other types of methods
     public String toString(boolean returnOnlyId) {
@@ -88,11 +96,12 @@ public class CheckerPiece {
 
     public CheckerPiece clone() {
         // completely clones the instance of CheckerPiece
-        return new CheckerPiece(Owner, Jumps, Identifier, Location);
+        return new CheckerPiece(Owner, Jumps, Identifier, Location, superPiece);
     }
 
     public CheckerPiece cloneToLocation(Point p) {
         // clones the current instance of CheckerPiece to a new location
-        return new CheckerPiece(Owner, Jumps, Identifier, p);
+        return new CheckerPiece(Owner, Jumps, Identifier, p, superPiece);
     }
+
 }

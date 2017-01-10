@@ -36,7 +36,7 @@ public class GUIBoard extends JPanel {
         this.N = N;
         Logic = board;
         // size of board is (N*SIZE)*(N*SIZE)
-        this.setPreferredSize(new Dimension(N * SIZE, N * SIZE));
+        this.setPreferredSize(new Dimension(N*SIZE, N*SIZE));
 
         // button array is 2d of length N and N
         buttonArray = new GUIButton[N][N];
@@ -76,8 +76,8 @@ public class GUIBoard extends JPanel {
         this.buttonArray[x][y].add(buttonToAdd);
     }
 
+    // fills the board with GUIButtons and fieldtypes according til boardlogic.
     public void fillBoard(LogicBoard boardToPopulate) {
-
         if (boardToPopulate.countAllPieces() >= 0) {
             for (int yn = 0; yn < N; yn++) {
                 for (int xn = 0; xn < N; xn++) {

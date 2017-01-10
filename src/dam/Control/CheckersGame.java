@@ -20,15 +20,15 @@ public class CheckersGame {
         this.boardSize = n;
         // initialization phase
         IdentifierGenerator idGen = new IdentifierGenerator();
+        Player player0 = new Player("Player 0", idGen.getNextIdentifier());
         Player player1 = new Player("Player 1", idGen.getNextIdentifier());
-        Player player2 = new Player("Player 2", idGen.getNextIdentifier());
         Player placeholder = new Player("This guy does not exist", -1);
         pieces = new CheckerPiece[boardSize][boardSize];
 
 
         // board creation
         LogicBoard board = new LogicBoard(pieces, boardSize);
-        board.populate(player1, player2, placeholder);
+        board.populate(player0, player1, placeholder);
         board.printBoard();
 
 

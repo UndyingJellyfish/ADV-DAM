@@ -89,6 +89,7 @@ public class GUIButton extends JButton {
 
     }
 
+
     public void drawField(GUIBoard.FieldType field) {
         // System.out.println("Calling drawField"); // for debugging purposes
         switch (field) {
@@ -104,6 +105,12 @@ public class GUIButton extends JButton {
             case PLAYER2:
                 //System.out.println("Setting field as PLAYER2-type"); // debug message
                 drawImage("Checker2.png");
+                break;
+            case PLAYER1DOUBLE:
+                drawImage("Checker1King.png");
+                break;
+            case PLAYER2DOUBLE:
+                drawImage("Checker2King.png");
                 break;
         }
 

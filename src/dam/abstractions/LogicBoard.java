@@ -1,9 +1,11 @@
 package dam.abstractions;
 
+import dam.graphics.GUIBoard;
 import dam.graphics.GUIButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Field;
 
 /**
  * Created by Emil Damsbo on 04-01-2017.
@@ -16,8 +18,8 @@ public class LogicBoard {
     private int boardSize;
     private GUIButton lastClickedGUIButton;
     private GUIButton newClickedGUIButton;
+    private Player player0;
     private Player player1;
-    private Player player2;
 
     private Player currentPlayer;
 
@@ -79,13 +81,54 @@ public class LogicBoard {
         return brikPlacering[x][y] == null;
     }
 
+    public void setBrikAt(int x, int y, CheckerPiece piece) {
+        brikPlacering[x][y] = piece;
+    }
+
+
+    // methods for manipulating fields and creating output
+    public void Move(int fromX, int fromY, int toX, int toY) {
+        try {
+            CheckerPiece pieceClone = brikPlacering[fromX][fromY].clone();
+            brikPlacering[fromX][fromY] = brikPlacering[toX][toY];
+            brikPlacering[toX][toY] = pieceClone;
+
+        } catch (Exception ex) {
+            System.out.println("Error occurred! Give this to the developer: " + ex.getMessage());
+        }
+    }
+
+    private boolean validDirection(int fromY, int toY, Player playerToMove, boolean superPiece) {
+        if (superPiece)
+            System.out.println("superpiece move");
+        boolean playerDirection = (playerToMove == player0);
+        boolean moveDirection = (fromY < toY);
+        return ((playerDirection == moveDirection) || superPiece);
+    }
+
+    private void isSuperPositionReached(int fromX, int fromY, int toY, Player playerToMove) {
+        if (((playerToMove == player0) &&
+                (toY == boardSize-1)) ||
+                ((playerToMove == player1) &&
+                (toY == 0))) {
+            System.out.println("A piece has achieved super");
+            brikPlacering[fromX][fromY].superPiece = true;
+        }
+    }
+
     public boolean isLegalMove(int fromX, int fromY, int toX, int toY) {
         // used for checking whether it's allowed to move from one location to another
         try {
             if (brikPlacering[fromX][fromY].getIdentifier() == -1) {
                 System.out.println("Identifier of fromClicked is " + brikPlacering[fromX][fromY].getIdentifier());
                 return false;
-            } else if (fromX == toX && fromY == toY) {
+            }
+            else if(!(validDirection(fromY, toY, brikPlacering[fromX][fromY].getOwner(), brikPlacering[fromX][fromY].superPiece))) {
+                System.out.println("Moving backwards is not allowed");
+                return false;
+            }
+
+            else if (fromX == toX && fromY == toY) {
                 System.out.println("From and to is the same");
                 return false;
             } else if (toX > boardSize - 1 || toX < 0) {
@@ -105,7 +148,8 @@ public class LogicBoard {
                         if (!(toX > boardSize - 1 || toX < 0) && !(toY > boardSize - 1 || toY < 0)) { // consider refactoring
                             if ((brikPlacering[toX][toY].getIdentifier() == -1)) {
                                 System.out.println("Successfully jumped over opponent piece");
-                                brikPlacering[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1), 0, -1, new Point(fromX + dirX, fromY + dirY));
+                                brikPlacering[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1), 0, -1, new Point(fromX + dirX, fromY + dirY), false);
+                                isSuperPositionReached(fromX, fromY, toY, brikPlacering[fromX][fromY].getOwner());
                                 return true;
                             } else {
                                 System.out.println("Able to jump over opponent's piece, but there is another piece behind");
@@ -120,7 +164,8 @@ public class LogicBoard {
                         return false;
                     }
                 }
-            } else if (brikPlacering[toX][toY].getIdentifier() != -1) {
+                // if and not else if to make sure it enters the statement
+            } if (brikPlacering[toX][toY].getIdentifier() != -1) {
                 System.out.println("There is another piece at target location");
                 return false;
             } else if ((Math.abs(toX - fromX) > 1 || Math.abs(toY - fromY) > 1)) {
@@ -132,39 +177,21 @@ public class LogicBoard {
             System.out.println("Error occurred, returning true by default");
         }
         System.out.println("Nothing else worked, so the move must be legal");
+        isSuperPositionReached(fromX, fromY, toY, brikPlacering[fromX][fromY].getOwner());
         return true;
     }
 
-    public void setBrikAt(int x, int y, CheckerPiece piece) {
-        brikPlacering[x][y] = piece;
-    }
-
-
-    // methods for manipulating fields and creating output
-    public void Move(int fromX, int fromY, int toX, int toY) {
-        try {
-            CheckerPiece pieceClone = brikPlacering[fromX][fromY].clone();
-            brikPlacering[fromX][fromY] = brikPlacering[toX][toY];
-            brikPlacering[toX][toY] = pieceClone;
-
-
-
-        } catch (Exception ex) {
-            System.out.println("Error occurred! Give this to the developer: " + ex.getMessage());
-        }
-    }
-
-    public void populate(Player owner1, Player owner2, Player placeholder) {
+    public void populate(Player owner0, Player owner1, Player placeholder) {
+        this.player0 = owner0;
         this.player1 = owner1;
-        this.player2 = owner2;
-        this.currentPlayer = player1;
+        this.currentPlayer = player0;
         IdentifierGenerator id = new IdentifierGenerator();
         if (this.boardSize > 2) {
             for (int yn = 0; yn < boardSize; yn++) {
                 // intitializes the board as being full of placeholders
                 // this prevents accidental NullPointerException
                 for (int xn = 0; xn < boardSize; xn++) {
-                    brikPlacering[xn][yn] = new CheckerPiece(placeholder, 0, -1, new Point(xn, yn));
+                    brikPlacering[xn][yn] = new CheckerPiece(placeholder, 0, -1, new Point(xn, yn), false);
                 }
             }
             if (boardSize == 3) {
@@ -175,7 +202,7 @@ public class LogicBoard {
                         // creates each row of player 2's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            brikPlacering[xn][yn] = new CheckerPiece(owner1, 1, id.getNextIdentifier(), new Point(xn, yn));
+                            brikPlacering[xn][yn] = new CheckerPiece(owner0, 1, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -185,7 +212,7 @@ public class LogicBoard {
                         // creates each row of player 2's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            brikPlacering[xn][yn] = new CheckerPiece(owner2, 1, id.getNextIdentifier(), new Point(xn, yn));
+                            brikPlacering[xn][yn] = new CheckerPiece(owner1, 1, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -197,7 +224,7 @@ public class LogicBoard {
                         // creates each row of player 1's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            brikPlacering[xn][yn] = new CheckerPiece(owner1, 1, id.getNextIdentifier(), new Point(xn, yn));
+                            brikPlacering[xn][yn] = new CheckerPiece(owner0, 1, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -207,7 +234,7 @@ public class LogicBoard {
                         // creates each row of player 2's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            brikPlacering[xn][yn] = new CheckerPiece(owner2, 1, id.getNextIdentifier(), new Point(xn, yn));
+                            brikPlacering[xn][yn] = new CheckerPiece(owner1, 1, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -219,7 +246,7 @@ public class LogicBoard {
                         // creates each row of player 1's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            brikPlacering[xn][yn] = new CheckerPiece(owner1, 1, id.getNextIdentifier(), new Point(xn, yn));
+                            brikPlacering[xn][yn] = new CheckerPiece(owner0, 1, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -229,7 +256,7 @@ public class LogicBoard {
                         // creates each row of player 2's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            brikPlacering[xn][yn] = new CheckerPiece(owner2, 1, id.getNextIdentifier(), new Point(xn, yn));
+                            brikPlacering[xn][yn] = new CheckerPiece(owner1, 1, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -262,17 +289,10 @@ public class LogicBoard {
     }
 
     public void endTurn() {
-        currentPlayer = (currentPlayer == player1 ? player2 : player1);
-        int n = 0;
-        for (int yn = 0; yn < boardSize; yn++){
-            for (int xn = 0; xn < boardSize; xn++){
-                if (getBrikPlacering()[xn][yn].getOwner() == currentPlayer){
-                    n++;
-                }
-            }
-        }
+            currentPlayer = (currentPlayer == player0 ? player1 : player0);
+        int n = countPiecesForPlayer(currentPlayer);
         if (n==0){
-            String winnerMessage = (currentPlayer == player1 ? player2.getPlayerName() : player1.getPlayerName()) + " has won!";
+            String winnerMessage = (currentPlayer == player0 ? player1.getPlayerName() : player0.getPlayerName()) + " has won!";
             System.out.println(winnerMessage);
 
             infoBox(winnerMessage, "Player wins!");
