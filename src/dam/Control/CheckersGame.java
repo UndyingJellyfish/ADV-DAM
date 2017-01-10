@@ -26,7 +26,7 @@ public class CheckersGame {
 
         // logicBoard creation
         LogicBoard board = new LogicBoard(pieces, boardSize);
-        board.populate(player0, player1, placeholder);
+        board.populateBoard(player0, player1, placeholder);
         board.printBoard();
 
         // start loading GUI elements
@@ -47,4 +47,10 @@ public class CheckersGame {
         // finally shows window
         f.setVisible(true);
     }
+
+    public static void infoBox(String infoMessage, String titleBar) {
+        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+
 }
