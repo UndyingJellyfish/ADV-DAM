@@ -79,7 +79,7 @@ public class ButtonListener implements ActionListener {
                             graphics.getButtonArray()[(int)Board.getLastClickedGUIButton().getPosition().getX() + dirX][(int)Board.getLastClickedGUIButton().getPosition().getY() + dirY].drawField(GUIBoard.FieldType.EMPTY);
                         }
 
-                        if (Board.getNewClickedGUIButton().getPosition().getY() == Board.getNewClickedGUIButton().getN()){
+                        if (Board.getNewClickedGUIButton().getPosition().getY() == Board.getNewClickedGUIButton().getN()-1){
                             Board.getNewClickedGUIButton().setFieldType(PLAYER0_KING);
                         }
                         else if(Board.getNewClickedGUIButton().getPosition().getY() == 0) {

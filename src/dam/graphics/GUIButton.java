@@ -25,7 +25,7 @@ public class GUIButton extends JButton {
         //this.AssociatedPiece = piece;
         position = pos;
         Owner = field;
-        drawField(field);
+        //drawField(field);
 
         lastClicked = new Point(-1, -1);
     }
@@ -71,17 +71,20 @@ public class GUIButton extends JButton {
     private void drawImage(String imageName) {
         // drawImage function which draws image on button depending on file name
 
-        int PREFFEREDSIZE = 65;// pixel width and height of a field
+        int PREFERRED_SIZE = (int) Math.floor(this.getWidth() * 0.9);// pixel width and height of a field
+
+        // debugging, remove later
+        //JOptionPane.showMessageDialog(null, "Width " + getWidth() + ", height " + getHeight(), "empty title", JOptionPane.INFORMATION_MESSAGE);
+
         try {
             Image img = ImageIO.read(getClass().getResource(imageName));
-            Image newImg = img.getScaledInstance(PREFFEREDSIZE , PREFFEREDSIZE, Image.SCALE_SMOOTH);
+            Image newImg = img.getScaledInstance(PREFERRED_SIZE, PREFERRED_SIZE, Image.SCALE_SMOOTH);
             ImageIcon image = new ImageIcon(newImg);
             this.setIcon(image);
         } catch (Exception e) {
             e.printStackTrace();
             this.setIcon(null);
         }
-
     }
 
 

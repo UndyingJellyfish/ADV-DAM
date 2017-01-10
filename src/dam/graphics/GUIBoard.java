@@ -34,8 +34,14 @@ public class GUIBoard extends JPanel {
         super(new GridLayout(N, N));
         this.N = N;
         Logic = board;
-        // size of board is (N*SIZE)*(N*SIZE)
-        this.setPreferredSize(new Dimension(N*SIZE, N*SIZE));
+        // sets preferred size of game board
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        int maxWidth = gd.getDisplayMode().getWidth();
+        int maxHeight = gd.getDisplayMode().getHeight();
+
+        int maxSize = (int) Math.floor((maxHeight < maxWidth ? maxHeight : maxWidth) * 0.9);
+
+        this.setPreferredSize(new Dimension(maxSize, maxSize));
 
         // button array is 2d of length N and N
         buttonArray = new GUIButton[N][N];
@@ -98,6 +104,14 @@ public class GUIBoard extends JPanel {
                         buttonArray[xn][yn] = new GUIButton(N, FieldType.EMPTY, new Point(xn, yn));
                     }
                 }
+            }
+        }
+    }
+
+    public void paintBoard(){
+        for (int yn = 0; yn < N; yn++){
+            for (int xn = 0; xn < N; xn++){
+                buttonArray[xn][yn].drawField(buttonArray[xn][yn].getFieldType());
             }
         }
     }

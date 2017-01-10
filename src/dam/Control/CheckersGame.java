@@ -8,6 +8,8 @@ import dam.graphics.GUIBoard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * Created by Emil Damsbo on 09-01-2017.
@@ -45,8 +47,11 @@ public class CheckersGame {
         f.setResizable(false);
 
         f.pack();
+        temp.paintBoard();
         f.setLocationRelativeTo(null);
         f.setVisible(true);
     }
+
+
 
 }
