@@ -72,6 +72,7 @@ public class ButtonListener implements ActionListener {
                         // Board.printBoard(); //debugging, used to make sure pieces moves properly on logic board
                         Board.endTurn();
                         Board.setLastClickedGUIButton(null);
+                        Board.setNewClickedGUIButton(null);
 
 
                     } else {

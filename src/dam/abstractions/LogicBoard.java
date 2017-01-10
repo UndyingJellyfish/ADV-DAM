@@ -261,6 +261,11 @@ public class LogicBoard {
         //System.out.println("Debugging message: All identifiers of value -1 indicates empty placement");
     }
 
+    public boolean PlayerHasLegalMove(Player player){
+        // fix this later
+        return false;
+    }
+
     public CheckerPiece getPieceAtPosition(Point position) {
         return PiecePlacement[(int) position.getX()][(int) position.getY()];
     }
