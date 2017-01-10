@@ -70,19 +70,23 @@ public class GUIButton extends JButton {
     // methods for graphics
     private void drawImage(String imageName) {
         // drawImage function which draws image on button depending on file name
+
+        int PREFFEREDSIZE = 65;// pixel width and height of a field
         try {
             Image img = ImageIO.read(getClass().getResource(imageName));
-            this.setIcon(new ImageIcon(img));
-        } catch (IOException e) {
+            Image newImg = img.getScaledInstance(PREFFEREDSIZE , PREFFEREDSIZE, Image.SCALE_SMOOTH);
+            ImageIcon image = new ImageIcon(newImg);
+            this.setIcon(image);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (NullPointerException ex){
-
+            this.setIcon(null);
         }
 
     }
 
 
     public void drawField(GUIBoard.FieldType field) {
+
         // System.out.println("Calling drawField"); // for debugging purposes
         switch (field) {
             case EMPTY:
@@ -110,7 +114,7 @@ public class GUIButton extends JButton {
         // colors the grid black and white
         if ((position.getX() % 2 == 0 && position.getY() % 2 == 0) ||
                 (position.getX() % 2 == 1 && position.getY() % 2 == 1)) {
-            this.setBackground(Color.BLACK);
+            this.setBackground(Color.GRAY);
         } else
             this.setBackground(Color.WHITE);
     }
