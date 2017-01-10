@@ -6,6 +6,7 @@ import dam.graphics.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import static dam.graphics.GUIBoard.FieldType.*;
 
@@ -34,6 +35,7 @@ public class ButtonListener implements ActionListener {
             if (Board.hasLastClicked()) {
                 System.out.println("Last pressed X: " + Board.getLastClickedGUIButton().getPosition().getX()
                         + ", Y: " + Board.getLastClickedGUIButton().getPosition().getY());
+
             }
 
             if (RelevantButton instanceof GUIButton) {
@@ -60,16 +62,16 @@ public class ButtonListener implements ActionListener {
                             graphics.getButtonArray()[(int) Board.getLastClickedGUIButton().getPosition().getX() + dirX][(int) Board.getLastClickedGUIButton().getPosition().getY() + dirY].drawField(GUIBoard.FieldType.EMPTY);
                         }
 
-                        if (Board.getNewClickedGUIButton().getPosition().getY() == Board.getNewClickedGUIButton().getN() - 1) {
+                        if (Board.getNewClickedGUIButton().getPosition().getY() == Board.getNewClickedGUIButton().getN() - 1 && Board.getNewClickedGUIButton().getFieldType() == PLAYER0) {
                             Board.getNewClickedGUIButton().setFieldType(PLAYER0_KING);
-                        } else if (Board.getNewClickedGUIButton().getPosition().getY() == 0) {
+                        } else if (Board.getNewClickedGUIButton().getPosition().getY() == 0 && Board.getNewClickedGUIButton().getFieldType() == PLAYER1) {
                             Board.getNewClickedGUIButton().setFieldType(PLAYER1_KING);
                         }
 
                         Board.getNewClickedGUIButton().drawField(Board.getNewClickedGUIButton().getFieldType());
                         Board.getLastClickedGUIButton().drawField(Board.getLastClickedGUIButton().getFieldType());
 
-                        // Board.printBoard(); //debugging, used to make sure pieces moves properly on logic board
+                        Board.printBoard(); //debugging, used to make sure pieces moves properly on logic board
                         Board.endTurn();
                         Board.setLastClickedGUIButton(null);
                         Board.setNewClickedGUIButton(null);

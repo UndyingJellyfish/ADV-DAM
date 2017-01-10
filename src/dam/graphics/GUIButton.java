@@ -1,5 +1,7 @@
 package dam.graphics;
 
+import dam.abstractions.Player;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +36,7 @@ public class GUIButton extends JButton {
     public Point getPosition() {
         return position;
     }
+
 
     public Point getLastClicked() {
         return this.lastClicked;
