@@ -3,15 +3,7 @@ package dam.graphics;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.*;
-
-import dam.Control.ButtonListener;
-import dam.abstractions.*;
-import test.Main;
 
 
 /**
@@ -98,19 +90,19 @@ public class GUIButton extends JButton {
                 this.setIcon(null);
 
                 break;
+            case PLAYER0:
+                // System.out.println("Setting field as PLAYER0-type"); // debug message
+                drawImage("CheckerBlack.png");
+                break;
             case PLAYER1:
-                // System.out.println("Setting field as PLAYER1-type"); // debug message
-                drawImage("Checker1.png");
+                //System.out.println("Setting field as PLAYER1-type"); // debug message
+                drawImage("CheckerWhite.png");
                 break;
-            case PLAYER2:
-                //System.out.println("Setting field as PLAYER2-type"); // debug message
-                drawImage("Checker2.png");
+            case PLAYER0_KING:
+                drawImage("CheckerBlackKing.png");
                 break;
-            case PLAYER1DOUBLE:
-                drawImage("Checker1King.png");
-                break;
-            case PLAYER2DOUBLE:
-                drawImage("Checker2King.png");
+            case PLAYER1_KING:
+                drawImage("CheckerWhiteKing.png");
                 break;
         }
 

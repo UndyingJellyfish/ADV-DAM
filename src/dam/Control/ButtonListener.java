@@ -7,9 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static dam.graphics.GUIBoard.FieldType.EMPTY;
-import static dam.graphics.GUIBoard.FieldType.PLAYER1;
-import static dam.graphics.GUIBoard.FieldType.PLAYER2;
+import static dam.graphics.GUIBoard.FieldType.*;
 
 /**
  * Created by Nicklas on 05-01-2017.
@@ -81,8 +79,17 @@ public class ButtonListener implements ActionListener {
                             graphics.getButtonArray()[(int)Board.getLastClickedGUIButton().getPosition().getX() + dirX][(int)Board.getLastClickedGUIButton().getPosition().getY() + dirY].drawField(GUIBoard.FieldType.EMPTY);
                         }
 
+                        if (Board.getNewClickedGUIButton().getPosition().getY() == Board.getNewClickedGUIButton().getN()){
+                            Board.getNewClickedGUIButton().setFieldType(PLAYER0_KING);
+                        }
+                        else if(Board.getNewClickedGUIButton().getPosition().getY() == 0) {
+                            Board.getNewClickedGUIButton().setFieldType(PLAYER1_KING);
+                        }
+
                         Board.getNewClickedGUIButton().drawField(Board.getNewClickedGUIButton().getFieldType());
                         Board.getLastClickedGUIButton().drawField(Board.getLastClickedGUIButton().getFieldType());
+
+
 
                         Board.printBoard();
 
@@ -102,7 +109,8 @@ public class ButtonListener implements ActionListener {
                     System.out.println("No lastClicked button exists");
                     if (Board.getPieceAtPosition(RelevantButton.getPosition()).getOwner() != Board.getCurrentPlayer())
                         System.out.println("Not your turn!");
-                    else if (RelevantButton.getFieldType() != PLAYER1 && RelevantButton.getFieldType() != PLAYER2)
+                    else if ((RelevantButton.getFieldType() != PLAYER0 && RelevantButton.getFieldType() != PLAYER0_KING)
+                    && (RelevantButton.getFieldType() != PLAYER1 && RelevantButton.getFieldType() != PLAYER1_KING))
                         System.out.println("Ignoring click as first click");
                     else
                         Board.setLastClickedGUIButton(this.RelevantButton);
@@ -115,6 +123,7 @@ public class ButtonListener implements ActionListener {
         } catch (NullPointerException ex) {
             System.out.println("Clicking returned: " + ex.getClass().getName());
         }
+
     }
 
     /*
@@ -181,7 +190,7 @@ public class ButtonListener implements ActionListener {
                     System.out.println("No lastClicked button exists");
                     if (Board.getPieceAtPosition(RelevantButton.getPosition()).getOwner() != Board.getCurrentPlayer())
                         System.out.println("Not your turn!");
-                    else if (RelevantButton.getFieldType() != PLAYER1 && RelevantButton.getFieldType() != PLAYER2)
+                    else if (RelevantButton.getFieldType() != PLAYER0 && RelevantButton.getFieldType() != PLAYER1)
                         System.out.println("Ignoring click as first click");
                     else
                         Board.setLastClickedGUIButton(this.RelevantButton);

@@ -3,7 +3,6 @@ package dam.graphics;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 import dam.Control.ButtonListener;
 import dam.abstractions.*;
@@ -22,10 +21,10 @@ public class GUIBoard extends JPanel {
     // list of field types
     public enum FieldType { // indicates ownership of a particular button
         EMPTY,
+        PLAYER0,
         PLAYER1,
-        PLAYER2,
-        PLAYER1DOUBLE,
-        PLAYER2DOUBLE
+        PLAYER0_KING,
+        PLAYER1_KING
     }
 
     // constructor
@@ -84,10 +83,10 @@ public class GUIBoard extends JPanel {
                 for (int xn = 0; xn < N; xn++) {
                     try {
                         if (boardToPopulate.getBrikPlacering()[xn][yn].getOwner().getIdentifier() == 0) {
-                            buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER1, new Point(xn, yn));
+                            buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER0, new Point(xn, yn));
 
                         } else if (boardToPopulate.getBrikPlacering()[xn][yn].getOwner().getIdentifier() == 1) {
-                            buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER2, new Point(xn, yn));
+                            buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER1, new Point(xn, yn));
                         } else {
                             buttonArray[xn][yn] = new GUIButton(N, FieldType.EMPTY, new Point(xn, yn));
                         }
