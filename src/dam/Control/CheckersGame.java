@@ -41,6 +41,8 @@ public class CheckersGame {
         JFrame f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.add(temp, BorderLayout.CENTER);
+        JToolBar tools = new JToolBar();
+
         f.setResizable(false);
 
         f.pack();
