@@ -66,6 +66,7 @@ public class GUIBoard extends JPanel {
         }
     }
 
+
     public void printInfoAtLocation(int x, int y) {
         GUIButton temp = this.buttonArray[x][y];
         Point p = temp.getPosition();
