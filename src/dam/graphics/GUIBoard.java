@@ -34,7 +34,7 @@ public class GUIBoard extends JPanel {
         super(new GridLayout(N, N));
         this.N = N;
         Logic = board;
-        // sets preferred size of game board
+        // sets preferred size of game board to 90% of screen resolution
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         int maxWidth = gd.getDisplayMode().getWidth();
         int maxHeight = gd.getDisplayMode().getHeight();
@@ -45,6 +45,8 @@ public class GUIBoard extends JPanel {
 
         // button array is 2d of length N and N
         buttonArray = new GUIButton[N][N];
+
+        // fills board with pieces of both players and empty fields. Uses logic board to place pieces at right locations
         fillBoard(board);
     }
 
@@ -62,7 +64,7 @@ public class GUIBoard extends JPanel {
     }
 
 
-    // methods of manipulating properties of the instance
+    // methods of manipulating properties of the instance. Adds actionListener to each field on board
     public void fillInAllActionHandlers() {
         for (int yn = 0; yn < N; yn++) {
             for (int xn = 0; xn < N; xn++) {
@@ -104,6 +106,7 @@ public class GUIBoard extends JPanel {
         }
     }
 
+    // draws each field on board using field type
     public void paintBoard() {
         for (int yn = 0; yn < N; yn++) {
             for (int xn = 0; xn < N; xn++) {

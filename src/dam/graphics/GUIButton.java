@@ -10,7 +10,10 @@ import java.awt.*;
  */
 public class GUIButton extends JButton {
 
+    // number of fields on one dimension
     private final int N;
+
+    // point object of lastClicked
     private Point lastClicked;
     private GUIBoard.FieldType Owner;
     private Point position;
@@ -50,13 +53,14 @@ public class GUIButton extends JButton {
 
     // methods for graphical interactions
     private void drawImage(String imageName) {
-        // drawImage function which draws image on button depending on file name
+
 
         int PREFERRED_SIZE = (int) Math.floor(this.getWidth() * 0.9);// pixel width and height of a field
 
         // debugging, remove later
         //JOptionPane.showMessageDialog(null, "Width " + getWidth() + ", height " + getHeight(), "empty title", JOptionPane.INFORMATION_MESSAGE);
 
+        // drawImage function which draws image on button depending on file name and scales to preffered size
         try {
             Image img = ImageIO.read(getClass().getResource(imageName));
             Image newImg = img.getScaledInstance(PREFERRED_SIZE, PREFERRED_SIZE, Image.SCALE_SMOOTH);
