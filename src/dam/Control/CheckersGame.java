@@ -1,15 +1,10 @@
 package dam.Control;
 
-import dam.abstractions.CheckerPiece;
-import dam.abstractions.IdentifierGenerator;
-import dam.abstractions.LogicBoard;
-import dam.abstractions.Player;
+import dam.abstractions.*;
 import dam.graphics.GUIBoard;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 /**
  * Created by Emil Damsbo on 09-01-2017.
@@ -20,7 +15,8 @@ public class CheckersGame {
 
     public CheckersGame(int n) {
         this.boardSize = n;
-        // initialization phase
+
+        // creating players and empty buttons
         IdentifierGenerator idGen = new IdentifierGenerator();
         Player player0 = new Player("Player 0", idGen.getNextIdentifier());
         Player player1 = new Player("Player 1", idGen.getNextIdentifier());
@@ -28,30 +24,27 @@ public class CheckersGame {
         pieces = new CheckerPiece[boardSize][boardSize];
 
 
-        // board creation
+        // logicBoard creation
         LogicBoard board = new LogicBoard(pieces, boardSize);
         board.populate(player0, player1, placeholder);
         board.printBoard();
 
+        // start loading GUI elements
+        GUIBoard graphicsBoard = new GUIBoard(boardSize, board);
+        graphicsBoard.fillInAllActionHandlers(); // ensures all buttons act properly when clicked
 
-        GUIBoard temp = new GUIBoard(boardSize, board);
-        //temp.printButtonArraySize();
-
-        // ensures all buttons act properly when clicked
-        temp.fillInAllActionHandlers();
-        // graphics loading
+        // loads window frame, but not visibly
         JFrame f = new JFrame();
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.add(temp, BorderLayout.CENTER);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // needed to ensure proper functionality
+        f.add(graphicsBoard, BorderLayout.CENTER); // adds the GUIBoard to the window frame and ensures it's centered
 
-        f.setResizable(false);
+        f.setResizable(false); // disallows window resizeablity, is available in the options menu
 
         f.pack();
-        temp.paintBoard();
+        graphicsBoard.paintBoard(); // loads all textures for game pieces
         f.setLocationRelativeTo(null);
+
+        // finally shows window
         f.setVisible(true);
     }
-
-
-
 }

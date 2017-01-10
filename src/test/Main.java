@@ -1,9 +1,6 @@
 package test;
 
-import dam.*;
 import dam.Control.CheckersGame;
-
-import javax.swing.*;
 
 
 /**
@@ -14,7 +11,6 @@ public class Main {
     public static void main(String[] args) {
         CheckersGame game = new CheckersGame(Integer.parseInt(args[0]));
     }
-
 
 
 }

@@ -3,7 +3,6 @@ package dam.graphics;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 
 /**
@@ -15,17 +14,14 @@ public class GUIButton extends JButton {
     private Point lastClicked;
     private GUIBoard.FieldType Owner;
     private Point position;
-    //private CheckerPiece AssociatedPiece;
 
     // constructors
     public GUIButton(int N, GUIBoard.FieldType field, Point pos) {
         this.N = N;
         this.setOpaque(true);
         this.setBorderPainted(false);
-        //this.AssociatedPiece = piece;
         position = pos;
         Owner = field;
-        //drawField(field);
 
         lastClicked = new Point(-1, -1);
     }
@@ -47,27 +43,12 @@ public class GUIButton extends JButton {
         return this.Owner;
     }
 
-    public void setFieldType(GUIBoard.FieldType newType){
+    // methods for setting fields
+    public void setFieldType(GUIBoard.FieldType newType) {
         this.Owner = newType;
     }
 
-    /*public Point getLocation() {
-        return this.getAssociatedPiece().getLocation();
-    }*/
-
-    // methods for setting fields
-    public void setLastClicked(Point p) {
-        try {
-            this.lastClicked.x = (int) p.x;
-            this.lastClicked.y = (int) p.y;
-        } catch (NullPointerException ex) {
-            this.lastClicked = new Point(-1, -1);
-            System.out.println("Recieved NullPointerException while setting LastClicked");
-        }
-
-    }
-
-    // methods for graphics
+    // methods for graphical interactions
     private void drawImage(String imageName) {
         // drawImage function which draws image on button depending on file name
 
@@ -86,7 +67,6 @@ public class GUIButton extends JButton {
             this.setIcon(null);
         }
     }
-
 
     public void drawField(GUIBoard.FieldType field) {
 

@@ -1,8 +1,6 @@
 package dam.abstractions;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 /**
  * Created by Emil Damsbo on 04-01-2017.
@@ -26,21 +24,7 @@ public class CheckerPiece {
 
     }
 
-    public CheckerPiece(Player owner, int jump, int id) {
-        this(owner, jump, id, new Point(0, 0), false);
-    }
 
-    public CheckerPiece(Player owner, int jump) {
-        this(owner, jump, 0);
-    }
-
-    public CheckerPiece(Player owner) {
-        this(owner, 1);
-    }
-
-    public CheckerPiece() {
-        this(new Player("unnamed player"));
-    }
 
     // methods for returning fields
     public Player getOwner() {
@@ -54,35 +38,6 @@ public class CheckerPiece {
     public int getIdentifier() {
         return this.Identifier;
     }
-
-    public Point getLocation() {
-        return this.Location;
-    }
-
-    // methods for setting fields
-    public void setOwner(Player o) {
-        this.Owner = o;
-    }
-
-    public void setJumps(int j) {
-        this.Jumps = j;
-    }
-
-    public void setId(int i) {
-        this.Identifier = i;
-    }
-
-    public void setLocation(Point p) {
-        this.Location.x = p.x;
-        this.Location.y = p.y;
-    }
-
-    /*public boolean setUpgraded() {
-
-    }*/
-
-
-
 
     // other types of methods
     public String toString(boolean returnOnlyId) {
@@ -99,9 +54,5 @@ public class CheckerPiece {
         return new CheckerPiece(Owner, Jumps, Identifier, Location, superPiece);
     }
 
-    public CheckerPiece cloneToLocation(Point p) {
-        // clones the current instance of CheckerPiece to a new location
-        return new CheckerPiece(Owner, Jumps, Identifier, p, superPiece);
-    }
 
 }

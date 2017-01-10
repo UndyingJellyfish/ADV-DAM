@@ -1,11 +1,11 @@
 package dam.graphics;
 
 
+import dam.Control.ButtonListener;
+import dam.abstractions.LogicBoard;
+
 import javax.swing.*;
 import java.awt.*;
-
-import dam.Control.ButtonListener;
-import dam.abstractions.*;
 
 /**
  * Created by smous on 02-01-2017.
@@ -88,18 +88,14 @@ public class GUIBoard extends JPanel {
             for (int yn = 0; yn < N; yn++) {
                 for (int xn = 0; xn < N; xn++) {
                     try {
-                        if (boardToPopulate.getBrikPlacering()[xn][yn].getOwner().getIdentifier() == 0) {
+                        if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 0) {
                             buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER0, new Point(xn, yn));
-
-                        } else if (boardToPopulate.getBrikPlacering()[xn][yn].getOwner().getIdentifier() == 1) {
+                        } else if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 1) {
                             buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER1, new Point(xn, yn));
                         } else {
                             buttonArray[xn][yn] = new GUIButton(N, FieldType.EMPTY, new Point(xn, yn));
                         }
                         this.add(buttonArray[xn][yn]);
-                        // this.buttonArray[i][j].setActionListener();
-                        //System.out.println("New button at: [" + buttonArray[xn][yn].getLocation().getX() + ", " + buttonArray[xn][yn].getLocation().getY() + "], identifier: " + this.buttonArray[xn][yn].getAssociatedPiece().getIdentifier());
-
                     } catch (NullPointerException e) {
                         buttonArray[xn][yn] = new GUIButton(N, FieldType.EMPTY, new Point(xn, yn));
                     }
@@ -108,9 +104,9 @@ public class GUIBoard extends JPanel {
         }
     }
 
-    public void paintBoard(){
-        for (int yn = 0; yn < N; yn++){
-            for (int xn = 0; xn < N; xn++){
+    public void paintBoard() {
+        for (int yn = 0; yn < N; yn++) {
+            for (int xn = 0; xn < N; xn++) {
                 buttonArray[xn][yn].drawField(buttonArray[xn][yn].getFieldType());
             }
         }
