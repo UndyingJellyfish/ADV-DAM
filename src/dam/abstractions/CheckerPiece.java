@@ -49,6 +49,14 @@ public class CheckerPiece {
         return ("This is a checker.\nOwned by: " + this.Owner.getPlayerName() + "\nChecker has " + this.Jumps + " jumps.\nChecker is identified by " + this.Identifier + " and is located at" + this.Location.toString());
     }
 
+    public Point getLocation(){
+        return this.Location;
+    }
+
+    public boolean isSuperPiece(){
+        return this.superPiece;
+    }
+
     public CheckerPiece clone() {
         // completely clones the instance of CheckerPiece
         return new CheckerPiece(Owner, Jumps, Identifier, Location, superPiece);

@@ -4,6 +4,7 @@ import dam.graphics.GUIButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Emil Damsbo on 04-01-2017.
@@ -166,6 +167,54 @@ public class LogicBoard {
         return true;
     }
 
+    private boolean isLegalMovePrivateUseOnly(int fromX, int fromY, int toX, int toY) {
+        // used for checking whether it's allowed to move from one location to another
+        try {
+            if (PiecePlacement[fromX][fromY].getIdentifier() == -1) {
+                return false;
+            } else if (!(validDirection(fromY, toY, PiecePlacement[fromX][fromY].getOwner(), PiecePlacement[fromX][fromY].superPiece))) {
+                return false;
+            } else if (fromX == toX && fromY == toY) {
+                return false;
+            } else if (toX > BoardSize - 1 || toX < 0) {
+                return false;
+            } else if (toY > BoardSize - 1 || toY < 0) {
+                return false;
+            } else if (Math.abs(toX - fromX) != Math.abs(toY - fromY)) {
+                return false;
+            } else if ((PiecePlacement[toX][toY].getIdentifier() == -1) && (Math.abs(toX - fromX) < 3 && Math.abs(toY - fromY) < 3)) {
+                int dirX = fromX > toX ? -1 : 1;
+                int dirY = fromY > toY ? -1 : 1;
+                if ((PiecePlacement[fromX + dirX][fromY + dirY].getIdentifier() != -1)) {
+                    if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() != PiecePlacement[fromX + dirX][fromY + dirY].getOwner().getIdentifier()) {
+                        if (!(toX > BoardSize - 1 || toX < 0) && !(toY > BoardSize - 1 || toY < 0)) { // consider refactoring
+                            if ((PiecePlacement[toX][toY].getIdentifier() == -1)) {
+                                //PiecePlacement[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1), 0, -1, new Point(fromX + dirX, fromY + dirY), false);
+
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                }
+                // if and not else if to make sure it enters the statement
+            }
+            if (PiecePlacement[toX][toY].getIdentifier() != -1) {
+                return false;
+            } else if ((Math.abs(toX - fromX) > 1 || Math.abs(toY - fromY) > 1)) {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error occurred, returning true by default");
+        }
+        return true;
+    }
+
     public void populate(Player owner0, Player owner1, Player placeholder) {
         this.Player0 = owner0;
         this.Player1 = owner1;
@@ -253,12 +302,18 @@ public class LogicBoard {
         for (int yn = 0; yn < this.BoardSize; yn++) {
             System.out.print("[");
             for (int xn = 0; xn < this.BoardSize; xn++) {
-                System.out.printf("%1$04d ", PiecePlacement[xn][yn].getIdentifier());
+                System.out.printf("%1$03d", PiecePlacement[xn][yn].getIdentifier());
+                System.out.printf(PiecePlacement[xn][yn].isSuperPiece() ? "t " : "f ");
             }
             System.out.print("]\n");
         }
         System.out.println();
         //System.out.println("Debugging message: All identifiers of value -1 indicates empty placement");
+    }
+
+    public boolean PlayerHasLegalMove(Player player){
+        // fix this later
+        return false;
     }
 
     public CheckerPiece getPieceAtPosition(Point position) {
@@ -271,6 +326,8 @@ public class LogicBoard {
 
     public void endTurn() {
         CurrentPlayer = (CurrentPlayer == Player0 ? Player1 : Player0);
+
+
         int n = countPiecesForPlayer(CurrentPlayer);
         if (n == 0) {
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
@@ -278,6 +335,35 @@ public class LogicBoard {
 
             infoBox(winnerMessage, "Player wins!");
         }
+
+        int temp = 0;
+
+        for (int yn = 0; yn < BoardSize; yn++){
+            for (int xn = 0; xn < BoardSize; xn++){
+                temp += legalMoves(PiecePlacement[xn][yn]).size();
+            }
+        }
+
+        if (temp == 0){
+            String msg = "Game is a draw";
+            System.out.println("No legal moves remain:" + msg);
+            infoBox(msg, "Player wins!");
+        }
+
+
+    }
+
+    public ArrayList<Point> legalMoves(CheckerPiece gamePiece){
+        int x = (int) gamePiece.getLocation().getX();
+        int y = (int) gamePiece.getLocation().getY();
+        ArrayList<Point> moves = new ArrayList<>();
+        for (int yn = y-2; yn <= y+2; yn++){
+            for (int xn = x-2; xn <= x+2; xn++){
+                if (isLegalMovePrivateUseOnly(x,y, xn, yn)) moves.add(new Point(xn,yn));
+            }
+        }
+
+        return moves;
     }
 
     private static void infoBox(String infoMessage, String titleBar) {
