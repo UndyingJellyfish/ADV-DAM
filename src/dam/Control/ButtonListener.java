@@ -82,9 +82,9 @@ public class ButtonListener implements ActionListener {
                         }
 
                         // sets the field type to king status if piece reaches opposite end
-                        if (Board.getNewClickedGUIButton().getPosition().getY() == Board.getNewClickedGUIButton().getN() - 1)
+                        if ((Board.getNewClickedGUIButton().getPosition().getY() == Board.getNewClickedGUIButton().getN() - 1) && (Board.getNewClickedGUIButton().getFieldType() == PLAYER0))
                             Board.getNewClickedGUIButton().setFieldType(PLAYER0_KING);
-                        else if (Board.getNewClickedGUIButton().getPosition().getY() == 0)
+                        else if ((Board.getNewClickedGUIButton().getPosition().getY()) == 0 && (Board.getNewClickedGUIButton().getFieldType() == PLAYER1))
                             Board.getNewClickedGUIButton().setFieldType(PLAYER1_KING);
 
                         // draws the lastClicked and newClicked according to field type

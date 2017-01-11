@@ -8,6 +8,11 @@ Settings extends JDialog {
     private JPanel contentPane;
     private JButton buttonExit;
     private JLabel labelSettingsheader;
+    private JPanel JPanelOptions;
+    private JLabel labelSetSize;
+    private JRadioButton radioMinSize;
+    private JRadioButton radioMedSize;
+    private JRadioButton radioMaxSize;
 
     public Settings() {
         setContentPane(contentPane);
