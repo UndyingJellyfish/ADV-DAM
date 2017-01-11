@@ -1,6 +1,7 @@
 package test;
 
 import dam.Control.CheckersGame;
+import dam.menus.test;
 
 
 /**
@@ -9,6 +10,11 @@ import dam.Control.CheckersGame;
 public class Main {
 
     public static void main(String[] args) {
+        test dialog = new test();
+        dialog.pack();
+        dialog.setResizable(false);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
         CheckersGame game = new CheckersGame(Integer.parseInt(args[0]));
     }
 

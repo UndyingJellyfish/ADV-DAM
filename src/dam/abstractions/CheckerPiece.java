@@ -61,6 +61,4 @@ public class CheckerPiece {
         // completely clones the instance of CheckerPiece
         return new CheckerPiece(Owner, Jumps, Identifier, Location, superPiece);
     }
-
-
 }
