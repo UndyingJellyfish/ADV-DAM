@@ -1,14 +1,17 @@
 package dam.menus;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.*;
+
+import static dam.menus.GameSetup.FrameSize.MIN_SIZE;
 
 /**
  * Created by smous on 11-01-2017.
  */
 
-public class
-Settings extends JDialog {
+public class Settings extends JDialog {
     private JPanel contentPane;
     private JButton buttonExit;
     private JLabel labelSettingsheader;
@@ -18,10 +21,13 @@ Settings extends JDialog {
     private JRadioButton radioMedSize;
     private JRadioButton radioMaxSize;
     private JLabel labelBoardSize;
-    private JSlider slider1;
+    private JSlider sliderBoardSize;
     private ButtonGroup RadioGroup = new ButtonGroup();
+    private GameSetup setup;
 
-    public Settings() {
+
+    public Settings(GameSetup setup) {
+        this.setup = setup;
         RadioGroup.add(radioMinSize);
         RadioGroup.add(radioMedSize);
         RadioGroup.add(radioMaxSize);
@@ -49,6 +55,16 @@ Settings extends JDialog {
                 onMaxSize();
             }
         });
+        sliderBoardSize.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                e.getSource();
+                if(!sliderBoardSize.getValueIsAdjusting()) {
+                    int boardSize = sliderBoardSize.getValue();
+                }
+
+            }
+        });
 
         // call onExit() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -66,19 +82,24 @@ Settings extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
     private void onMinSize() {
+        setup.frameSize = GameSetup.FrameSize.MIN_SIZE;
 
     }
 
     private void onMedSize() {
+        setup.frameSize = GameSetup.FrameSize.MED_SIZE;
 
     }
 
     private void onMaxSize() {
+        setup.frameSize = GameSetup.FrameSize.MAX_SIZE;
 
     }
 
     private void onExit() {
         // add your code here if necessary
+
+
         dispose();
     }
 }

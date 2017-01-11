@@ -2,6 +2,7 @@ package dam.Control;
 
 import dam.abstractions.*;
 import dam.graphics.GUIBoard;
+import dam.menus.GameSetup;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,8 +14,9 @@ public class CheckersGame {
     private int boardSize;
     public static CheckerPiece[][] pieces;
 
-    public CheckersGame(int n) {
+    public CheckersGame(int n, GameSetup setup) {
         this.boardSize = n;
+
 
         // creating players and empty buttons
         IdentifierGenerator idGen = new IdentifierGenerator();
@@ -30,7 +32,7 @@ public class CheckersGame {
         board.printBoard();
 
         // start loading GUI elements
-        GUIBoard graphicsBoard = new GUIBoard(boardSize, board);
+        GUIBoard graphicsBoard = new GUIBoard(boardSize, board, setup);
         graphicsBoard.fillInAllActionHandlers(); // ensures all buttons act properly when clicked
 
         // loads window frame, but not visibly

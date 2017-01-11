@@ -16,8 +16,7 @@ public class mainMenu extends JDialog {
     private JButton buttonRules;
     private JLabel labelWelcome;
 
-
-    public mainMenu() {
+    public mainMenu(GameSetup setup) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonNewGame);
@@ -30,7 +29,7 @@ public class mainMenu extends JDialog {
 
         buttonSettings.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onSettings();
+                onSettings(setup);
             }
         });
         buttonExit.addActionListener(new ActionListener() {
@@ -69,8 +68,8 @@ public class mainMenu extends JDialog {
         dispose();
     }
 
-    private void onSettings() {
-        Settings settingsDialog = new Settings();
+    private void onSettings(GameSetup setup) {
+        Settings settingsDialog = new Settings(setup);
         settingsDialog.pack();
         settingsDialog.setResizable(false);
         settingsDialog.setLocationRelativeTo(null);

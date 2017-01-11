@@ -3,6 +3,7 @@ package dam.graphics;
 
 import dam.Control.ButtonListener;
 import dam.abstractions.LogicBoard;
+import dam.menus.GameSetup;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,20 +29,36 @@ public class GUIBoard extends JPanel {
     }
 
     // constructor
-    public GUIBoard(int N, LogicBoard board) {
+    public GUIBoard(int N, LogicBoard board, GameSetup setup) {
 
         // new N*N gridlayout
         super(new GridLayout(N, N));
         this.N = N;
         Logic = board;
         // sets preferred size of game board to 90% of screen resolution
+
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         int maxWidth = gd.getDisplayMode().getWidth();
         int maxHeight = gd.getDisplayMode().getHeight();
 
-        int maxSize = (int) Math.floor((maxHeight < maxWidth ? maxHeight : maxWidth) * 0.9);
+        double relativSize;
+        switch (setup.frameSize) {
+            case MIN_SIZE:
+                relativSize = 0.3;
+                break;
+            case MED_SIZE:
+                relativSize = 0.6;
+                break;
+            default:
+            case MAX_SIZE:
+                relativSize = 0.9;
+                break;
 
-        this.setPreferredSize(new Dimension(maxSize, maxSize));
+        }
+
+        int ScreenSize = (int) Math.floor((maxHeight < maxWidth ? maxHeight : maxWidth) * relativSize);
+
+        this.setPreferredSize(new Dimension(ScreenSize, ScreenSize));
 
         // button array is 2d of length N and N
         buttonArray = new GUIButton[N][N];
