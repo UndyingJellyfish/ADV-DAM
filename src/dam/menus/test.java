@@ -84,7 +84,7 @@ public class test extends JDialog {
 
     private void onHighScore() {
         // add your code here if necessary
-        dispose();
+
     }
 
     private void onExit() {

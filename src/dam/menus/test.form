@@ -71,6 +71,8 @@
                     </constraints>
                     <properties>
                       <background color="-12038825"/>
+                      <foreground color="-3549994"/>
+                      <selected value="false"/>
                       <text value="Exit"/>
                     </properties>
                   </component>
@@ -82,6 +84,9 @@
                     </constraints>
                     <properties>
                       <background color="-12038825"/>
+                      <focusable value="true"/>
+                      <foreground color="-3549994"/>
+                      <rolloverEnabled value="false"/>
                       <text value="New Game"/>
                     </properties>
                   </component>
@@ -93,6 +98,7 @@
                     </constraints>
                     <properties>
                       <background color="-12038825"/>
+                      <foreground color="-3549994"/>
                       <text value="Highscore"/>
                     </properties>
                   </component>
@@ -119,6 +125,7 @@
                     </constraints>
                     <properties>
                       <background color="-12038825"/>
+                      <foreground color="-3549994"/>
                       <text value="Rules"/>
                     </properties>
                   </component>
@@ -130,7 +137,7 @@
                     </constraints>
                     <properties>
                       <background color="-12038825"/>
-                      <foreground color="-4473925"/>
+                      <foreground color="-3549994"/>
                       <text value="Settings"/>
                     </properties>
                   </component>
