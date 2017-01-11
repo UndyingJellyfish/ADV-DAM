@@ -14,7 +14,7 @@ import java.awt.*;
 public class GUIBoard extends JPanel {
 
     // fields
-    protected static int N; // number of fields on one dimension
+    private int N;//protected static int N; // number of fields on one dimension
     static int SIZE = 75;// pixel width and height of a field
     private GUIButton[][] buttonArray; // button array of all buttons on board
     private LogicBoard Logic; // logic board for game board
@@ -29,11 +29,12 @@ public class GUIBoard extends JPanel {
     }
 
     // constructor
-    public GUIBoard(int N, LogicBoard board, GameSetup setup) {
-
+    public GUIBoard(LogicBoard board, GameSetup setup) {
         // new N*N gridlayout
-        super(new GridLayout(N, N));
-        this.N = N;
+        super(new GridLayout(setup.boardSquares, setup.boardSquares));
+        //this.N = N;
+        this.N = setup.boardSquares;
+
         Logic = board;
         // sets preferred size of game board to 90% of screen resolution
 

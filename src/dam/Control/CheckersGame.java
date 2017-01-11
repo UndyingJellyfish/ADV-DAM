@@ -14,8 +14,8 @@ public class CheckersGame {
     private int boardSize;
     public static CheckerPiece[][] pieces;
 
-    public CheckersGame(int n, GameSetup setup) {
-        this.boardSize = n;
+    public CheckersGame(GameSetup setup) {
+        boardSize = setup.boardSquares;
 
 
         // creating players and empty buttons
@@ -27,12 +27,12 @@ public class CheckersGame {
 
 
         // logicBoard creation
-        LogicBoard board = new LogicBoard(pieces, boardSize);
+        LogicBoard board = new LogicBoard(pieces, setup);
         board.populateBoard(player0, player1, placeholder);
         board.printBoard();
 
         // start loading GUI elements
-        GUIBoard graphicsBoard = new GUIBoard(boardSize, board, setup);
+        GUIBoard graphicsBoard = new GUIBoard(board, setup);
         graphicsBoard.fillInAllActionHandlers(); // ensures all buttons act properly when clicked
 
         // loads window frame, but not visibly

@@ -2,6 +2,7 @@ package dam.abstractions;
 
 import dam.Control.CheckersGame;
 import dam.graphics.GUIButton;
+import dam.menus.GameSetup;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,11 +24,15 @@ public class LogicBoard {
 
 
     // constructors
-    public LogicBoard(CheckerPiece[][] brikker, int size) {
+    /*public LogicBoard(CheckerPiece[][] brikker, int size) {
         this.PiecePlacement = brikker;
         this.BoardSize = size;
-    }
+    }*/
 
+    public LogicBoard(CheckerPiece[][] brikker, GameSetup setup) {
+        this.PiecePlacement = brikker;
+        BoardSize = setup.boardSquares;
+    }
     // board essentials
     public void populateBoard(Player owner0, Player owner1, Player placeholder) {
         this.Player0 = owner0;

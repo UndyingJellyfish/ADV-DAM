@@ -17,6 +17,6 @@ public class Launcher {
         dialog.setResizable(false);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-        CheckersGame game = new CheckersGame(Integer.parseInt(args[0]), setup);
+        CheckersGame game = new CheckersGame(setup);
     }
 }

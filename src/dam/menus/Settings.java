@@ -56,11 +56,11 @@ public class Settings extends JDialog {
             }
         });
         sliderBoardSize.addChangeListener(new ChangeListener() {
-            @Override
             public void stateChanged(ChangeEvent e) {
                 e.getSource();
                 if(!sliderBoardSize.getValueIsAdjusting()) {
-                    int boardSize = sliderBoardSize.getValue();
+                    setup.boardSquares = sliderBoardSize.getValue();
+                    System.out.println(setup.boardSquares);
                 }
 
             }
