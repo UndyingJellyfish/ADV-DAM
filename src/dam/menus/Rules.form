@@ -51,7 +51,7 @@
                   <rows value="10"/>
                   <selectedTextColor color="-3549994"/>
                   <tabSize value="8"/>
-                  <text value="A simple move consists of moving a piece one square diagonally to an adjacent unoccupied dark square. Uncrowned pieces can move only diagonally forward; kings can move in any diagonal direction.     A jump consists of moving a piece from a square diagonally adjacent to an opponent's piece, to an empty square immediately beyond it in the same direction. (Thus jumping over the opponent's piece.) Uncrowned pieces can jump only diagonally forward; kings can jump in any diagonal direction. A jumped piece is considered &quot;captured&quot; and removed from the game. Any piece, whether crowned or not, can jump a king. " noi18n="true"/>
+                  <text value="A simple move consists of moving a piece one square diagonally to an adjacent unoccupied dark square. Uncrowned pieces can move only diagonally forward; kings can move in any diagonal direction. A jump consists of moving a piece from a square diagonally adjacent to an opponent's piece, to an empty square immediately beyond it in the same direction. (Thus jumping over the opponent's piece.) Uncrowned pieces can jump only diagonally forward; kings can jump in any diagonal direction. A jumped piece is considered &quot;captured&quot; and removed from the game. Any piece, whether crowned or not, can jump a king. " noi18n="true"/>
                 </properties>
               </component>
             </children>
