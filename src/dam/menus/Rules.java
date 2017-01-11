@@ -2,6 +2,9 @@ package dam.menus;
 
 import javax.swing.*;
 import java.awt.event.*;
+/**
+ * Created by smous on 11-01-2017.
+ */
 
 public class Rules extends JDialog {
     private JPanel contentPane;

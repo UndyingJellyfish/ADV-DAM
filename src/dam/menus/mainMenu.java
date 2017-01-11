@@ -3,7 +3,11 @@ package dam.menus;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class test extends JDialog {
+/**
+ * Created by smous on 11-01-2017.
+ */
+
+public class mainMenu extends JDialog {
     private JPanel contentPane;
     private JButton buttonNewGame;
     private JButton buttonSettings;
@@ -13,7 +17,7 @@ public class test extends JDialog {
     private JLabel labelWelcome;
 
 
-    public test() {
+    public mainMenu() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonNewGame);

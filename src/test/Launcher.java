@@ -1,22 +1,19 @@
 package test;
 
 import dam.Control.CheckersGame;
-import dam.menus.test;
-
+import dam.menus.mainMenu;
 
 /**
  * Created by Emil Damsbo on 09-01-2017.
  */
-public class Main {
+public class Launcher {
 
     public static void main(String[] args) {
-        test dialog = new test();
+        mainMenu dialog = new mainMenu();
         dialog.pack();
         dialog.setResizable(false);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         CheckersGame game = new CheckersGame(Integer.parseInt(args[0]));
     }
-
-
 }

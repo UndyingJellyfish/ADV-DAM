@@ -3,18 +3,28 @@ package dam.menus;
 import javax.swing.*;
 import java.awt.event.*;
 
+/**
+ * Created by smous on 11-01-2017.
+ */
+
 public class
 Settings extends JDialog {
     private JPanel contentPane;
     private JButton buttonExit;
     private JLabel labelSettingsheader;
-    private JPanel JPanelOptions;
+    private JPanel JPanelOptionsSize;
     private JLabel labelSetSize;
     private JRadioButton radioMinSize;
     private JRadioButton radioMedSize;
     private JRadioButton radioMaxSize;
+    private JLabel labelBoardSize;
+    private JSlider slider1;
+    private ButtonGroup RadioGroup = new ButtonGroup();
 
     public Settings() {
+        RadioGroup.add(radioMinSize);
+        RadioGroup.add(radioMedSize);
+        RadioGroup.add(radioMaxSize);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonExit);
@@ -22,6 +32,21 @@ Settings extends JDialog {
         buttonExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onExit();
+            }
+        });
+        radioMinSize.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onMinSize();
+            }
+        });
+        radioMedSize.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onMedSize();
+            }
+        });
+        radioMaxSize.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onMaxSize();
             }
         });
 
@@ -40,16 +65,20 @@ Settings extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+    private void onMinSize() {
+
+    }
+
+    private void onMedSize() {
+
+    }
+
+    private void onMaxSize() {
+
+    }
 
     private void onExit() {
         // add your code here if necessary
         dispose();
-    }
-
-    public static void main(String[] args) {
-        Settings dialog = new Settings();
-        dialog.pack();
-        dialog.setVisible(true);
-
     }
 }
