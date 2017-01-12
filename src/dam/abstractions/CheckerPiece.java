@@ -53,6 +53,10 @@ public class CheckerPiece {
         return this.Location;
     }
 
+    public void setLocation(int x, int y){
+        this.Location = new Point(x,y);
+    }
+
     public boolean isSuperPiece(){
         return this.superPiece;
     }

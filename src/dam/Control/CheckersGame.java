@@ -28,7 +28,7 @@ public class CheckersGame {
 
         // logicBoard creation
         LogicBoard board = new LogicBoard(pieces, setup);
-        board.populateBoard(player0, player1, placeholder);
+        board.PopulateBoard(player0, player1, placeholder);
         board.printBoard();
 
         // start loading GUI elements
