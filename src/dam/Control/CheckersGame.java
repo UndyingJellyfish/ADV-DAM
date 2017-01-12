@@ -15,7 +15,7 @@ public class CheckersGame {
     public static CheckerPiece[][] pieces;
 
     public CheckersGame(GameSetup setup) {
-        boardSize = setup.boardSquares;
+        this.boardSize = setup.boardSquares;
 
 
         // creating players and empty buttons
@@ -28,7 +28,7 @@ public class CheckersGame {
 
         // logicBoard creation
         LogicBoard board = new LogicBoard(pieces, setup);
-        board.populateBoard(player0, player1, placeholder);
+        board.PopulateBoard(player0, player1, placeholder);
         board.printBoard();
 
         // start loading GUI elements

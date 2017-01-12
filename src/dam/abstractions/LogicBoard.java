@@ -3,6 +3,7 @@ package dam.abstractions;
 import dam.Control.CheckersGame;
 import dam.graphics.GUIButton;
 import dam.menus.GameSetup;
+import org.omg.CORBA.Current;
 
 import javax.swing.*;
 import java.awt.*;
@@ -354,7 +355,9 @@ public class LogicBoard {
         // winner message shows up when someone has 0 pieces left
         int n = countPiecesForPlayer(CurrentPlayer);
         if (n == 0) {
-            String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
+            double piecesLeft = Math.max(countPiecesForPlayer(Player0), countPiecesForPlayer(Player1));
+
+            String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won with " + (int) piecesLeft + " pieces left!";
             System.out.println(winnerMessage);
 
             CheckersGame.infoBox(winnerMessage, "Player wins!");

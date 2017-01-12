@@ -24,8 +24,6 @@ public class CheckerPiece {
 
     }
 
-
-
     // methods for returning fields
     public Player getOwner() {
         return this.Owner;
