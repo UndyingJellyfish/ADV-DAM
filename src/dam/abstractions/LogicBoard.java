@@ -5,7 +5,6 @@ import dam.graphics.GUIButton;
 import dam.menus.GameSetup;
 import org.omg.CORBA.Current;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -24,8 +23,8 @@ public class LogicBoard {
     private Player CurrentPlayer;
 
     // logic board constructor
-    public LogicBoard(CheckerPiece[][] brikker, GameSetup setup) {
-        this.PiecePlacement = brikker;
+    public LogicBoard(CheckerPiece[][] pieces, GameSetup setup) {
+        this.PiecePlacement = pieces;
         BoardSize = setup.boardSquares;
     }
     // board essentials
@@ -180,8 +179,8 @@ public class LogicBoard {
         int x = (int) gamePiece.getLocation().getX();
         int y = (int) gamePiece.getLocation().getY();
         ArrayList<Point> moves = new ArrayList<>();
-        for (int yn = y - 2; yn <= y + 2; yn++) {
-            for (int xn = x - 2; xn <= x + 2; xn++) {
+        for (int yn = 0; yn < BoardSize; yn++) {
+            for (int xn = 0; xn < BoardSize; xn++) {
                 if (isLegalMovePrivateUseOnly(x, y, xn, yn)) moves.add(new Point(xn, yn));
             }
         }
@@ -336,6 +335,12 @@ public class LogicBoard {
             PiecePlacement[fromX][fromY] = PiecePlacement[toX][toY];
             PiecePlacement[toX][toY] = pieceClone;
 
+
+            PiecePlacement[fromX][fromY].setLocation(toX, toY);
+            PiecePlacement[toX][toY].setLocation(fromX, fromY);
+
+
+
         } catch (Exception ex) {
             System.out.println("Error occurred! Give this to the developer: " + ex.getMessage());
         }
@@ -343,7 +348,25 @@ public class LogicBoard {
     }
 
     public boolean PlayerHasLegalMove(Player player) {
-        // fix this later
+        int nMoves = 0;
+
+        for (int fromY = 0; fromY < BoardSize; fromY++) {
+            for (int fromX = 0; fromX < BoardSize; fromX++) {
+                for (int toY = 0; toY < BoardSize; toY++) {
+                    for (int toX = 0; toX < BoardSize; toX++){
+                        if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() == player.getIdentifier()){
+                            if (isLegalMovePrivateUseOnly(fromX, fromY, toX, toY)){
+                                nMoves++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (nMoves > 0){
+            return true;
+        }
+
         return false;
     }
 
@@ -361,6 +384,7 @@ public class LogicBoard {
             System.out.println(winnerMessage);
 
             CheckersGame.infoBox(winnerMessage, "Player wins!");
+            return;
         }
 
         int temp = 0;
@@ -375,6 +399,16 @@ public class LogicBoard {
             String msg = "Game is a draw";
             System.out.println("No legal moves remain:" + msg);
             CheckersGame.infoBox(msg, "Player wins!");
+            return;
+        }
+
+        if (!PlayerHasLegalMove(CurrentPlayer)){
+            String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
+            System.out.println(winnerMessage);
+
+            CheckersGame.infoBox(winnerMessage, "Player wins!");
+
+            return;
         }
 
 
