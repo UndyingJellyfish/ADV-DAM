@@ -32,7 +32,6 @@ public class GUIBoard extends JPanel {
     public GUIBoard(LogicBoard board, GameSetup setup) {
         // new N*N gridlayout using number of board squares from game setup
         super(new GridLayout(setup.boardSquares, setup.boardSquares));
-        //this.N = N;
         this.N = setup.boardSquares;
 
         Logic = board;
@@ -97,10 +96,6 @@ public class GUIBoard extends JPanel {
         GUIButton temp = this.buttonArray[x][y];
         Point p = temp.getPosition();
         System.out.println(p.getLocation());
-    }
-
-    public void addButtonAt(GUIButton buttonToAdd, int x, int y) {
-        this.buttonArray[x][y].add(buttonToAdd);
     }
 
     // fills the board with GUIButtons and fieldtypes according til boardlogic.

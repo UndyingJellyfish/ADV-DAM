@@ -21,6 +21,7 @@ public class LogicBoard {
     private Player Player0;
     private Player Player1;
     private Player CurrentPlayer;
+    private boolean endGame = false;
 
     // logic board constructor
     public LogicBoard(CheckerPiece[][] pieces, GameSetup setup) {
@@ -383,7 +384,8 @@ public class LogicBoard {
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won with " + (int) piecesLeft + " pieces left!";
             System.out.println(winnerMessage);
 
-            CheckersGame.infoBox(winnerMessage, "Player wins!");
+            endGame = CheckersGame.infoBox(winnerMessage, "Player wins!");
+
             return;
         }
 
@@ -398,7 +400,7 @@ public class LogicBoard {
         if (temp == 0) {
             String msg = "Game is a draw";
             System.out.println("No legal moves remain:" + msg);
-            CheckersGame.infoBox(msg, "Player wins!");
+            endGame = CheckersGame.infoBox(msg, "Player wins!");
             return;
         }
 
@@ -406,7 +408,7 @@ public class LogicBoard {
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
             System.out.println(winnerMessage);
 
-            CheckersGame.infoBox(winnerMessage, "Player wins!");
+            endGame = CheckersGame.infoBox(winnerMessage, "Player wins!");
 
             return;
         }

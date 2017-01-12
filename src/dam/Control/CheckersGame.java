@@ -3,6 +3,9 @@ package dam.Control;
 import dam.abstractions.*;
 import dam.graphics.GUIBoard;
 import dam.menus.GameSetup;
+import dam.menus.mainMenu;
+import jdk.nashorn.internal.scripts.JO;
+import test.Launcher;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +16,9 @@ import java.awt.*;
 public class CheckersGame {
     private int boardSize;
     public static CheckerPiece[][] pieces;
+    public static boolean continueGame = false;
+    public static boolean gameDone = false;
+    public JFrame f;
 
     public CheckersGame(GameSetup setup) {
         this.boardSize = setup.boardSquares;
@@ -25,7 +31,6 @@ public class CheckersGame {
         Player placeholder = new Player("This guy does not exist", -1);
         pieces = new CheckerPiece[boardSize][boardSize];
 
-
         // logicBoard creation
         LogicBoard board = new LogicBoard(pieces, setup);
         board.PopulateBoard(player0, player1, placeholder);
@@ -36,7 +41,7 @@ public class CheckersGame {
         graphicsBoard.fillInAllActionHandlers(); // ensures all buttons act properly when clicked
 
         // loads window frame, but not visibly
-        JFrame f = new JFrame();
+        this.f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // needed to ensure proper functionality
         f.add(graphicsBoard, BorderLayout.CENTER); // adds the GUIBoard to the window frame and ensures it's centered
 
@@ -48,9 +53,35 @@ public class CheckersGame {
 
         // finally shows window
         f.setVisible(true);
+
     }
 
-    public static void infoBox(String infoMessage, String titleBar) {
-        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+    public void closeGame() {
+        f.setVisible(false);
+        f.dispose();
     }
+
+    public static boolean infoBox(String infoMessage, String titleBar) {
+        //JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+        Object[] options = {"Back to menu", "Exit game"};
+
+        int input = JOptionPane.showOptionDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);
+        if(input == JOptionPane.OK_OPTION) {
+            continueGame = true;
+            gameDone = true;
+            return false;
+
+        }
+
+        else if (input == JOptionPane.CANCEL_OPTION) {
+            continueGame = false;
+            gameDone = true;
+            return true;
+        }
+        continueGame = false;
+        gameDone = true;
+        return true;
+    }
+
+
 }

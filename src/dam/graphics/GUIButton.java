@@ -12,7 +12,7 @@ import java.awt.*;
  */
 public class GUIButton extends JButton {
 
-    // number of fields on one dimension
+    // number of squares on each side
     private final int N;
 
     // point object of lastClicked
