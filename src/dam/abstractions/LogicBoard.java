@@ -1,6 +1,7 @@
 package dam.abstractions;
 
 import dam.Control.CheckersGame;
+import dam.graphics.AudioPlayer;
 import dam.graphics.GUIButton;
 import dam.menus.GameSetup;
 import org.omg.CORBA.Current;
@@ -383,6 +384,7 @@ public class LogicBoard {
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won with " + (int) piecesLeft + " pieces left!";
             System.out.println(winnerMessage);
 
+            new AudioPlayer(AudioPlayer.AUDIO.WON);
             CheckersGame.infoBox(winnerMessage, "Player wins!");
             return;
         }
@@ -398,6 +400,7 @@ public class LogicBoard {
         if (temp == 0) {
             String msg = "Game is a draw";
             System.out.println("No legal moves remain:" + msg);
+
             CheckersGame.infoBox(msg, "Player wins!");
             return;
         }
@@ -405,7 +408,7 @@ public class LogicBoard {
         if (!PlayerHasLegalMove(CurrentPlayer)){
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
             System.out.println(winnerMessage);
-
+            new AudioPlayer(AudioPlayer.AUDIO.WON);
             CheckersGame.infoBox(winnerMessage, "Player wins!");
 
             return;
