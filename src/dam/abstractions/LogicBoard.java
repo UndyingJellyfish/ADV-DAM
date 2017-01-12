@@ -28,11 +28,11 @@ public class LogicBoard {
         BoardSize = setup.boardSquares;
     }
     // board essentials
-    public void populateBoard(Player owner0, Player owner1, Player placeholder) {
+    public void PopulateBoard(Player owner0, Player owner1, Player placeholder) {
         this.Player0 = owner0;
         this.Player1 = owner1;
         this.CurrentPlayer = Player0;
-        IdentifierGenerator id = new IdentifierGenerator();
+        IdentifierGenerator id = new IdentifierGenerator(2);
         if (this.BoardSize > 2) {
             for (int yn = 0; yn < BoardSize; yn++) {
                 // initializes the board as being full of placeholders
@@ -108,6 +108,8 @@ public class LogicBoard {
                     }
                 }
             }
+        } else {
+            System.out.println("You tried populating a board with less than 3 by 3 size, this is not allowed");
         }
     }
 
