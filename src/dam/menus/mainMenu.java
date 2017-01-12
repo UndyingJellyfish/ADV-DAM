@@ -6,21 +6,24 @@ import java.awt.event.*;
 /**
  * Created by smous on 11-01-2017.
  */
-
+// main menu is the opening screen when you run the program. In this menu you can choose between some buttons which opens
+// new dialogs
 public class mainMenu extends JDialog {
     private JPanel contentPane;
     private JButton buttonNewGame;
     private JButton buttonSettings;
     private JButton buttonExit;
-    private JButton buttonHighScore;
     private JButton buttonRules;
     private JLabel labelWelcome;
 
+    // main menu constructor with the game setup as argument to access the variables
     public mainMenu(GameSetup setup) {
         setContentPane(contentPane);
+        // setModal to true so the checkers board will not open with main menu
         setModal(true);
         getRootPane().setDefaultButton(buttonNewGame);
 
+        // adding Actionslisteners to all buttons.
         buttonNewGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onNewGame();
@@ -34,10 +37,6 @@ public class mainMenu extends JDialog {
         });
         buttonExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { onExit();
-            }
-        });
-        buttonHighScore.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { onHighScore();
             }
         });
         buttonRules.addActionListener(new ActionListener() {
@@ -61,13 +60,17 @@ public class mainMenu extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-    }
 
+
+    }
+    // closes the menu when clicking on new game, then opens the board
     private void onNewGame() {
         // add your code here
         dispose();
     }
 
+    // opens a new dialog when clicked on settings. The method has game setup as argument to keep access to the arguments
+    // in that class
     private void onSettings(GameSetup setup) {
         Settings settingsDialog = new Settings(setup);
         settingsDialog.pack();
@@ -77,6 +80,7 @@ public class mainMenu extends JDialog {
 
     }
 
+    // opens a new dialog when clicked on rules.
     private void onRules() {
         Rules rulesDialog = new Rules();
         rulesDialog.pack();
@@ -85,11 +89,7 @@ public class mainMenu extends JDialog {
         rulesDialog.setVisible(true);
     }
 
-    private void onHighScore() {
-        // add your code here if necessary
-
-    }
-
+    // shuts down program when clicked on exit button
     private void onExit() {
         // add your code here if necessary
         System.exit(0);

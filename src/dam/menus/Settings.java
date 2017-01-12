@@ -5,13 +5,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.*;
 
-import static dam.menus.GameSetup.FrameSize.MIN_SIZE;
-
 /**
  * Created by smous on 11-01-2017.
  */
 
 public class Settings extends JDialog {
+    // fields
     private JPanel contentPane;
     private JButton buttonExit;
     private JLabel labelSettingsheader;
@@ -25,9 +24,11 @@ public class Settings extends JDialog {
     private ButtonGroup RadioGroup = new ButtonGroup();
     private GameSetup setup;
 
-
+    // constructor
     public Settings(GameSetup setup) {
         this.setup = setup;
+
+        // adding the radio buttons to a ButtonGroup to make only one of them selected
         RadioGroup.add(radioMinSize);
         RadioGroup.add(radioMedSize);
         RadioGroup.add(radioMaxSize);
@@ -35,6 +36,7 @@ public class Settings extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonExit);
 
+        // adding Actionlistener to all the buttons
         buttonExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onExit();
@@ -56,11 +58,11 @@ public class Settings extends JDialog {
             }
         });
         sliderBoardSize.addChangeListener(new ChangeListener() {
+            // sets the number of squares to the slider value when it's not adjusting.
             public void stateChanged(ChangeEvent e) {
                 e.getSource();
                 if(!sliderBoardSize.getValueIsAdjusting()) {
                     setup.boardSquares = sliderBoardSize.getValue();
-                    System.out.println(setup.boardSquares);
                 }
 
             }
@@ -81,25 +83,23 @@ public class Settings extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+    // sets frame size to minimum size when clicked on min button
     private void onMinSize() {
         setup.frameSize = GameSetup.FrameSize.MIN_SIZE;
 
     }
-
+    // sets frame size to medium size when clicked on med button
     private void onMedSize() {
         setup.frameSize = GameSetup.FrameSize.MED_SIZE;
 
     }
-
+    // sets frame size to maximum size when clicked on max button
     private void onMaxSize() {
         setup.frameSize = GameSetup.FrameSize.MAX_SIZE;
 
     }
 
     private void onExit() {
-        // add your code here if necessary
-
-
         dispose();
     }
 }

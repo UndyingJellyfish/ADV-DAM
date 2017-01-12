@@ -7,16 +7,20 @@ import java.awt.event.*;
  */
 
 public class Rules extends JDialog {
+    // fields
     private JPanel contentPane;
     private JButton buttonExit;
     private JLabel labelHeader;
     private JTextArea textRules;
 
+    // rules constructor
     public Rules() {
+        // the content panel contains a text area with rules
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonExit);
 
+        // added actionlistener to exit button
         buttonExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onExit();

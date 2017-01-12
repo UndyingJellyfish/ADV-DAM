@@ -22,13 +22,7 @@ public class LogicBoard {
     private Player Player1;
     private Player CurrentPlayer;
 
-
-    // constructors
-    /*public LogicBoard(CheckerPiece[][] brikker, int size) {
-        this.PiecePlacement = brikker;
-        this.BoardSize = size;
-    }*/
-
+    // logic board constructor
     public LogicBoard(CheckerPiece[][] brikker, GameSetup setup) {
         this.PiecePlacement = brikker;
         BoardSize = setup.boardSquares;
@@ -156,6 +150,7 @@ public class LogicBoard {
         return this.NewClickedGUIButton;
     }
 
+    // counts all the pieces on the board which belongs to either player
     public int countAllPieces() {
         int sum = 0;
         for (int i = 0; i < BoardSize; i++) {
@@ -166,6 +161,7 @@ public class LogicBoard {
         return sum;
     }
 
+    // counts all pieces for the player you want
     public int countPiecesForPlayer(Player targetPlayer) {
         int sum = 0;
         for (int i = 0; i < BoardSize; i++) {
@@ -199,11 +195,7 @@ public class LogicBoard {
     }
 
     // movement related methods
-
     private boolean validDirection(int fromY, int toY, Player playerToMove, boolean superPiece) {
-        if (superPiece){
-            // System.out.println("superpiece move");
-        }
         boolean playerDirection = (playerToMove == Player0);
         boolean moveDirection = (fromY < toY);
         return ((playerDirection == moveDirection) || superPiece);
@@ -214,7 +206,7 @@ public class LogicBoard {
                 (toY == BoardSize - 1)) ||
                 ((playerToMove == Player1) &&
                         (toY == 0))) {
-            System.out.println("A piece has achieved super");
+            //System.out.println("A piece has achieved super");
             PiecePlacement[fromX][fromY].superPiece = true;
         }
     }
@@ -344,6 +336,7 @@ public class LogicBoard {
         } catch (Exception ex) {
             System.out.println("Error occurred! Give this to the developer: " + ex.getMessage());
         }
+
     }
 
     public boolean PlayerHasLegalMove(Player player) {
@@ -351,10 +344,12 @@ public class LogicBoard {
         return false;
     }
 
+    // method to end to turn for each player
     public void endTurn() {
+        // if current player is player0, then set current player to player1
         CurrentPlayer = (CurrentPlayer == Player0 ? Player1 : Player0);
 
-
+        // winner message shows up when someone has 0 pieces left
         int n = countPiecesForPlayer(CurrentPlayer);
         if (n == 0) {
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
