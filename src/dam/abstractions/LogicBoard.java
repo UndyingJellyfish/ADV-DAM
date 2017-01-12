@@ -28,8 +28,11 @@ public class LogicBoard {
         this.PiecePlacement = pieces;
         BoardSize = setup.boardSquares;
     }
+
     // board essentials
     public void PopulateBoard(Player owner0, Player owner1, Player placeholder) {
+        // this creates all the "logical" game pieces using 3 algorithms
+
         this.Player0 = owner0;
         this.Player1 = owner1;
         this.CurrentPlayer = Player0;
@@ -109,13 +112,12 @@ public class LogicBoard {
                     }
                 }
             }
-        } else {
-            System.out.println("You tried populating a board with less than 3 by 3 size, this is not allowed");
         }
     }
 
     // creating console output
     public void printBoard() {
+        // prints the board identifiers in the console, also uses t/f to indicate whether piece is king
         for (int yn = 0; yn < this.BoardSize; yn++) {
             System.out.print("[");
             for (int xn = 0; xn < this.BoardSize; xn++) {
@@ -125,7 +127,6 @@ public class LogicBoard {
             System.out.print("]\n");
         }
         System.out.println();
-        //System.out.println("Debugging message: All identifiers of value -1 indicates empty placement");
     }
 
     // methods for returning and setting fields and other properties
@@ -153,19 +154,8 @@ public class LogicBoard {
         return this.NewClickedGUIButton;
     }
 
-    // counts all the pieces on the board which belongs to either player
-    public int countAllPieces() {
-        int sum = 0;
-        for (int i = 0; i < BoardSize; i++) {
-            for (int j = 0; j < BoardSize; j++) {
-                if (PiecePlacement[i][j] != null) sum++;
-            }
-        }
-        return sum;
-    }
-
-    // counts all pieces for the player you want
     public int countPiecesForPlayer(Player targetPlayer) {
+        // counts all pieces for the specified player
         int sum = 0;
         for (int i = 0; i < BoardSize; i++) {
             for (int j = 0; j < BoardSize; j++) {
@@ -199,12 +189,14 @@ public class LogicBoard {
 
     // movement related methods
     private boolean validDirection(int fromY, int toY, Player playerToMove, boolean superPiece) {
+        // ensures that non-king (non-super) pieces moves in the correct direction
         boolean playerDirection = (playerToMove == Player0);
         boolean moveDirection = (fromY < toY);
         return ((playerDirection == moveDirection) || superPiece);
     }
 
     private void isSuperPositionReached(int fromX, int fromY, int toY, Player playerToMove) {
+        // used for checking whether a piece has reached the state of "king" or "super"
         if (((playerToMove == Player0) &&
                 (toY == BoardSize - 1)) ||
                 ((playerToMove == Player1) &&
@@ -331,6 +323,8 @@ public class LogicBoard {
     }
 
     public void Move(int fromX, int fromY, int toX, int toY) {
+        // used to move pieces in the logic, you should always perform a check with isLegalMove on the same data before
+        // attempting to use this method!
         try {
             CheckerPiece pieceClone = PiecePlacement[fromX][fromY].clone();
             PiecePlacement[fromX][fromY] = PiecePlacement[toX][toY];
@@ -341,7 +335,6 @@ public class LogicBoard {
             PiecePlacement[toX][toY].setLocation(fromX, fromY);
 
 
-
         } catch (Exception ex) {
             System.out.println("Error occurred! Give this to the developer: " + ex.getMessage());
         }
@@ -349,55 +342,63 @@ public class LogicBoard {
     }
 
     public boolean PlayerHasLegalMove(Player player) {
-        int nMoves = 0;
+        // used for checking if a player has any legal moves left
 
+        // TODO: consider refactoring to check for only black pieces
         for (int fromY = 0; fromY < BoardSize; fromY++) {
             for (int fromX = 0; fromX < BoardSize; fromX++) {
-                for (int toY = 0; toY < BoardSize; toY++) {
-                    for (int toX = 0; toX < BoardSize; toX++){
-                        if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() == player.getIdentifier()){
-                            if (isLegalMovePrivateUseOnly(fromX, fromY, toX, toY)){
-                                nMoves++;
+                if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() == player.getIdentifier()) {
+                    // no need to check the legal moves of a button if it doesn't belong to the player we're checking
+                    for (int toY = 0; toY < BoardSize; toY++) {
+                        for (int toX = 0; toX < BoardSize; toX++) {
+                            if (isLegalMovePrivateUseOnly(fromX, fromY, toX, toY)) {
+                                // only increments if a given move is legal
+                                // as soon as we know that a legal move exists we don't need to continue
+                                return true;
                             }
                         }
                     }
                 }
             }
         }
-        if (nMoves > 0){
-            return true;
-        }
 
+        // only returns false if no legal moves are found
         return false;
     }
 
-    // method to end to turn for each player
+
     public void endTurn() {
+        // method to end to turn for each player
         // if current player is player0, then set current player to player1
         CurrentPlayer = (CurrentPlayer == Player0 ? Player1 : Player0);
 
         // winner message shows up when someone has 0 pieces left
         int n = countPiecesForPlayer(CurrentPlayer);
         if (n == 0) {
-            double piecesLeft = Math.max(countPiecesForPlayer(Player0), countPiecesForPlayer(Player1));
+            int piecesLeft = Math.max(countPiecesForPlayer(Player0), countPiecesForPlayer(Player1));
 
-            String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won with " + (int) piecesLeft + " pieces left!";
+            String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won with " + piecesLeft + " pieces left!";
             System.out.println(winnerMessage);
 
+            // plays winning sound
             new AudioPlayer(AudioPlayer.AUDIO.WON);
+            // prompts a pop-up window notifying that a player has won
             CheckersGame.infoBox(winnerMessage, "Player wins!");
             return;
         }
 
         int temp = 0;
 
+        // count the amount of legal moves left
         for (int yn = 0; yn < BoardSize; yn++) {
             for (int xn = 0; xn < BoardSize; xn++) {
                 temp += legalMoves(PiecePlacement[xn][yn]).size();
             }
         }
 
+
         if (temp == 0) {
+            // if no player has any legal moves left, the game is a draw
             String msg = "Game is a draw";
             System.out.println("No legal moves remain:" + msg);
 
@@ -405,7 +406,8 @@ public class LogicBoard {
             return;
         }
 
-        if (!PlayerHasLegalMove(CurrentPlayer)){
+        if (!PlayerHasLegalMove(CurrentPlayer)) {
+            // if the current player has no legal moves, the other player wins
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
             System.out.println(winnerMessage);
             new AudioPlayer(AudioPlayer.AUDIO.WON);

@@ -113,37 +113,25 @@ public class GUIBoard extends JPanel {
         }
     }
 
-
-    public void printInfoAtLocation(int x, int y) {
-        GUIButton temp = this.buttonArray[x][y];
-        Point p = temp.getPosition();
-        System.out.println(p.getLocation());
-    }
-
-    public void addButtonAt(GUIButton buttonToAdd, int x, int y) {
-        this.buttonArray[x][y].add(buttonToAdd);
-    }
-
     // fills the board with GUIButtons and fieldtypes according til boardlogic.
     public void fillBoard(LogicBoard boardToPopulate) {
-        if (boardToPopulate.countAllPieces() >= 0) {
-            for (int yn = 0; yn < N; yn++) {
-                for (int xn = 0; xn < N; xn++) {
-                    try {
-                        if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 0) {
-                            buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER0, new Point(xn, yn));
-                        } else if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 1) {
-                            buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER1, new Point(xn, yn));
-                        } else {
-                            buttonArray[xn][yn] = new GUIButton(N, FieldType.EMPTY, new Point(xn, yn));
-                        }
-                        this.add(buttonArray[xn][yn]);
-                    } catch (NullPointerException e) {
+        for (int yn = 0; yn < N; yn++) {
+            for (int xn = 0; xn < N; xn++) {
+                try {
+                    if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 0) {
+                        buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER0, new Point(xn, yn));
+                    } else if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 1) {
+                        buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER1, new Point(xn, yn));
+                    } else {
                         buttonArray[xn][yn] = new GUIButton(N, FieldType.EMPTY, new Point(xn, yn));
                     }
+                    this.add(buttonArray[xn][yn]);
+                } catch (NullPointerException e) {
+                    buttonArray[xn][yn] = new GUIButton(N, FieldType.EMPTY, new Point(xn, yn));
                 }
             }
         }
+
     }
 
     // draws each field on board using field type
