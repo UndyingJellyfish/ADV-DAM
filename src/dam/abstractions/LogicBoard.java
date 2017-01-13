@@ -4,9 +4,7 @@ import dam.control.CheckersGame;
 import dam.graphics.AudioPlayer;
 import dam.graphics.GUIButton;
 import dam.menus.GameSetup;
-
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Created by Emil Damsbo on 04-01-2017.
@@ -21,7 +19,6 @@ public class LogicBoard {
     private Player Player0;
     private Player Player1;
     private Player CurrentPlayer;
-    private boolean endGame = false;
 
     // logic board constructor
     public LogicBoard(CheckerPiece[][] pieces, GameSetup setup) {
@@ -177,22 +174,6 @@ public class LogicBoard {
         return sum;
     }
 
-    public ArrayList<Point> legalMoves(CheckerPiece gamePiece) {
-        int x = (int) gamePiece.getLocation().getX();
-        int y = (int) gamePiece.getLocation().getY();
-        ArrayList<Point> moves = new ArrayList<>();
-        for (int yn = 0; yn < BoardSize; yn++) {
-            for (int xn = 0; xn < BoardSize; xn++) {
-                if (PiecePlacement[x][y].getOwner().getIdentifier() == gamePiece.getOwner().getIdentifier()) {
-                    if (isLegalMove(x, y, xn, yn)) moves.add(new Point(xn, yn));
-                }
-
-            }
-        }
-
-        return moves;
-    }
-
     public CheckerPiece getPieceAtPosition(Point position) {
         return PiecePlacement[(int) position.getX()][(int) position.getY()];
     }
@@ -307,15 +288,21 @@ public class LogicBoard {
 
     public boolean PlayerHasLegalMove(Player player) {
         // used for checking is a player has any legal moves left
-        int temp = 0;
         for (int fromY = 0; fromY < BoardSize; fromY++) {
             for (int fromX = 0; fromX < BoardSize; fromX++) {
-                if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() == player.getIdentifier()) {
-                    // no need to check the legal moves of a button if it doesn't belong to player we're checking
-                    for (int toY = 0; toY < BoardSize; toY++) {
-                        for (int toX = 0; toX < BoardSize; toX++) {
-                            if (isLegalMove(fromX, fromY, toX, toY)) {
-                                temp++;
+                if ((fromX % 2 == 0 && fromY % 2 == 0) || (fromX % 2 == 1 && fromY % 2 == 1)) {
+                    // only checks non-white fields
+                    if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() == player.getIdentifier()) {
+                        // no need to check the legal moves of a button if it doesn't belong to player we're checking
+                        for (int toY = 0; toY < BoardSize; toY++) {
+                            for (int toX = 0; toX < BoardSize; toX++) {
+                                if ((toX % 2 == 0 && toY % 2 == 0) || (toX % 2 == 1 && toY % 2 == 1)) {
+                                    // only checks non-white fields
+                                    if (isLegalMove(fromX, fromY, toX, toY)) {
+                                        // no need to continue searching when a legal move is found
+                                        return true;
+                                    }
+                                }
                             }
                         }
                     }
@@ -323,7 +310,7 @@ public class LogicBoard {
             }
         }
         // only returns false if no legal moves are found
-        return temp > 0;
+        return false;
     }
 
     // method to end to turn for each player
@@ -343,7 +330,7 @@ public class LogicBoard {
             System.out.println(winnerMessage);
 
             // returns a dialog result based on which button
-            endGame = CheckersGame.infoBox(winnerMessage, "Player wins!");
+            CheckersGame.infoBox(winnerMessage, "Player wins!");
 
             // plays winning sound
             new AudioPlayer(AudioPlayer.AUDIO.WON);
@@ -353,26 +340,24 @@ public class LogicBoard {
         }
 
         if (!PlayerHasLegalMove(Player0) && !PlayerHasLegalMove(Player1)) {
-            // if no player has any legal moves left, he game is a draw
+            // if no player has any legal moves left, the game is a draw
             String msg = "Game is a draw";
             System.out.println("No legal moves remain: " + msg);
 
-            endGame = CheckersGame.infoBox(msg, "Player wins!");
-
             CheckersGame.infoBox(msg, "Player wins!");
 
+
             return;
-        } /*else if (!PlayerHasLegalMove(CurrentPlayer)) {
+        } else if (!PlayerHasLegalMove(CurrentPlayer)) {
             // if the current player has no legal moves, the other player wins
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
             System.out.println(winnerMessage);
 
-            endGame = CheckersGame.infoBox(winnerMessage, "Player wins!");
+            CheckersGame.infoBox(winnerMessage, "Player wins!");
 
             new AudioPlayer(AudioPlayer.AUDIO.WON);
-            CheckersGame.infoBox(winnerMessage, "Player wins!");
             return;
-        }*/
+        }
 
         PrintBoard();
 

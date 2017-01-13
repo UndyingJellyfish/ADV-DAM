@@ -19,8 +19,10 @@ public class GUIBoard extends JPanel {
     private LogicBoard Logic; // logic board for game board
 
     // list of field types
-    public enum FieldType { // indicates ownership of a particular button
-        EMPTY("Resources\\Textures\\Empty.png"),
+    public enum FieldType {
+        // indicates ownership of a particular button
+        // binds enum values to a string, which is the relative file path of sound files
+        EMPTY(null),
         PLAYER0("Resources\\Textures\\CheckerBlack.png"),
         PLAYER1("Resources\\Textures\\CheckerWhite.png"),
         PLAYER0_KING("Resources\\Textures\\CheckerBlackKing.png"),
@@ -33,6 +35,7 @@ public class GUIBoard extends JPanel {
         }
 
         public String getText() {
+            // returns the associated file path
             return this.text;
         }
 

@@ -61,7 +61,6 @@ public class GUIButton extends JButton {
             ImageIcon image = new ImageIcon(newImg);
             this.setIcon(image);
         } catch (Exception e) {
-            e.printStackTrace();
             this.setIcon(null);
         }
     }

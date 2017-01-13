@@ -8,7 +8,7 @@ import java.awt.*;
 public class CheckerPiece {
     // fields
     private Player Owner;
-    protected int Identifier;
+    private int Identifier;
     private Point Location;
     private boolean superPiece;
 

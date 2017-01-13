@@ -20,7 +20,7 @@ public class CheckersGame {
         this.boardSize = setup.boardSquares;
 
 
-        // creating players and empty buttons
+        // creating players and "empty" player
         IdentifierGenerator idGen = new IdentifierGenerator();
         Player player0 = new Player("Player 0", idGen.getNextIdentifier());
         Player player1 = new Player("Player 1", idGen.getNextIdentifier());
@@ -30,7 +30,7 @@ public class CheckersGame {
         // logicBoard creation
         LogicBoard board = new LogicBoard(pieces, setup);
         board.PopulateBoard(player0, player1, placeholder);
-        board.PrintBoard();
+        //board.PrintBoard();
 
         // start loading GUI elements
         GUIBoard graphicsBoard = new GUIBoard(board, setup);

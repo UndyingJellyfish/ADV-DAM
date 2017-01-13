@@ -11,7 +11,7 @@ public class Launcher {
 
 
     public static void main(String[] args) {
-        // default boardsize is argument from terminal
+        // default board size is argument from terminal
         int boardSize = Integer.parseInt(args[0]);
         GameSetup setup = new GameSetup(boardSize);
 
@@ -21,6 +21,7 @@ public class Launcher {
             gameSession(setup);
         }
         while (CheckersGame.continueGame);
+        // when no longer choosing to continue the game, close the program
         System.exit(0);
     }
 
