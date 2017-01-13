@@ -8,6 +8,7 @@ import java.awt.*;
 
 /**
  * Created by Emil Damsbo on 04-01-2017.
+ * Member primarily responsible for file: Emil Damsbo
  */
 
 public class LogicBoard {
@@ -199,7 +200,7 @@ public class LogicBoard {
                 ((playerToMove == Player1) &&
                         (toY == 0))) {
             //System.out.println("A piece has achieved super");
-            PiecePlacement[fromX][fromY].superPiece = true;
+            PiecePlacement[fromX][fromY].setSuperPiece(true);
         }
     }
 
@@ -355,16 +356,6 @@ public class LogicBoard {
         }
 
         if (!PlayerHasLegalMove(Player0) && !PlayerHasLegalMove(Player1)) {
-
-        // count the amount of legal moves left
-        for (int yn = 0; yn < BoardSize; yn++) {
-            for (int xn = 0; xn < BoardSize; xn++) {
-                temp += legalMoves(PiecePlacement[xn][yn]).size();
-            }
-        }
-
-
-        if (temp == 0) {
             // if no player has any legal moves left, the game is a draw
             String msg = "Game is a draw";
             System.out.println("No legal moves remain: " + msg);
@@ -384,7 +375,7 @@ public class LogicBoard {
             return;
         }
 
-        PrintBoard();
+        //PrintBoard();
 
     }
 

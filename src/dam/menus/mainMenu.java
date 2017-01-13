@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 /**
  * Created by smous on 11-01-2017.
+ * Member primarily responsible for file: Nicklas Juul
  */
 // main menu is the opening screen when you run the program. In this menu you can choose between some buttons which opens
 // new dialogs

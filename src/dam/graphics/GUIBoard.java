@@ -10,6 +10,7 @@ import java.awt.*;
 
 /**
  * Created by smous on 02-01-2017.
+ * Member primarily responsible for file: Søren Mousten
  */
 public class GUIBoard extends JPanel {
 

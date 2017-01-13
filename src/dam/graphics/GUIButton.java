@@ -10,6 +10,7 @@ import java.io.File;
 
 /**
  * Created by smous on 02-01-2017.
+ * Member primarily responsible for file: Søren Mousten
  */
 public class GUIButton extends JButton {
 
@@ -27,7 +28,6 @@ public class GUIButton extends JButton {
         position = pos;
         Owner = field;
 
-        lastClicked = new Point(-1, -1);
     }
 
     // methods for returning fields

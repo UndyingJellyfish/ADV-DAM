@@ -2,6 +2,7 @@ package dam.menus;
 
 /**
  * Created by smous on 11-01-2017.
+ * Member primarily responsible for file: Søren Mousten
  */
 public class GameSetup {
 

@@ -7,6 +7,7 @@ import java.awt.event.*;
 
 /**
  * Created by smous on 11-01-2017.
+ * Member primarily responsible for file: Nicklas Juul
  */
 
 public class Settings extends JDialog {

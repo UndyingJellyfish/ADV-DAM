@@ -9,6 +9,7 @@ import static dam.graphics.GUIBoard.FieldType.*;
 
 /**
  * Created by Nicklas on 05-01-2017.
+ * Member primarily responsible for file: Nicklas Juul
  */
 
 
@@ -28,16 +29,19 @@ public class ButtonListener implements ActionListener {
     // action on click
     public void actionPerformed(ActionEvent e) {
         try {
+            // debug code
+            /*
             // prints position of GUIButton clicked
-            System.out.println("Field pressed X: " + RelevantButton.getPosition().getX()
-                    + ", Y: " + RelevantButton.getPosition().getY());
+            System.out.println("Field pressed X: " + RelevantButton.getPosition().getX() + ", Y: " + RelevantButton.getPosition().getY());
             // prints position of last click if it exists
             if (Board.hasLastClicked()) {
                 System.out.println("Last pressed X: " + Board.getLastClickedGUIButton().getPosition().getX()
                         + ", Y: " + Board.getLastClickedGUIButton().getPosition().getY());
             }
-
+            */
             if (RelevantButton instanceof GUIButton) {
+                // TODO: this is god awful and should be refactored immediately
+
                 // continue if lastClicked exists, else set as lastClick
                 if (Board.hasLastClicked()) {
 
@@ -61,6 +65,8 @@ public class ButtonListener implements ActionListener {
                                 (int) Board.getLastClickedGUIButton().getPosition().getY(),
                                 (int) Board.getNewClickedGUIButton().getPosition().getX(),
                                 (int) Board.getNewClickedGUIButton().getPosition().getY());
+
+
 
                         // checks piece jumps over another piece
                         if ((Math.abs(Board.getNewClickedGUIButton().getPosition().getX() - Board.getLastClickedGUIButton().getPosition().getX()) > 1 &&
@@ -89,11 +95,10 @@ public class ButtonListener implements ActionListener {
                         Board.getNewClickedGUIButton().drawField(Board.getNewClickedGUIButton().getFieldType());
                         Board.getLastClickedGUIButton().drawField(Board.getLastClickedGUIButton().getFieldType());
 
-                        // Board.PrintBoard(); //debugging, used to make sure pieces moves properly on logic board
-
-                        // calls the endTurn method from logic, which changes turn of players
+                        // plays sound for movement (aka. satisfying wooden *click*)
                         new AudioPlayer(AudioPlayer.AUDIO.MOVE);
 
+                        // calls the endTurn method from logic, which changes turn of players
                         Board.endTurn();
 
                         // resets lastClicked
@@ -104,6 +109,7 @@ public class ButtonListener implements ActionListener {
                     } else {
                         System.out.println("Move is not legal");
                         // move is not legal and resets lastClicked
+                        new AudioPlayer(AudioPlayer.AUDIO.ERROR);
                         Board.setLastClickedGUIButton(null);
                     }
                 } else {

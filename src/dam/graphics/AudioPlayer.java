@@ -6,6 +6,7 @@ import java.io.IOException;
 
 /**
  * Created by Emil Damsbo on 12-01-2017.
+ * Member primarily responsible for file: Emil Damsbo
  */
 public class AudioPlayer implements LineListener {
     public enum AUDIO {
