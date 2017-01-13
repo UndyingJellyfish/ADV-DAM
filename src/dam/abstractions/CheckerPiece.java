@@ -8,16 +8,14 @@ import java.awt.*;
 public class CheckerPiece {
     // fields
     private Player Owner;
-    private int Jumps;
     private int Identifier;
     private Point Location;
-    public boolean superPiece;
+    private boolean superPiece;
 
 
     // constructors
-    public CheckerPiece(Player owner, int jump, int id, Point place, boolean superPiece) {
+    public CheckerPiece(Player owner, int id, Point place, boolean superPiece) {
         this.Owner = owner;
-        this.Jumps = jump;
         this.Identifier = id;
         this.Location = place;
         this.superPiece = superPiece;
@@ -45,8 +43,12 @@ public class CheckerPiece {
         return this.superPiece;
     }
 
+    public void setSuperPiece(boolean b){
+        this.superPiece = b;
+    }
+
     public CheckerPiece clone() {
         // completely clones the instance of CheckerPiece
-        return new CheckerPiece(Owner, Jumps, Identifier, Location, superPiece);
+        return new CheckerPiece(Owner, Identifier, Location, superPiece);
     }
 }

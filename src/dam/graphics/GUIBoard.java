@@ -1,7 +1,7 @@
 package dam.graphics;
 
 
-import dam.Control.ButtonListener;
+import dam.control.ButtonListener;
 import dam.abstractions.LogicBoard;
 import dam.menus.GameSetup;
 
@@ -15,12 +15,14 @@ public class GUIBoard extends JPanel {
 
     // fields
     private int N;// int N; // number of fields on one dimension
-    static int SIZE = 75;// pixel width and height of a field
     private GUIButton[][] buttonArray; // button array of all buttons on board
     private LogicBoard Logic; // logic board for game board
 
     // list of field types
-    public enum FieldType { // indicates ownership of a particular button
+    public enum FieldType {
+        // indicates ownership of a particular button
+        // binds enum values to a string, which is the relative file path of sound files
+
         EMPTY("Resources\\Textures\\Empty.png"),
         PLAYER0("Resources\\Textures\\CheckerBlack.png"),
         PLAYER1("Resources\\Textures\\CheckerWhite.png"),
@@ -34,6 +36,7 @@ public class GUIBoard extends JPanel {
         }
 
         public String getText() {
+            // returns the associated file path
             return this.text;
         }
 
@@ -53,7 +56,6 @@ public class GUIBoard extends JPanel {
     public GUIBoard(LogicBoard board, GameSetup setup) {
         // new N*N gridlayout using number of board squares from game setup
         super(new GridLayout(setup.boardSquares, setup.boardSquares));
-        //this.N = N;
         this.N = setup.boardSquares;
 
         Logic = board;
@@ -91,10 +93,6 @@ public class GUIBoard extends JPanel {
     }
 
     // methods for returning fields
-    public int getN() {
-        return this.N;
-    }
-
     public LogicBoard getLogicBoard() {
         return this.Logic;
     }
@@ -113,8 +111,10 @@ public class GUIBoard extends JPanel {
         }
     }
 
-    // fills the board with GUIButtons and fieldtypes according til boardlogic.
+    
+
     public void fillBoard(LogicBoard boardToPopulate) {
+        // fills the board with GUIButtons and fieldtypes according to boardlogic.
         for (int yn = 0; yn < N; yn++) {
             for (int xn = 0; xn < N; xn++) {
                 try {

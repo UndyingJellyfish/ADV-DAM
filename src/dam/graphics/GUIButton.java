@@ -13,12 +13,9 @@ import java.io.File;
  */
 public class GUIButton extends JButton {
 
-
-    // number of fields on one dimension
+    // number of squares on each side
     private final int N;
 
-    // point object of lastClicked
-    private Point lastClicked;
     private GUIBoard.FieldType Owner;
     private Point position;
 
@@ -42,11 +39,6 @@ public class GUIButton extends JButton {
         return position;
     }
 
-
-    public Point getLastClicked() {
-        return this.lastClicked;
-    }
-
     public GUIBoard.FieldType getFieldType() {
         return this.Owner;
     }
@@ -58,8 +50,6 @@ public class GUIButton extends JButton {
 
     // methods for graphical interactions
     private void drawImage(GUIBoard.FieldType field) {
-
-
         int PREFERRED_SIZE = (int) Math.floor(this.getWidth() * 0.9);// pixel width and height of a field
 
         // drawImage function which draws image on button depending on file name and scales to preffered size
@@ -69,7 +59,6 @@ public class GUIButton extends JButton {
             ImageIcon image = new ImageIcon(newImg);
             this.setIcon(image);
         } catch (Exception e) {
-            e.printStackTrace();
             this.setIcon(null);
         }
     }

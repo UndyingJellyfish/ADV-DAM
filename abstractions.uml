@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>dam.abstractions</OriginalElement>
+  <nodes>
+    <node x="386.625" y="196.0">dam.graphics.AudioPlayer.AUDIO</node>
+    <node x="36.5" y="1028.0">dam.abstractions.CheckerPiece</node>
+    <node x="908.405392156863" y="737.5">dam.graphics.GUIBoard.FieldType</node>
+    <node x="165.03039215686283" y="724.0">dam.abstractions.Player</node>
+    <node x="238.64387254901953" y="1818.0">dam.control.CheckersGame</node>
+    <node x="1524.1367647058823" y="420.0">dam.menus.mainMenu</node>
+    <node x="1435.8867647058823" y="167.0">dam.menus.GameSetup</node>
+    <node x="438.48370098039226" y="0.0">dam.graphics.AudioPlayer</node>
+    <node x="1669.8867647058823" y="307.0">dam.menus.Rules</node>
+    <node x="1094.3867647058823" y="1082.5">dam.abstractions.IdentifierGenerator</node>
+    <node x="771.405392156863" y="419.0">dam.graphics.GUIBoard</node>
+    <node x="591.4003676470589" y="237.0">dam.control.ButtonListener</node>
+    <node x="318.1117647058824" y="1315.0">dam.abstractions.LogicBoard</node>
+    <node x="1472.8867647058823" y="0.0">dam.menus.GameSetup.FrameSize</node>
+    <node x="1442.8867647058823" y="307.0">dam.menus.Settings</node>
+    <node x="700.3867647058823" y="1041.5">dam.graphics.GUIButton</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="dam.control.CheckersGame" target="dam.abstractions.IdentifierGenerator">
+      <point x="64.0" y="-59.5" />
+      <point x="430.64387254901953" y="1788.0" />
+      <point x="1289.3867647058823" y="1788.0" />
+      <point x="65.0" y="59.0" />
+    </edge>
+    <edge source="dam.abstractions.LogicBoard" target="dam.abstractions.Player">
+      <point x="-138.66666666666657" y="-221.5" />
+      <point x="491.44509803921585" y="1295.0" />
+      <point x="522.0" y="1295.0" />
+      <point x="522.0" y="1008.0" />
+      <point x="398.78039215686283" y="1008.0" />
+      <point x="46.75" y="127.0" />
+    </edge>
+    <edge source="dam.graphics.GUIBoard" target="dam.control.ButtonListener">
+      <point x="-63.25" y="-127.5" />
+      <point x="834.655392156863" y="394.0" />
+      <point x="850.1503676470589" y="394.0" />
+      <point x="51.75" y="45.5" />
+    </edge>
+    <edge source="dam.control.ButtonListener" target="dam.graphics.GUIBoard">
+      <point x="155.25" y="45.5" />
+      <point x="953.6503676470589" y="394.0" />
+      <point x="961.155392156863" y="394.0" />
+      <point x="63.25" y="-127.5" />
+    </edge>
+    <edge source="dam.control.CheckersGame" target="dam.abstractions.LogicBoard">
+      <point x="21.33333333333337" y="-59.5" />
+      <point x="387.9772058823529" y="1778.0" />
+      <point x="630.1117647058825" y="1778.0" />
+      <point x="0.0" y="221.5" />
+    </edge>
+    <edge source="dam.menus.mainMenu" target="dam.menus.Settings">
+      <point x="-56.0" y="-31.5" />
+      <point x="1580.1367647058823" y="395.0" />
+      <point x="1546.3867647058823" y="395.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="dam.control.ButtonListener" target="dam.graphics.GUIButton">
+      <point x="-51.75" y="45.5" />
+      <point x="746.6503676470589" y="394.0" />
+      <point x="666.4867647058825" y="394.0" />
+      <point x="666.4867647058825" y="1008.0" />
+      <point x="747.1367647058823" y="1008.0" />
+      <point x="-140.25" y="-100.0" />
+    </edge>
+    <edge source="dam.control.ButtonListener" target="dam.abstractions.LogicBoard">
+      <point x="-155.25" y="45.5" />
+      <point x="643.1503676470589" y="394.0" />
+      <point x="616.0863970588234" y="394.0" />
+      <point x="616.0863970588234" y="1285.0" />
+      <point x="699.4450980392157" y="1285.0" />
+      <point x="69.33333333333337" y="-221.5" />
+    </edge>
+    <edge source="dam.abstractions.CheckerPiece" target="dam.abstractions.Player">
+      <point x="0.0" y="-113.5" />
+      <point x="274.0" y="1008.0" />
+      <point x="305.28039215686283" y="1008.0" />
+      <point x="-46.75" y="127.0" />
+    </edge>
+    <edge source="dam.control.ButtonListener" target="dam.graphics.AudioPlayer">
+      <point x="0.0" y="-45.5" />
+      <point x="798.4003676470589" y="171.0" />
+      <point x="675.1503676470588" y="171.0" />
+      <point x="94.66666666666663" y="73.0" />
+    </edge>
+    <edge source="dam.control.CheckersGame" target="dam.abstractions.CheckerPiece">
+      <point x="-64.0" y="-59.5" />
+      <point x="302.64387254901953" y="1788.0" />
+      <point x="121.86176470588236" y="1788.0" />
+      <point x="121.86176470588236" y="1295.0" />
+      <point x="95.875" y="1295.0" />
+      <point x="-178.125" y="113.5" />
+    </edge>
+    <edge source="dam.abstractions.LogicBoard" target="dam.abstractions.CheckerPiece">
+      <point x="-207.9999999999999" y="-221.5" />
+      <point x="422.11176470588254" y="1295.0" />
+      <point x="452.125" y="1295.0" />
+      <point x="178.125" y="113.5" />
+    </edge>
+    <edge source="dam.menus.Settings" target="dam.menus.GameSetup">
+      <point x="0.0" y="-31.5" />
+      <point x="0.0" y="45.0" />
+    </edge>
+    <edge source="dam.menus.GameSetup" target="dam.menus.GameSetup.FrameSize">
+      <point x="-55.25" y="-45.0" />
+      <point x="1491.1367647058823" y="142.0" />
+      <point x="1509.6367647058823" y="142.0" />
+      <point x="-36.75" y="58.5" />
+    </edge>
+    <edge source="dam.graphics.AudioPlayer.AUDIO" target="dam.graphics.AudioPlayer">
+      <point x="0.0" y="-86.5" />
+      <point x="471.625" y="171.0" />
+      <point x="485.81703431372557" y="171.0" />
+      <point x="-94.66666666666669" y="73.0" />
+    </edge>
+    <edge source="dam.graphics.GUIBoard.FieldType" target="dam.graphics.GUIBoard">
+      <point x="0.0" y="-113.5" />
+      <point x="1012.905392156863" y="704.0" />
+      <point x="948.5053921568629" y="704.0" />
+      <point x="50.59999999999991" y="127.5" />
+    </edge>
+    <edge source="dam.graphics.GUIBoard" target="dam.graphics.GUIButton">
+      <point x="-50.60000000000002" y="127.5" />
+      <point x="847.3053921568628" y="704.0" />
+      <point x="871.1367647058823" y="704.0" />
+      <point x="871.1367647058823" y="1008.0" />
+      <point x="840.6367647058823" y="1008.0" />
+      <point x="-46.75" y="-100.0" />
+    </edge>
+    <edge source="dam.control.CheckersGame" target="dam.graphics.GUIBoard">
+      <point x="106.66666666666663" y="-59.5" />
+      <point x="473.31053921568616" y="1798.0" />
+      <point x="1364.8867647058823" y="1798.0" />
+      <point x="1364.8867647058823" y="694.0" />
+      <point x="999.1053921568628" y="694.0" />
+      <point x="101.19999999999993" y="127.5" />
+    </edge>
+    <edge source="dam.graphics.GUIButton" target="dam.graphics.GUIBoard.FieldType">
+      <point x="140.25" y="-100.0" />
+      <point x="1027.6367647058823" y="1008.0" />
+      <point x="1012.905392156863" y="1008.0" />
+      <point x="0.0" y="113.5" />
+    </edge>
+    <edge source="dam.menus.mainMenu" target="dam.menus.Rules">
+      <point x="56.0" y="-31.5" />
+      <point x="1692.1367647058823" y="395.0" />
+      <point x="1725.8867647058823" y="395.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="dam.menus.GameSetup.FrameSize" target="dam.menus.GameSetup">
+      <point x="36.75" y="58.5" />
+      <point x="1583.1367647058823" y="142.0" />
+      <point x="1601.6367647058823" y="142.0" />
+      <point x="55.25" y="-45.0" />
+    </edge>
+    <edge source="dam.graphics.GUIBoard" target="dam.abstractions.LogicBoard">
+      <point x="-101.20000000000005" y="127.5" />
+      <point x="796.7053921568629" y="704.0" />
+      <point x="689.8867647058825" y="704.0" />
+      <point x="689.8867647058825" y="1275.0" />
+      <point x="768.7784313725492" y="1275.0" />
+      <point x="138.66666666666674" y="-221.5" />
+    </edge>
+    <edge source="dam.abstractions.LogicBoard" target="dam.abstractions.IdentifierGenerator">
+      <point x="277.33333333333326" y="-221.5" />
+      <point x="907.4450980392157" y="1295.0" />
+      <point x="1159.3867647058823" y="1295.0" />
+      <point x="-65.0" y="59.0" />
+    </edge>
+    <edge source="dam.abstractions.LogicBoard" target="dam.graphics.AudioPlayer">
+      <point x="0.0" y="-221.5" />
+      <point x="630.1117647058825" y="1295.0" />
+      <point x="567.125" y="1295.0" />
+      <point x="567.125" y="171.0" />
+      <point x="580.4837009803923" y="171.0" />
+      <point x="0.0" y="73.0" />
+    </edge>
+    <edge source="dam.abstractions.LogicBoard" target="dam.graphics.GUIButton">
+      <point x="208.0" y="-221.5" />
+      <point x="838.1117647058825" y="1295.0" />
+      <point x="887.3867647058823" y="1295.0" />
+      <point x="0.0" y="100.0" />
+    </edge>
+    <edge source="dam.control.CheckersGame" target="dam.abstractions.Player">
+      <point x="-106.66666666666663" y="-59.5" />
+      <point x="259.9772058823529" y="1798.0" />
+      <point x="26.0" y="1798.0" />
+      <point x="26.0" y="1008.0" />
+      <point x="211.78039215686283" y="1008.0" />
+      <point x="-140.25" y="127.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.07899846704139" x="745.7229588937298" y="607.0124076529646" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>packageLocal</VISIBILITY>
+</Diagram>
+

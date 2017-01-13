@@ -1,9 +1,7 @@
-package dam.Control;
+package dam.control;
 
 import dam.abstractions.LogicBoard;
 import dam.graphics.*;
-
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -91,7 +89,7 @@ public class ButtonListener implements ActionListener {
                         Board.getNewClickedGUIButton().drawField(Board.getNewClickedGUIButton().getFieldType());
                         Board.getLastClickedGUIButton().drawField(Board.getLastClickedGUIButton().getFieldType());
 
-                        // Board.printBoard(); //debugging, used to make sure pieces moves properly on logic board
+                        // Board.PrintBoard(); //debugging, used to make sure pieces moves properly on logic board
 
                         // calls the endTurn method from logic, which changes turn of players
                         new AudioPlayer(AudioPlayer.AUDIO.MOVE);

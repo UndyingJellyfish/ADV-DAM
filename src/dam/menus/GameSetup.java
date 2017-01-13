@@ -5,6 +5,10 @@ package dam.menus;
  */
 public class GameSetup {
 
+    public GameSetup(int boardSize) {
+        this.boardSquares = boardSize;
+    }
+
     // enumeration to keep the different frame sizes.
     public enum FrameSize {
         MIN_SIZE,
@@ -16,5 +20,5 @@ public class GameSetup {
     public FrameSize frameSize = FrameSize.MAX_SIZE;
 
     // default number of squares is 8*8
-    public int boardSquares = 8;
+    public int boardSquares;
 }

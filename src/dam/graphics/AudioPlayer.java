@@ -9,6 +9,7 @@ import java.io.IOException;
  */
 public class AudioPlayer implements LineListener {
     public enum AUDIO {
+        // binds enum values to a string, which is the relative file path of sound files
         ERROR("Resources\\Sounds\\Error.wav"),
         MOVE("Resources\\Sounds\\On_move.wav"),
         WON("Resources\\Sounds\\Game_won.wav");
@@ -21,17 +22,6 @@ public class AudioPlayer implements LineListener {
 
         public String getText() {
             return this.text;
-        }
-
-        public static AUDIO fromString(String text) {
-            if (text != null) {
-                for (AUDIO a : AUDIO.values()) {
-                    if (text.equalsIgnoreCase(a.text)) {
-                        return a;
-                    }
-                }
-            }
-            return null;
         }
     }
 
@@ -62,7 +52,7 @@ public class AudioPlayer implements LineListener {
                     while (!playCompleted) {
                         // wait for the playback completes
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(500);
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }
