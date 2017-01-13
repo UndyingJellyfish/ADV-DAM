@@ -16,8 +16,6 @@ public class GUIButton extends JButton {
     // number of squares on each side
     private final int N;
 
-    // point object of lastClicked
-    private Point lastClicked;
     private GUIBoard.FieldType Owner;
     private Point position;
 
@@ -67,7 +65,6 @@ public class GUIButton extends JButton {
 
     public void drawField(GUIBoard.FieldType field) {
         drawImage(field);
-
 
         // colors the grid black and white
         if ((position.getX() % 2 == 0 && position.getY() % 2 == 0) ||

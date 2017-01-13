@@ -22,7 +22,8 @@ public class GUIBoard extends JPanel {
     public enum FieldType {
         // indicates ownership of a particular button
         // binds enum values to a string, which is the relative file path of sound files
-        EMPTY(null),
+
+        EMPTY("Resources\\Textures\\Empty.png"),
         PLAYER0("Resources\\Textures\\CheckerBlack.png"),
         PLAYER1("Resources\\Textures\\CheckerWhite.png"),
         PLAYER0_KING("Resources\\Textures\\CheckerBlackKing.png"),
@@ -110,26 +111,27 @@ public class GUIBoard extends JPanel {
         }
     }
 
-    // fills the board with GUIButtons and fieldtypes according to boardlogic.
+    
+
     public void fillBoard(LogicBoard boardToPopulate) {
-        if (boardToPopulate.countAllPieces() >= 0) {
-            for (int yn = 0; yn < N; yn++) {
-                for (int xn = 0; xn < N; xn++) {
-                    try {
-                        if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 0) {
-                            buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER0, new Point(xn, yn));
-                        } else if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 1) {
-                            buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER1, new Point(xn, yn));
-                        } else {
-                            buttonArray[xn][yn] = new GUIButton(N, FieldType.EMPTY, new Point(xn, yn));
-                        }
-                        this.add(buttonArray[xn][yn]);
-                    } catch (NullPointerException e) {
+        // fills the board with GUIButtons and fieldtypes according to boardlogic.
+        for (int yn = 0; yn < N; yn++) {
+            for (int xn = 0; xn < N; xn++) {
+                try {
+                    if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 0) {
+                        buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER0, new Point(xn, yn));
+                    } else if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 1) {
+                        buttonArray[xn][yn] = new GUIButton(N, FieldType.PLAYER1, new Point(xn, yn));
+                    } else {
                         buttonArray[xn][yn] = new GUIButton(N, FieldType.EMPTY, new Point(xn, yn));
                     }
+                    this.add(buttonArray[xn][yn]);
+                } catch (NullPointerException e) {
+                    buttonArray[xn][yn] = new GUIButton(N, FieldType.EMPTY, new Point(xn, yn));
                 }
             }
         }
+
     }
 
     // draws each field on board using field type

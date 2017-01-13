@@ -26,7 +26,7 @@ public class AudioPlayer implements LineListener {
     }
 
 
-    public AudioPlayer(AudioPlayer.AUDIO clipToPlay){
+    public AudioPlayer(AudioPlayer.AUDIO clipToPlay) {
         play(clipToPlay.getText());
     }
 
@@ -58,11 +58,11 @@ public class AudioPlayer implements LineListener {
                         }
                     }
 
-                } catch(UnsupportedAudioFileException aud) {
+                } catch (UnsupportedAudioFileException aud) {
                     System.out.println("File format is unsupported");
-                } catch(IOException io) {
+                } catch (IOException io) {
                     System.out.println("File could not be found, error code: " + io.getMessage());
-                } catch(LineUnavailableException line) {
+                } catch (LineUnavailableException line) {
                     System.out.println("Clip could not be obtained");
                 }
             }

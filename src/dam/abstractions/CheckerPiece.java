@@ -31,25 +31,15 @@ public class CheckerPiece {
         return this.Identifier;
     }
 
-    // other types of methods
-    public String toString(boolean returnOnlyId) {
-        // returns a string containing every property of the current object
-        if (returnOnlyId) {
-            return Integer.toString(this.getIdentifier());
-        }
-
-        return ("This is a checker.\nOwned by: " + this.Owner.getPlayerName() + "\nChecker is identified by " + this.Identifier + " and is located at" + this.Location.toString());
-    }
-
-    public Point getLocation(){
+    public Point getLocation() {
         return this.Location;
     }
 
-    public void setLocation(int x, int y){
-        this.Location = new Point(x,y);
+    public void setLocation(int x, int y) {
+        this.Location = new Point(x, y);
     }
 
-    public boolean isSuperPiece(){
+    public boolean isSuperPiece() {
         return this.superPiece;
     }
 

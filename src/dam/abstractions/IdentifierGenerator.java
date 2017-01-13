@@ -8,12 +8,8 @@ public class IdentifierGenerator {
     private int Counter;
 
     // constructors
-    public IdentifierGenerator(int n, int d) {
-        this.Counter = n;
-    }
-
     public IdentifierGenerator(int n) {
-        this(n, 0);
+        this.Counter = n;
     }
 
     public IdentifierGenerator() {
@@ -24,9 +20,4 @@ public class IdentifierGenerator {
     public int getNextIdentifier() {
         return this.Counter++;
     }
-
-    public String toString() {
-        return ("Last identifier: " + this.Counter + "\nDefault identifier: ");
-    }
-
 }

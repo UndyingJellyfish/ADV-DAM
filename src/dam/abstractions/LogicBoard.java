@@ -28,6 +28,8 @@ public class LogicBoard {
 
     // board essentials
     public void PopulateBoard(Player owner0, Player owner1, Player placeholder) {
+        // this creates all the "logical" game pieces using 3 algorithms
+
         this.Player0 = owner0;
         this.Player1 = owner1;
         this.CurrentPlayer = Player0;
@@ -107,13 +109,12 @@ public class LogicBoard {
                     }
                 }
             }
-        } else {
-            System.out.println("You tried populating a board with less than 3 by 3 size, this is not allowed");
         }
     }
 
     // creating console output
     public void PrintBoard() {
+
         // prints the board identifiers in the console, also uses t/f to indicate whether piece is king
         for (int yn = 0; yn < this.BoardSize; yn++) {
             System.out.print("[");
@@ -163,7 +164,7 @@ public class LogicBoard {
     }
 
     public int countPiecesForPlayer(Player targetPlayer) {
-        // counts all the piecse for the specified player
+        // counts all pieces for the specified player
         int sum = 0;
         for (int i = 0; i < BoardSize; i++) {
             for (int j = 0; j < BoardSize; j++) {
@@ -184,12 +185,23 @@ public class LogicBoard {
 
     // movement related methods
     private boolean validDirection(int fromY, int toY, Player playerToMove, boolean superPiece) {
-        // ensures that non-king (non-super) pieces moves in the currect direction
+        // ensures that non-king (non-super) pieces moves in the correct direction
+
         boolean playerDirection = (playerToMove == Player0);
         boolean moveDirection = (fromY < toY);
         return ((playerDirection == moveDirection) || superPiece);
     }
 
+    private void isSuperPositionReached(int fromX, int fromY, int toY, Player playerToMove) {
+        // used for checking whether a piece has reached the state of "king" or "super"
+        if (((playerToMove == Player0) &&
+                (toY == BoardSize - 1)) ||
+                ((playerToMove == Player1) &&
+                        (toY == 0))) {
+            //System.out.println("A piece has achieved super");
+            PiecePlacement[fromX][fromY].superPiece = true;
+        }
+    }
 
     public boolean isLegalMove(int fromX, int fromY, int toX, int toY) {
         // used for checking whether it's allowed to move from one location to another
@@ -279,7 +291,6 @@ public class LogicBoard {
             int endZone = PiecePlacement[toX][toY].getOwner().getIdentifier() == 1 ? 0 : BoardSize - 1;
             PiecePlacement[toX][toY].setSuperPiece(toY == endZone);
 
-
         } catch (Exception ex) {
             System.out.println("Error occurred! Give this to the developer: " + ex.getMessage());
         }
@@ -313,8 +324,9 @@ public class LogicBoard {
         return false;
     }
 
-    // method to end to turn for each player
+
     public void endTurn() {
+        // method to end to turn for each player
         // if current player is player0, then set current player to player1
         CurrentPlayer = (CurrentPlayer == Player0 ? Player1 : Player0);
 
@@ -329,7 +341,10 @@ public class LogicBoard {
             String winnerMessage = (CurrentPlayer.getPlayerName()) + " has won with " + piecesLeft + " pieces left!";
             System.out.println(winnerMessage);
 
-            // returns a dialog result based on which button
+            // plays winning sound
+            new AudioPlayer(AudioPlayer.AUDIO.WON);
+            // prompts a pop-up window notifying that a player has won
+
             CheckersGame.infoBox(winnerMessage, "Player wins!");
 
             // plays winning sound
@@ -340,6 +355,16 @@ public class LogicBoard {
         }
 
         if (!PlayerHasLegalMove(Player0) && !PlayerHasLegalMove(Player1)) {
+
+        // count the amount of legal moves left
+        for (int yn = 0; yn < BoardSize; yn++) {
+            for (int xn = 0; xn < BoardSize; xn++) {
+                temp += legalMoves(PiecePlacement[xn][yn]).size();
+            }
+        }
+
+
+        if (temp == 0) {
             // if no player has any legal moves left, the game is a draw
             String msg = "Game is a draw";
             System.out.println("No legal moves remain: " + msg);
