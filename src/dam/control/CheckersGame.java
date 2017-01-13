@@ -55,6 +55,7 @@ public class CheckersGame {
     public void closeGame() {
         f.setVisible(false);
         f.dispose();
+
     }
 
     public static boolean infoBox(String infoMessage, String titleBar) {
@@ -72,6 +73,7 @@ public class CheckersGame {
         else if (input == JOptionPane.CANCEL_OPTION) {
             continueGame = false;
             gameDone = true;
+
             return true;
         }
         continueGame = false;

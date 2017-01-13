@@ -40,7 +40,7 @@ public class LogicBoard {
                 // initializes the board as being full of placeholders
                 // this prevents accidental NullPointerException's, also allows ButtonListener interactions
                 for (int xn = 0; xn < BoardSize; xn++) {
-                    PiecePlacement[xn][yn] = new CheckerPiece(placeholder, 0, -1, new Point(xn, yn), false);
+                    PiecePlacement[xn][yn] = new CheckerPiece(placeholder, -1, new Point(xn, yn), false);
                 }
             }
             if (BoardSize == 3) {
@@ -51,7 +51,7 @@ public class LogicBoard {
                         // creates each row of player 2's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner0, 1, id.getNextIdentifier(), new Point(xn, yn), false);
+                            PiecePlacement[xn][yn] = new CheckerPiece(owner0, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -61,7 +61,7 @@ public class LogicBoard {
                         // creates each row of player 2's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner1, 1, id.getNextIdentifier(), new Point(xn, yn), false);
+                            PiecePlacement[xn][yn] = new CheckerPiece(owner1, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -73,7 +73,7 @@ public class LogicBoard {
                         // creates each row of player 1's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner0, 1, id.getNextIdentifier(), new Point(xn, yn), false);
+                            PiecePlacement[xn][yn] = new CheckerPiece(owner0, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -83,7 +83,7 @@ public class LogicBoard {
                         // creates each row of player 2's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner1, 1, id.getNextIdentifier(), new Point(xn, yn), false);
+                            PiecePlacement[xn][yn] = new CheckerPiece(owner1, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -95,7 +95,7 @@ public class LogicBoard {
                         // creates each row of player 1's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner0, 1, id.getNextIdentifier(), new Point(xn, yn), false);
+                            PiecePlacement[xn][yn] = new CheckerPiece(owner0, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -105,7 +105,7 @@ public class LogicBoard {
                         // creates each row of player 2's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner1, 1, id.getNextIdentifier(), new Point(xn, yn), false);
+                            PiecePlacement[xn][yn] = new CheckerPiece(owner1, id.getNextIdentifier(), new Point(xn, yn), false);
                         }
                     }
                 }
@@ -282,18 +282,20 @@ public class LogicBoard {
             if (isJumpMove(fromX, fromY, toX, toY)) {
                 int dirX = fromX > toX ? -1 : 1;
                 int dirY = fromY > toY ? -1 : 1;
-                PiecePlacement[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1), 0, -1, new Point(fromX + dirX, fromY + dirY), false);
+                PiecePlacement[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1),-1, new Point(fromX + dirX, fromY + dirY), false);
 
             }
+            // change places at logic board
             CheckerPiece pieceClone = PiecePlacement[fromX][fromY].clone();
             PiecePlacement[fromX][fromY] = PiecePlacement[toX][toY];
             PiecePlacement[toX][toY] = pieceClone;
 
+            // update piece Location fields
             PiecePlacement[fromX][fromY].setLocation(toX, toY);
             PiecePlacement[toX][toY].setLocation(fromX, fromY);
 
+            // sets as super piece if moving to "endzone"
             int endZone = PiecePlacement[toX][toY].getOwner().getIdentifier() == 1 ? 0 : BoardSize - 1;
-
             PiecePlacement[toX][toY].setSuperPiece(toY == endZone);
 
 
@@ -332,17 +334,20 @@ public class LogicBoard {
         // winner message shows up when someone has 0 pieces left
         int n = countPiecesForPlayer(CurrentPlayer);
         if (n == 0) {
-            double piecesLeft = Math.max(countPiecesForPlayer(Player0), countPiecesForPlayer(Player1));
+            // counts winning players pieces
+            CurrentPlayer = (CurrentPlayer == Player0 ? Player1 : Player0);
+            int piecesLeft = countPiecesForPlayer(getCurrentPlayer());
 
-            String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won with " + (int) piecesLeft + " pieces left!";
+            // creates winning message
+            String winnerMessage = (CurrentPlayer.getPlayerName()) + " has won with " + piecesLeft + " pieces left!";
             System.out.println(winnerMessage);
 
+            // returns a dialog result based on which button
             endGame = CheckersGame.infoBox(winnerMessage, "Player wins!");
 
             // plays winning sound
             new AudioPlayer(AudioPlayer.AUDIO.WON);
             // prompts a pop-up window notifying that a player has won
-            CheckersGame.infoBox(winnerMessage, "Player wins!");
 
             return;
         }

@@ -8,16 +8,14 @@ import java.awt.*;
 public class CheckerPiece {
     // fields
     private Player Owner;
-    private int Jumps;
     protected int Identifier;
     private Point Location;
     private boolean superPiece;
 
 
     // constructors
-    public CheckerPiece(Player owner, int jump, int id, Point place, boolean superPiece) {
+    public CheckerPiece(Player owner, int id, Point place, boolean superPiece) {
         this.Owner = owner;
-        this.Jumps = jump;
         this.Identifier = id;
         this.Location = place;
         this.superPiece = superPiece;
@@ -27,10 +25,6 @@ public class CheckerPiece {
     // methods for returning fields
     public Player getOwner() {
         return this.Owner;
-    }
-
-    public int getJumps() {
-        return this.Jumps;
     }
 
     public int getIdentifier() {
@@ -44,7 +38,7 @@ public class CheckerPiece {
             return Integer.toString(this.getIdentifier());
         }
 
-        return ("This is a checker.\nOwned by: " + this.Owner.getPlayerName() + "\nChecker has " + this.Jumps + " jumps.\nChecker is identified by " + this.Identifier + " and is located at" + this.Location.toString());
+        return ("This is a checker.\nOwned by: " + this.Owner.getPlayerName() + "\nChecker is identified by " + this.Identifier + " and is located at" + this.Location.toString());
     }
 
     public Point getLocation(){
@@ -65,6 +59,6 @@ public class CheckerPiece {
 
     public CheckerPiece clone() {
         // completely clones the instance of CheckerPiece
-        return new CheckerPiece(Owner, Jumps, Identifier, Location, superPiece);
+        return new CheckerPiece(Owner, Identifier, Location, superPiece);
     }
 }

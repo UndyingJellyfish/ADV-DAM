@@ -21,6 +21,7 @@ public class Launcher {
             gameSession(setup);
         }
         while (CheckersGame.continueGame);
+        System.exit(0);
     }
 
     private static void gameSession(GameSetup setup) {
