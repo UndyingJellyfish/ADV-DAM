@@ -1,10 +1,9 @@
 package dam.abstractions;
 
-import dam.Control.CheckersGame;
+import dam.control.CheckersGame;
 import dam.graphics.AudioPlayer;
 import dam.graphics.GUIButton;
 import dam.menus.GameSetup;
-import org.omg.CORBA.Current;
 
 import java.awt.*;
 import java.util.ArrayList;

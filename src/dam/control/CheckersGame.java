@@ -1,4 +1,4 @@
-package dam.Control;
+package dam.control;
 
 import dam.abstractions.*;
 import dam.graphics.GUIBoard;

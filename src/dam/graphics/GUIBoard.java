@@ -1,7 +1,7 @@
 package dam.graphics;
 
 
-import dam.Control.ButtonListener;
+import dam.control.ButtonListener;
 import dam.abstractions.LogicBoard;
 import dam.menus.GameSetup;
 

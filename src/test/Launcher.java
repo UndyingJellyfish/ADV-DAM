@@ -1,6 +1,6 @@
 package test;
 
-import dam.Control.CheckersGame;
+import dam.control.CheckersGame;
 import dam.menus.GameSetup;
 import dam.menus.mainMenu;
 

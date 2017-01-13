@@ -7,17 +7,12 @@ public class Player {
     // fields
     private String PlayerName;
     private int Identifier;
-    private double Score;
 
     // constructors
-    public Player(String name, int id, double score) {
-        this.PlayerName = name;
-        this.Identifier = id;
-        this.Score = score;
-    }
 
     public Player(String name, int id) {
-        this(name, id, 0.0);
+        this.PlayerName = name;
+        this.Identifier = id;
     }
 
     public Player(String name) {
@@ -37,12 +32,8 @@ public class Player {
         return this.Identifier;
     }
 
-    public double getScore() {
-        return this.Score;
-    }
-
     public String toString() {
-        return ("Player named " + this.PlayerName + " has ID " + this.Identifier + "and score " + this.Score);
+        return ("Player named " + this.PlayerName + " has ID " + this.Identifier);
     }
 
 }

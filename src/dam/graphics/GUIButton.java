@@ -41,11 +41,6 @@ public class GUIButton extends JButton {
         return position;
     }
 
-
-    public Point getLastClicked() {
-        return this.lastClicked;
-    }
-
     public GUIBoard.FieldType getFieldType() {
         return this.Owner;
     }
