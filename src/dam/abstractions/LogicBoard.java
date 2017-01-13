@@ -1,6 +1,7 @@
 package dam.abstractions;
 
 import dam.Control.CheckersGame;
+import dam.graphics.AudioPlayer;
 import dam.graphics.GUIButton;
 import dam.menus.GameSetup;
 import org.omg.CORBA.Current;
@@ -116,6 +117,7 @@ public class LogicBoard {
 
     // creating console output
     public void printBoard() {
+        // prints the board identifiers in the console, also uses t/f to indicate whether piece is king
         for (int yn = 0; yn < this.BoardSize; yn++) {
             System.out.print("[");
             for (int xn = 0; xn < this.BoardSize; xn++) {
@@ -125,7 +127,6 @@ public class LogicBoard {
             System.out.print("]\n");
         }
         System.out.println();
-        //System.out.println("Debugging message: All identifiers of value -1 indicates empty placement");
     }
 
     // methods for returning and setting fields and other properties
@@ -164,8 +165,9 @@ public class LogicBoard {
         return sum;
     }
 
-    // counts all pieces for the player you want
+
     public int countPiecesForPlayer(Player targetPlayer) {
+        // counts all the piecse for the specified player
         int sum = 0;
         for (int i = 0; i < BoardSize; i++) {
             for (int j = 0; j < BoardSize; j++) {
@@ -199,12 +201,14 @@ public class LogicBoard {
 
     // movement related methods
     private boolean validDirection(int fromY, int toY, Player playerToMove, boolean superPiece) {
+        // ensures that non-king (non-super) pieces moves in the currect direction
         boolean playerDirection = (playerToMove == Player0);
         boolean moveDirection = (fromY < toY);
         return ((playerDirection == moveDirection) || superPiece);
     }
 
     private void isSuperPositionReached(int fromX, int fromY, int toY, Player playerToMove) {
+        // used for checking whether a piece has reached the state of "king" or "super"
         if (((playerToMove == Player0) &&
                 (toY == BoardSize - 1)) ||
                 ((playerToMove == Player1) &&
@@ -331,6 +335,8 @@ public class LogicBoard {
     }
 
     public void Move(int fromX, int fromY, int toX, int toY) {
+        // used to move pieces in the logic, you should always perform a check with isLegalMove on the same data before
+        // attempting to use this method!
         try {
             CheckerPiece pieceClone = PiecePlacement[fromX][fromY].clone();
             PiecePlacement[fromX][fromY] = PiecePlacement[toX][toY];
@@ -349,25 +355,25 @@ public class LogicBoard {
     }
 
     public boolean PlayerHasLegalMove(Player player) {
-        int nMoves = 0;
+        /// used for checking is a player has any legal moves left
 
         for (int fromY = 0; fromY < BoardSize; fromY++) {
             for (int fromX = 0; fromX < BoardSize; fromX++) {
+                if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() == player.getIdentifier()){
+                    // no need to check the legal moves of a button if it doesn't belong to player we're checking
                 for (int toY = 0; toY < BoardSize; toY++) {
                     for (int toX = 0; toX < BoardSize; toX++){
-                        if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() == player.getIdentifier()){
                             if (isLegalMovePrivateUseOnly(fromX, fromY, toX, toY)){
-                                nMoves++;
+                                // only increments if a given move is legal
+                                // as soon as we know that a legal move exists we don't need to continue
+                                return true;
                             }
                         }
                     }
                 }
             }
         }
-        if (nMoves > 0){
-            return true;
-        }
-
+        // only returns false if no legal moves are found
         return false;
     }
 
@@ -386,6 +392,11 @@ public class LogicBoard {
 
             endGame = CheckersGame.infoBox(winnerMessage, "Player wins!");
 
+            // plays winning sound
+            new AudioPlayer(AudioPlayer.AUDIO.WON);
+            // prompts a pop-up window notifying that a player has won
+            CheckersGame.infoBox(winnerMessage, "Player wins!");
+
             return;
         }
 
@@ -398,18 +409,26 @@ public class LogicBoard {
         }
 
         if (temp == 0) {
+            // if no player has any legal moves left, he game is a draw
             String msg = "Game is a draw";
             System.out.println("No legal moves remain:" + msg);
+
             endGame = CheckersGame.infoBox(msg, "Player wins!");
+
+            CheckersGame.infoBox(msg, "Player wins!");
+
             return;
         }
 
         if (!PlayerHasLegalMove(CurrentPlayer)){
+            // if the current player has no legal moves, the other player wins
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
             System.out.println(winnerMessage);
 
             endGame = CheckersGame.infoBox(winnerMessage, "Player wins!");
 
+            new AudioPlayer(AudioPlayer.AUDIO.WON);
+            CheckersGame.infoBox(winnerMessage, "Player wins!");
             return;
         }
 

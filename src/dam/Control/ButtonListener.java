@@ -94,6 +94,8 @@ public class ButtonListener implements ActionListener {
                         // Board.printBoard(); //debugging, used to make sure pieces moves properly on logic board
 
                         // calls the endTurn method from logic, which changes turn of players
+                        new AudioPlayer(AudioPlayer.AUDIO.MOVE);
+
                         Board.endTurn();
 
                         // resets lastClicked
@@ -109,8 +111,10 @@ public class ButtonListener implements ActionListener {
                 } else {
                     System.out.println("No lastClicked button exists");
                     // lastClicked can only be a piece of current player
-                    if (Board.getPieceAtPosition(RelevantButton.getPosition()).getOwner() != Board.getCurrentPlayer())
+                    if (Board.getPieceAtPosition(RelevantButton.getPosition()).getOwner() != Board.getCurrentPlayer()) {
                         System.out.println("Not your turn!");
+                        new AudioPlayer(AudioPlayer.AUDIO.ERROR);
+                    }
                     // empty fields can not be set as lastClicked
                     else if ((RelevantButton.getFieldType() != PLAYER0 && RelevantButton.getFieldType() != PLAYER0_KING)
                             && (RelevantButton.getFieldType() != PLAYER1 && RelevantButton.getFieldType() != PLAYER1_KING))

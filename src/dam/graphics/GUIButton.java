@@ -109,12 +109,3 @@ public class GUIButton extends JButton {
             this.setBackground(Color.WHITE);
     }
 }
-
-
-
-
-
-
-
-
-
