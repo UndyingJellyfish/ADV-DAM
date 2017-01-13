@@ -11,13 +11,14 @@ public class Launcher {
 
 
     public static void main(String[] args) {
+        // default boardsize is argument from terminal
         int boardSize = Integer.parseInt(args[0]);
         GameSetup setup = new GameSetup(boardSize);
+
+        // the checkers game continues while game done is false
         do {
-            System.out.println("start game session");
             CheckersGame.gameDone = false;
             gameSession(setup);
-            System.out.println("end game session");
         }
         while (CheckersGame.continueGame);
     }
@@ -29,6 +30,8 @@ public class Launcher {
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         CheckersGame game = new CheckersGame(setup);
+
+        // while the checkers game is not done, sleep for
         while (!CheckersGame.gameDone) {
             try {
                 Thread.sleep(10);
@@ -37,6 +40,7 @@ public class Launcher {
                 e.printStackTrace();
             }
         }
+        // closes frame
         game.closeGame();
 
     }

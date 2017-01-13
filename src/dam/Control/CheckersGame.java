@@ -3,10 +3,6 @@ package dam.Control;
 import dam.abstractions.*;
 import dam.graphics.GUIBoard;
 import dam.menus.GameSetup;
-import dam.menus.mainMenu;
-import jdk.nashorn.internal.scripts.JO;
-import test.Launcher;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -62,7 +58,6 @@ public class CheckersGame {
     }
 
     public static boolean infoBox(String infoMessage, String titleBar) {
-        //JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
         Object[] options = {"Back to menu", "Exit game"};
 
         int input = JOptionPane.showOptionDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);
@@ -70,6 +65,7 @@ public class CheckersGame {
             continueGame = true;
             gameDone = true;
             return false;
+
 
         }
 

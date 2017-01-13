@@ -9,9 +9,9 @@ import java.io.IOException;
  */
 public class AudioPlayer implements LineListener {
     public enum AUDIO {
-        ERROR("src\\dam\\graphics\\Error.wav"),
-        MOVE("src\\dam\\graphics\\On_move.wav"),
-        WON("src\\dam\\graphics\\Game_won.wav");
+        ERROR("Resources\\Sounds\\Error.wav"),
+        MOVE("Resources\\Sounds\\On_move.wav"),
+        WON("Resources\\Sounds\\Game_won.wav");
 
         private String text;
 

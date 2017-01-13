@@ -21,11 +21,32 @@ public class GUIBoard extends JPanel {
 
     // list of field types
     public enum FieldType { // indicates ownership of a particular button
-        EMPTY,
-        PLAYER0,
-        PLAYER1,
-        PLAYER0_KING,
-        PLAYER1_KING
+        EMPTY("Resources\\Textures\\Empty.png"),
+        PLAYER0("Resources\\Textures\\CheckerBlack.png"),
+        PLAYER1("Resources\\Textures\\CheckerWhite.png"),
+        PLAYER0_KING("Resources\\Textures\\CheckerBlackKing.png"),
+        PLAYER1_KING("Resources\\Textures\\CheckerWhiteKing.png");
+
+        private String text;
+
+        FieldType(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return this.text;
+        }
+
+        public static FieldType fromString(String text) {
+            if (text != null) {
+                for (FieldType f : FieldType.values()) {
+                    if (text.equalsIgnoreCase(f.text)) {
+                        return f;
+                    }
+                }
+            }
+            return null;
+        }
     }
 
     // constructor
@@ -89,13 +110,6 @@ public class GUIBoard extends JPanel {
                 buttonArray[xn][yn].addActionListener(new ButtonListener(buttonArray[xn][yn], this.getLogicBoard(), this));
             }
         }
-    }
-
-
-    public void printInfoAtLocation(int x, int y) {
-        GUIButton temp = this.buttonArray[x][y];
-        Point p = temp.getPosition();
-        System.out.println(p.getLocation());
     }
 
     // fills the board with GUIButtons and fieldtypes according til boardlogic.

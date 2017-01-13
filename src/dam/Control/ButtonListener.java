@@ -2,8 +2,6 @@ package dam.Control;
 
 import dam.abstractions.LogicBoard;
 import dam.graphics.*;
-
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

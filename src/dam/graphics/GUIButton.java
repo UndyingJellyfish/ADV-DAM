@@ -5,6 +5,7 @@ import dam.abstractions.Player;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 
 /**
@@ -55,17 +56,14 @@ public class GUIButton extends JButton {
     }
 
     // methods for graphical interactions
-    private void drawImage(String imageName) {
+    private void drawImage(GUIBoard.FieldType field) {
 
 
         int PREFERRED_SIZE = (int) Math.floor(this.getWidth() * 0.9);// pixel width and height of a field
 
-        // debugging, remove later
-        //JOptionPane.showMessageDialog(null, "Width " + getWidth() + ", height " + getHeight(), "empty title", JOptionPane.INFORMATION_MESSAGE);
-
         // drawImage function which draws image on button depending on file name and scales to preffered size
         try {
-            Image img = ImageIO.read(getClass().getResource(imageName));
+            Image img = ImageIO.read(new File(field.getText()));
             Image newImg = img.getScaledInstance(PREFERRED_SIZE, PREFERRED_SIZE, Image.SCALE_SMOOTH);
             ImageIcon image = new ImageIcon(newImg);
             this.setIcon(image);
@@ -76,29 +74,7 @@ public class GUIButton extends JButton {
     }
 
     public void drawField(GUIBoard.FieldType field) {
-
-        // System.out.println("Calling drawField"); // for debugging purposes
-        switch (field) {
-            case EMPTY:
-                // System.out.println("Setting field as EMPTY-type"); //debug message
-                this.setIcon(null);
-
-                break;
-            case PLAYER0:
-                // System.out.println("Setting field as PLAYER0-type"); // debug message
-                drawImage("CheckerBlack.png");
-                break;
-            case PLAYER1:
-                //System.out.println("Setting field as PLAYER1-type"); // debug message
-                drawImage("CheckerWhite.png");
-                break;
-            case PLAYER0_KING:
-                drawImage("CheckerBlackKing.png");
-                break;
-            case PLAYER1_KING:
-                drawImage("CheckerWhiteKing.png");
-                break;
-        }
+        drawImage(field);
 
 
         // colors the grid black and white
