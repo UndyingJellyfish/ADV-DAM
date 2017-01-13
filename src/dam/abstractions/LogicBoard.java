@@ -28,6 +28,7 @@ public class LogicBoard {
         this.PiecePlacement = pieces;
         BoardSize = setup.boardSquares;
     }
+
     // board essentials
     public void PopulateBoard(Player owner0, Player owner1, Player placeholder) {
         this.Player0 = owner0;
@@ -115,7 +116,7 @@ public class LogicBoard {
     }
 
     // creating console output
-    public void printBoard() {
+    public void PrintBoard() {
         // prints the board identifiers in the console, also uses t/f to indicate whether piece is king
         for (int yn = 0; yn < this.BoardSize; yn++) {
             System.out.print("[");
@@ -164,7 +165,6 @@ public class LogicBoard {
         return sum;
     }
 
-
     public int countPiecesForPlayer(Player targetPlayer) {
         // counts all the piecse for the specified player
         int sum = 0;
@@ -183,7 +183,10 @@ public class LogicBoard {
         ArrayList<Point> moves = new ArrayList<>();
         for (int yn = 0; yn < BoardSize; yn++) {
             for (int xn = 0; xn < BoardSize; xn++) {
-                if (isLegalMovePrivateUseOnly(x, y, xn, yn)) moves.add(new Point(xn, yn));
+                if (PiecePlacement[x][y].getOwner().getIdentifier() == gamePiece.getOwner().getIdentifier()) {
+                    if (isLegalMove(x, y, xn, yn)) moves.add(new Point(xn, yn));
+                }
+
             }
         }
 
@@ -206,64 +209,51 @@ public class LogicBoard {
         return ((playerDirection == moveDirection) || superPiece);
     }
 
-    private void isSuperPositionReached(int fromX, int fromY, int toY, Player playerToMove) {
-        // used for checking whether a piece has reached the state of "king" or "super"
-        if (((playerToMove == Player0) &&
-                (toY == BoardSize - 1)) ||
-                ((playerToMove == Player1) &&
-                        (toY == 0))) {
-            //System.out.println("A piece has achieved super");
-            PiecePlacement[fromX][fromY].superPiece = true;
-        }
-    }
 
     public boolean isLegalMove(int fromX, int fromY, int toX, int toY) {
         // used for checking whether it's allowed to move from one location to another
         try {
             if (PiecePlacement[fromX][fromY].getIdentifier() == -1) {
                 // clicking on a non-player-owned piece
-                System.out.println("Identifier of fromClicked is " + PiecePlacement[fromX][fromY].getIdentifier());
+                // System.out.println("Identifier of fromClicked is " + PiecePlacement[fromX][fromY].getIdentifier());
                 return false;
-            } else if (!(validDirection(fromY, toY, PiecePlacement[fromX][fromY].getOwner(), PiecePlacement[fromX][fromY].superPiece))) {
+            } else if (!(validDirection(fromY, toY, PiecePlacement[fromX][fromY].getOwner(), PiecePlacement[fromX][fromY].isSuperPiece()))) {
                 // clicking on a wrong direction without being king piece
-                System.out.println("Moving backwards is not allowed");
+                //System.out.println("Moving backwards is not allowed");
                 return false;
             } else if (fromX == toX && fromY == toY) {
                 // trying to move to and from the same location
-                System.out.println("From and to is the same");
+                //System.out.println("From and to is the same");
                 return false;
             } else if (toX > BoardSize - 1 || toX < 0) {
                 // trying to move outside the board along x-axis
-                System.out.println("Out of bounds in direction x");
+                //System.out.println("Out of bounds in direction x");
                 return false;
             } else if (toY > BoardSize - 1 || toY < 0) {
                 // trying to move outside the board along y-axis
-                System.out.println("Out of bounds in direction y");
+                //System.out.println("Out of bounds in direction y");
                 return false;
             } else if (Math.abs(toX - fromX) != Math.abs(toY - fromY)) {
                 // trying to move non-diagonally
-                System.out.println("Move is not diagonal");
+                //System.out.println("Move is not diagonal");
                 return false;
-            } else if (isJumpMove(fromX, fromY, toX, toY)){
+            } else if (PiecePlacement[toX][toY].getIdentifier() != -1) {
+                //System.out.println("There is another piece at target location");
+                return false;
+            } else if (isJumpMove(fromX, fromY, toX, toY)) {
                 return true;
-            }
-            // if and not else if to make sure it enters the statement
-            if (PiecePlacement[toX][toY].getIdentifier() != -1) {
-                System.out.println("There is another piece at target location");
-                return false;
             } else if ((Math.abs(toX - fromX) > 1 || Math.abs(toY - fromY) > 1)) {
-                System.out.println("Target location is too far away");
+                //System.out.println("Target location is too far away");
                 return false;
             }
         } catch (Exception e) {
             System.out.println("Error occurred, returning true by default");
         }
-        System.out.println("Nothing else worked, so the move must be legal");
-        isSuperPositionReached(fromX, fromY, toY, PiecePlacement[fromX][fromY].getOwner());
+        //System.out.println("Nothing else worked, so the move must be legal");
         return true;
     }
 
-    private boolean isJumpMove(int fromX, int fromY, int toX, int toY){
+    private boolean isJumpMove(int fromX, int fromY, int toX, int toY) {
         if ((PiecePlacement[toX][toY].getIdentifier() == -1) && (Math.abs(toX - fromX) < 3 && Math.abs(toY - fromY) < 3)) {
             // trying to move less than 3 fields to an empty field
 
@@ -274,15 +264,10 @@ public class LogicBoard {
                 // another piece is between fromLocation and toLocation
                 if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() != PiecePlacement[fromX + dirX][fromY + dirY].getOwner().getIdentifier()) {
                     // owners of the piece between and the moving piece are different
-                    System.out.println("Successfully jumped over opponent piece");
-
-                    PiecePlacement[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1), 0, -1, new Point(fromX + dirX, fromY + dirY), false);
-                    isSuperPositionReached(fromX, fromY, toY, PiecePlacement[fromX][fromY].getOwner());
-                    // move this part up to the move() method after checking whether you jumped over an opponent piece
 
                     return true;
                 } else {
-                    System.out.println("The location is viable and there is a target to jump over, but piece is owned by you");
+
                     return false;
                 }
             }
@@ -290,68 +275,26 @@ public class LogicBoard {
         return false;
     }
 
-    // TODO: Remove this after refactoring other isLegalMove
-    private boolean isLegalMovePrivateUseOnly(int fromX, int fromY, int toX, int toY) {
-        // used for checking whether it's allowed to move from one location to another
-        try {
-            if (PiecePlacement[fromX][fromY].getIdentifier() == -1) {
-                // clicking on a non-player-owned piece
-                return false;
-            } else if (!(validDirection(fromY, toY, PiecePlacement[fromX][fromY].getOwner(), PiecePlacement[fromX][fromY].superPiece))) {
-                // clicking on a wrong direction without being king piece
-                return false;
-            } else if (fromX == toX && fromY == toY) {
-                // trying to move to and from the same location
-                return false;
-            } else if (toX > BoardSize - 1 || toX < 0) {
-                // trying to move outside the board along x-axis
-                return false;
-            } else if (toY > BoardSize - 1 || toY < 0) {
-                // trying to move outside the board along y-axis
-                return false;
-            } else if (Math.abs(toX - fromX) != Math.abs(toY - fromY)) {
-                // trying to move non-diagonally
-                return false;
-            } else if ((PiecePlacement[toX][toY].getIdentifier() == -1) && (Math.abs(toX - fromX) < 3 && Math.abs(toY - fromY) < 3)) {
-                // trying to move less than 3 fields to an empty field
-
-                // used for detecting direction of movement, used when checking if jumping over another piece
-                int dirX = fromX > toX ? -1 : 1;
-                int dirY = fromY > toY ? -1 : 1;
-                if ((PiecePlacement[fromX + dirX][fromY + dirY].getIdentifier() != -1)) {
-                    // another piece is between fromLocation and toLocation
-                    if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() != PiecePlacement[fromX + dirX][fromY + dirY].getOwner().getIdentifier()) {
-                        // owners of the piece between and the moving piece are different
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-            // if and not else if to make sure it enters the statement
-            if (PiecePlacement[toX][toY].getIdentifier() != -1) {
-                return false;
-            } else if ((Math.abs(toX - fromX) > 1 || Math.abs(toY - fromY) > 1)) {
-                return false;
-            }
-        } catch (Exception e) {
-            // do nothing
-        }
-        return true;
-    }
-
     public void Move(int fromX, int fromY, int toX, int toY) {
         // used to move pieces in the logic, you should always perform a check with isLegalMove on the same data before
         // attempting to use this method!
         try {
+            if (isJumpMove(fromX, fromY, toX, toY)) {
+                int dirX = fromX > toX ? -1 : 1;
+                int dirY = fromY > toY ? -1 : 1;
+                PiecePlacement[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1), 0, -1, new Point(fromX + dirX, fromY + dirY), false);
+
+            }
             CheckerPiece pieceClone = PiecePlacement[fromX][fromY].clone();
             PiecePlacement[fromX][fromY] = PiecePlacement[toX][toY];
             PiecePlacement[toX][toY] = pieceClone;
 
-
             PiecePlacement[fromX][fromY].setLocation(toX, toY);
             PiecePlacement[toX][toY].setLocation(fromX, fromY);
 
+            int endZone = PiecePlacement[toX][toY].getOwner().getIdentifier() == 1 ? 0 : BoardSize - 1;
+
+            PiecePlacement[toX][toY].setSuperPiece(toY == endZone);
 
 
         } catch (Exception ex) {
@@ -361,18 +304,16 @@ public class LogicBoard {
     }
 
     public boolean PlayerHasLegalMove(Player player) {
-        /// used for checking is a player has any legal moves left
-
+        // used for checking is a player has any legal moves left
+        int temp = 0;
         for (int fromY = 0; fromY < BoardSize; fromY++) {
             for (int fromX = 0; fromX < BoardSize; fromX++) {
-                if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() == player.getIdentifier()){
+                if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() == player.getIdentifier()) {
                     // no need to check the legal moves of a button if it doesn't belong to player we're checking
-                for (int toY = 0; toY < BoardSize; toY++) {
-                    for (int toX = 0; toX < BoardSize; toX++){
-                            if (isLegalMovePrivateUseOnly(fromX, fromY, toX, toY)){
-                                // only increments if a given move is legal
-                                // as soon as we know that a legal move exists we don't need to continue
-                                return true;
+                    for (int toY = 0; toY < BoardSize; toY++) {
+                        for (int toX = 0; toX < BoardSize; toX++) {
+                            if (isLegalMove(fromX, fromY, toX, toY)) {
+                                temp++;
                             }
                         }
                     }
@@ -380,7 +321,7 @@ public class LogicBoard {
             }
         }
         // only returns false if no legal moves are found
-        return false;
+        return temp > 0;
     }
 
     // method to end to turn for each player
@@ -406,27 +347,17 @@ public class LogicBoard {
             return;
         }
 
-        int temp = 0;
-
-        for (int yn = 0; yn < BoardSize; yn++) {
-            for (int xn = 0; xn < BoardSize; xn++) {
-                temp += legalMoves(PiecePlacement[xn][yn]).size();
-            }
-        }
-
-        if (temp == 0) {
+        if (!PlayerHasLegalMove(Player0) && !PlayerHasLegalMove(Player1)) {
             // if no player has any legal moves left, he game is a draw
             String msg = "Game is a draw";
-            System.out.println("No legal moves remain:" + msg);
+            System.out.println("No legal moves remain: " + msg);
 
             endGame = CheckersGame.infoBox(msg, "Player wins!");
 
             CheckersGame.infoBox(msg, "Player wins!");
 
             return;
-        }
-
-        if (!PlayerHasLegalMove(CurrentPlayer)){
+        } /*else if (!PlayerHasLegalMove(CurrentPlayer)) {
             // if the current player has no legal moves, the other player wins
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
             System.out.println(winnerMessage);
@@ -436,8 +367,9 @@ public class LogicBoard {
             new AudioPlayer(AudioPlayer.AUDIO.WON);
             CheckersGame.infoBox(winnerMessage, "Player wins!");
             return;
-        }
+        }*/
 
+        PrintBoard();
 
     }
 

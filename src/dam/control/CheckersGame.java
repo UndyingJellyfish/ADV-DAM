@@ -30,7 +30,7 @@ public class CheckersGame {
         // logicBoard creation
         LogicBoard board = new LogicBoard(pieces, setup);
         board.PopulateBoard(player0, player1, placeholder);
-        board.printBoard();
+        board.PrintBoard();
 
         // start loading GUI elements
         GUIBoard graphicsBoard = new GUIBoard(board, setup);

@@ -9,9 +9,9 @@ public class CheckerPiece {
     // fields
     private Player Owner;
     private int Jumps;
-    private int Identifier;
+    protected int Identifier;
     private Point Location;
-    public boolean superPiece;
+    private boolean superPiece;
 
 
     // constructors
@@ -57,6 +57,10 @@ public class CheckerPiece {
 
     public boolean isSuperPiece(){
         return this.superPiece;
+    }
+
+    public void setSuperPiece(boolean b){
+        this.superPiece = b;
     }
 
     public CheckerPiece clone() {
