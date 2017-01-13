@@ -52,8 +52,6 @@ public class GUIButton extends JButton {
 
     // methods for graphical interactions
     private void drawImage(GUIBoard.FieldType field) {
-
-
         int PREFERRED_SIZE = (int) Math.floor(this.getWidth() * 0.9);// pixel width and height of a field
 
         // drawImage function which draws image on button depending on file name and scales to preffered size

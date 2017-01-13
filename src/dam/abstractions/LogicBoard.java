@@ -244,28 +244,8 @@ public class LogicBoard {
                 // trying to move non-diagonally
                 System.out.println("Move is not diagonal");
                 return false;
-            } else if ((PiecePlacement[toX][toY].getIdentifier() == -1) && (Math.abs(toX - fromX) < 3 && Math.abs(toY - fromY) < 3)) {
-                // trying to move less than 3 fields to an empty field
-
-                // used for detecting direction of movement, used when checking if jumping over another piece
-                int dirX = fromX > toX ? -1 : 1;
-                int dirY = fromY > toY ? -1 : 1;
-                if ((PiecePlacement[fromX + dirX][fromY + dirY].getIdentifier() != -1)) {
-                    // another piece is between fromLocation and toLocation
-                    if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() != PiecePlacement[fromX + dirX][fromY + dirY].getOwner().getIdentifier()) {
-                        // owners of the piece between and the moving piece are different
-                        System.out.println("Successfully jumped over opponent piece");
-
-                        PiecePlacement[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1), 0, -1, new Point(fromX + dirX, fromY + dirY), false);
-                        isSuperPositionReached(fromX, fromY, toY, PiecePlacement[fromX][fromY].getOwner());
-                        // move this part up to the move() method after checking whether you jumped over an opponent piece
-
-                        return true;
-                    } else {
-                        System.out.println("The location is viable and there is a target to jump over, but piece is owned by you");
-                        return false;
-                    }
-                }
+            } else if (isJumpMove(fromX, fromY, toX, toY)){
+                return true;
             }
             // if and not else if to make sure it enters the statement
             if (PiecePlacement[toX][toY].getIdentifier() != -1) {
@@ -281,6 +261,33 @@ public class LogicBoard {
         System.out.println("Nothing else worked, so the move must be legal");
         isSuperPositionReached(fromX, fromY, toY, PiecePlacement[fromX][fromY].getOwner());
         return true;
+    }
+
+    private boolean isJumpMove(int fromX, int fromY, int toX, int toY){
+        if ((PiecePlacement[toX][toY].getIdentifier() == -1) && (Math.abs(toX - fromX) < 3 && Math.abs(toY - fromY) < 3)) {
+            // trying to move less than 3 fields to an empty field
+
+            // used for detecting direction of movement, used when checking if jumping over another piece
+            int dirX = fromX > toX ? -1 : 1;
+            int dirY = fromY > toY ? -1 : 1;
+            if ((PiecePlacement[fromX + dirX][fromY + dirY].getIdentifier() != -1)) {
+                // another piece is between fromLocation and toLocation
+                if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() != PiecePlacement[fromX + dirX][fromY + dirY].getOwner().getIdentifier()) {
+                    // owners of the piece between and the moving piece are different
+                    System.out.println("Successfully jumped over opponent piece");
+
+                    PiecePlacement[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1), 0, -1, new Point(fromX + dirX, fromY + dirY), false);
+                    isSuperPositionReached(fromX, fromY, toY, PiecePlacement[fromX][fromY].getOwner());
+                    // move this part up to the move() method after checking whether you jumped over an opponent piece
+
+                    return true;
+                } else {
+                    System.out.println("The location is viable and there is a target to jump over, but piece is owned by you");
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     // TODO: Remove this after refactoring other isLegalMove

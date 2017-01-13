@@ -15,7 +15,6 @@ public class GUIBoard extends JPanel {
 
     // fields
     private int N;// int N; // number of fields on one dimension
-    static int SIZE = 75;// pixel width and height of a field
     private GUIButton[][] buttonArray; // button array of all buttons on board
     private LogicBoard Logic; // logic board for game board
 
@@ -90,10 +89,6 @@ public class GUIBoard extends JPanel {
     }
 
     // methods for returning fields
-    public int getN() {
-        return this.N;
-    }
-
     public LogicBoard getLogicBoard() {
         return this.Logic;
     }
@@ -112,7 +107,7 @@ public class GUIBoard extends JPanel {
         }
     }
 
-    // fills the board with GUIButtons and fieldtypes according til boardlogic.
+    // fills the board with GUIButtons and fieldtypes according to boardlogic.
     public void fillBoard(LogicBoard boardToPopulate) {
         if (boardToPopulate.countAllPieces() >= 0) {
             for (int yn = 0; yn < N; yn++) {
