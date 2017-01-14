@@ -3,8 +3,6 @@ package dam.graphics;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
@@ -15,29 +13,22 @@ import java.net.URL;
  */
 public class GUIButton extends JButton {
 
-    // number of squares on each side
-    private final int N;
-
     private GUIBoard.FieldType Owner;
-    final private Point position; // we probably shouldn't start moving the buttons, so this is final
+    final private Point Position; // we probably shouldn't start moving the buttons, so this is final
 
     // constructors
-    public GUIButton(int N, GUIBoard.FieldType field, Point pos) {
-        this.N = N;
+    public GUIButton(GUIBoard.FieldType field, Point pos) {
         this.setOpaque(true);
         this.setBorderPainted(false);
-        position = pos;
+        Position = pos;
         Owner = field;
 
     }
 
     // methods for returning fields
-    public int getN() {
-        return this.N;
-    }
 
     public Point getPosition() {
-        return position;
+        return Position;
     }
 
     public GUIBoard.FieldType getFieldType() {
@@ -59,6 +50,8 @@ public class GUIButton extends JButton {
         try {
             URL imgResource = getClass().getClassLoader().getResource(field.getPath());
             //System.out.println(field.getPath());
+
+            assert imgResource != null; // this is never possible, so we can safely assert it
             Image img = ImageIO.read(imgResource);
 
             Image newImg = img.getScaledInstance(PREFERRED_SIZE, PREFERRED_SIZE, Image.SCALE_SMOOTH);
@@ -69,8 +62,8 @@ public class GUIButton extends JButton {
         }
 
         // colors the grid black and white
-        if ((position.getX() % 2 == 0 && position.getY() % 2 == 0) ||
-                (position.getX() % 2 == 1 && position.getY() % 2 == 1)) {
+        if ((Position.getX() % 2 == 0 && Position.getY() % 2 == 0) ||
+                (Position.getX() % 2 == 1 && Position.getY() % 2 == 1)) {
             this.setBackground(Color.GRAY);
         } else
             this.setBackground(Color.WHITE);

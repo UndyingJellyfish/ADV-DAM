@@ -2,10 +2,9 @@ package dam.graphics;
 
 
 import dam.control.ButtonListener;
-import dam.abstractions.LogicBoard;
+import dam.logic.GameBoard;
 import dam.menus.GameSetup;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,7 +18,7 @@ public class GUIBoard extends JPanel {
     final private int BoardSize;    // number of fields on one dimension
                                     // is final because it never changes while in game
     private GUIButton[][] buttonArray; // button array of all buttons on board
-    private LogicBoard Logic; // logic board for game board
+    private GameBoard Logic; // logic board for game board
 
     // list of field types
     public enum FieldType {
@@ -45,7 +44,7 @@ public class GUIBoard extends JPanel {
     }
 
     // constructor
-    public GUIBoard(LogicBoard board, GameSetup setup) {
+    public GUIBoard(GameBoard board, GameSetup setup) {
         // new BoardSize*BoardSize gridlayout using number of board squares from game setup
         super(new GridLayout(setup.boardSquares, setup.boardSquares));
         this.BoardSize = setup.boardSquares;
@@ -102,21 +101,21 @@ public class GUIBoard extends JPanel {
 
     
 
-    private void fillBoard(LogicBoard boardToPopulate) {
+    private void fillBoard(GameBoard boardToPopulate) {
         // fills the board with GUIButtons and field types according to board logic
         for (int yn = 0; yn < BoardSize; yn++) {
             for (int xn = 0; xn < BoardSize; xn++) {
                 try {
                     if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 0) {
-                        buttonArray[xn][yn] = new GUIButton(BoardSize, FieldType.PLAYER0, new Point(xn, yn));
+                        buttonArray[xn][yn] = new GUIButton(FieldType.PLAYER0, new Point(xn, yn));
                     } else if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 1) {
-                        buttonArray[xn][yn] = new GUIButton(BoardSize, FieldType.PLAYER1, new Point(xn, yn));
+                        buttonArray[xn][yn] = new GUIButton(FieldType.PLAYER1, new Point(xn, yn));
                     } else {
-                        buttonArray[xn][yn] = new GUIButton(BoardSize, FieldType.EMPTY, new Point(xn, yn));
+                        buttonArray[xn][yn] = new GUIButton(FieldType.EMPTY, new Point(xn, yn));
                     }
                     this.add(buttonArray[xn][yn]);
                 } catch (NullPointerException e) {
-                    buttonArray[xn][yn] = new GUIButton(BoardSize, FieldType.EMPTY, new Point(xn, yn));
+                    buttonArray[xn][yn] = new GUIButton(FieldType.EMPTY, new Point(xn, yn));
                 }
             }
         }

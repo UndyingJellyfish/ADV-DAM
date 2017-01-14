@@ -1,15 +1,15 @@
-package dam.abstractions;
+package dam.logic;
 
 /**
  * Created by Emil Damsbo on 04-01-2017.
  * Member primarily responsible for file: Emil Damsbo
  */
-public class IdentifierGenerator {
+public class IDGenerator {
     // fields
     private int Counter;
 
     // constructors
-    public IdentifierGenerator(int n) {
+    public IDGenerator(int n) {
         this.Counter = n;
     }
 

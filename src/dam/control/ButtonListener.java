@@ -1,6 +1,6 @@
 package dam.control;
 
-import dam.abstractions.LogicBoard;
+import dam.logic.GameBoard;
 import dam.graphics.*;
 
 import java.awt.event.ActionEvent;
@@ -17,12 +17,12 @@ import static dam.graphics.GUIBoard.FieldType.*;
 public class ButtonListener implements ActionListener {
     // fields are final because they never change
     final private GUIButton RelevantButton;
-    final private LogicBoard Board;
+    final private GameBoard Board;
     final private GUIBoard Graphics;
     private int BoardSize;
 
     // constructors
-    public ButtonListener(GUIButton button, LogicBoard board, GUIBoard graphics) {
+    public ButtonListener(GUIButton button, GameBoard board, GUIBoard graphics) {
         this.RelevantButton = button;
         this.Board = board;
         this.Graphics = graphics;

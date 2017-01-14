@@ -11,8 +11,8 @@ public class Rules extends JDialog {
     // fields
     private JPanel contentPane;
     private JButton buttonExit;
-    private JLabel labelHeader; // TODO: Was this supposed to do something?
-    private JTextArea textRules; // TODO: Was this supposed to do something?
+    private JLabel labelHeader;
+    private JTextArea textRules;
 
     // rules constructor
     public Rules() {
@@ -20,6 +20,7 @@ public class Rules extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonExit);
+        textRules.setWrapStyleWord(true); // this sets the text wrapping to wrap at words rather than characters
 
         // added actionlistener to exit button
         buttonExit.addActionListener(new ActionListener() {

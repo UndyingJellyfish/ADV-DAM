@@ -1,4 +1,4 @@
-package dam.abstractions;
+package dam.logic;
 
 /**
  * Created by Emil Damsbo on 04-01-2017.

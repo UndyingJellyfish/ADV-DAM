@@ -2,10 +2,8 @@ package dam.graphics;
 
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 /**
  * Created by Emil Damsbo on 12-01-2017.
@@ -87,7 +85,7 @@ public class AudioPlayer implements LineListener {
         LineEvent.Type type = event.getType();
 
         if (type == LineEvent.Type.START) {
-
+            // nothing to do
         } else if (type == LineEvent.Type.STOP) {
             playCompleted = true;
         }

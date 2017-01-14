@@ -13,14 +13,10 @@ import java.awt.event.*;
 public class Settings extends JDialog {
     // fields
     private JPanel contentPane;
-
-    // TODO: Did any of these have a purpose? Or were they supposed to?
-
     private JPanel JPanelOptionsSize;
     private JLabel labelSettingsHeader;
     private JLabel labelSetSize;
     private JLabel labelBoardSize;
-
     private JButton buttonExit;
     private JRadioButton radioMinSize;
     private JRadioButton radioMedSize;

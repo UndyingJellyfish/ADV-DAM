@@ -1,6 +1,6 @@
 package dam.control;
 
-import dam.abstractions.*;
+import dam.logic.*;
 import dam.graphics.GUIBoard;
 import dam.menus.GameSetup;
 import javax.swing.*;
@@ -20,14 +20,14 @@ public class CheckersGame {
 
 
         // creating players and "empty" player
-        IdentifierGenerator idGen = new IdentifierGenerator(0);
+        IDGenerator idGen = new IDGenerator(0);
         Player player0 = new Player("Player 0", idGen.getNextIdentifier());
         Player player1 = new Player("Player 1", idGen.getNextIdentifier());
         Player placeholder = new Player("This guy does not exist", -1);
         CheckerPiece[][] pieces = new CheckerPiece[boardSize][boardSize];
 
         // logicBoard creation
-        LogicBoard board = new LogicBoard(pieces, setup);
+        GameBoard board = new GameBoard(pieces, setup);
         board.PopulateBoard(player0, player1, placeholder);
         board.PrintBoard();
 

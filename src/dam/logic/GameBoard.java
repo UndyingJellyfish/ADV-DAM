@@ -1,4 +1,4 @@
-package dam.abstractions;
+package dam.logic;
 
 import dam.control.CheckersGame;
 import dam.graphics.AudioPlayer;
@@ -11,7 +11,7 @@ import java.awt.*;
  * Member primarily responsible for file: Emil Damsbo
  */
 
-public class LogicBoard {
+public class GameBoard {
     // fields
     // essential parts of the fields
     final private int BoardSize; // board size never changes in game
@@ -27,7 +27,7 @@ public class LogicBoard {
     private Player CurrentPlayer;
 
     // logic board constructor
-    public LogicBoard(CheckerPiece[][] pieces, GameSetup setup) {
+    public GameBoard(CheckerPiece[][] pieces, GameSetup setup) {
         this.PiecePlacement = pieces;
         BoardSize = setup.boardSquares;
     }
@@ -39,7 +39,7 @@ public class LogicBoard {
         this.Player0 = owner0;
         this.Player1 = owner1;
         this.CurrentPlayer = Player0;
-        IdentifierGenerator id = new IdentifierGenerator(2);
+        IDGenerator id = new IDGenerator(2);
         if (this.BoardSize > 2) {
             for (int yn = 0; yn < BoardSize; yn++) {
                 // initializes the board as being full of placeholders
@@ -84,7 +84,7 @@ public class LogicBoard {
 
     // these two special cases were created because the exact same lines of code was used twice for the same purposes
     // so we refactored them into their own methods, which are then called, this makes PopulateBoard less of a mess
-    private void CreatePlayer0Pieces(Player owner0, IdentifierGenerator id){
+    private void CreatePlayer0Pieces(Player owner0, IDGenerator id){
         for (int yn = 0; yn < BoardSize / 2 - 1; yn++) {
             // creates each column of player 0's game pieces
             for (int xn = 0; xn < BoardSize; xn++) {
@@ -97,7 +97,7 @@ public class LogicBoard {
         }
     }
 
-    private void CreatePlayer1Pieces(Player owner1, IdentifierGenerator id){
+    private void CreatePlayer1Pieces(Player owner1, IDGenerator id){
         for (int yn = BoardSize / 2 + 1; yn < BoardSize; yn++) {
             // creates each column of player 1's game pieces
             for (int xn = 0; xn < BoardSize; xn++) {
@@ -273,31 +273,31 @@ public class LogicBoard {
 
     }
 
-    public boolean PlayerHasLegalMove(Player player) {
-        // used for checking is a player has any legal moves left
+    public boolean PlayerHasNoLegalMove(Player player) {
+        // used for checking whether a player has any legal moves left
         for (int fromY = 0; fromY < BoardSize; fromY++) {
             for (int fromX = 0; fromX < BoardSize; fromX++) {
                 if ((fromX % 2 == 0 && fromY % 2 == 0) || (fromX % 2 == 1 && fromY % 2 == 1)) {
-                    // only checks non-white fields
+                    // only checks non-white fields, pieces can only be on black fields
                     if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() == player.getIdentifier()) {
-                        // no need to check the legal moves of a button if it doesn't belong to player we're checking
+                        // no need to check the legal moves of a piece if it doesn't belong to player we're checking
                         for (int toY = 0; toY < BoardSize; toY++) {
                             for (int toX = 0; toX < BoardSize; toX++) {
                                 if ((toX % 2 == 0 && toY % 2 == 0) || (toX % 2 == 1 && toY % 2 == 1)) {
-                                    // only checks non-white fields
+                                    // only checks non-white fields, pieces can only be on black fields
                                     if (isLegalMove(fromX, fromY, toX, toY)) {
                                         // no need to continue searching when a legal move is found
-                                        return true;
+                                        return false;
                                     }
-                                }
+                                } // end non-white check #2
                             }
-                        }
+                        } // end to-coordinates
                     }
-                }
+                } // end non-white check #1
             }
         }
-        // only returns false if no legal moves are found
-        return false;
+        // only returns true if no legal moves exists
+        return true;
     }
 
 
@@ -326,7 +326,7 @@ public class LogicBoard {
             return;
         }
 
-        if (!PlayerHasLegalMove(Player0) && !PlayerHasLegalMove(Player1)) {
+        if (PlayerHasNoLegalMove(Player0) && PlayerHasNoLegalMove(Player1)) {
             // if no player has any legal moves left, the game is a draw
             String msg = "Game is a draw";
             System.out.println("No legal moves remain: " + msg);
@@ -336,7 +336,7 @@ public class LogicBoard {
             CheckersGame.infoBox(msg, "No one wins :(");
 
 
-        } else if (!PlayerHasLegalMove(CurrentPlayer)) {
+        } else if (PlayerHasNoLegalMove(CurrentPlayer)) {
             // if the current player has no legal moves, the other player wins
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
             System.out.println(winnerMessage);

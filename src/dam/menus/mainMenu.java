@@ -15,7 +15,7 @@ public class mainMenu extends JDialog {
     private JButton buttonSettings;
     private JButton buttonExit;
     private JButton buttonRules;
-    private JLabel labelWelcome; // TODO: Was this supposed to do something?
+    private JLabel labelWelcome;
 
     // main menu constructor with the game setup as argument to access the variables
     public mainMenu(GameSetup setup) {

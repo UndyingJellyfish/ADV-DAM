@@ -1,4 +1,4 @@
-package dam.abstractions;
+package dam.logic;
 
 import dam.graphics.AudioPlayer;
 
@@ -12,7 +12,6 @@ public class CheckerPiece implements Cloneable {
     // final because these two should never need to be changed unless the code is faulty anyway
     final private Player Owner;
     final private int Identifier;
-
     private boolean superPiece;
 
 
@@ -49,7 +48,6 @@ public class CheckerPiece implements Cloneable {
         } catch (CloneNotSupportedException ex) {
             System.out.println("ERROR: We couldn't clone one or more pieces");
             new AudioPlayer(AudioPlayer.AUDIO.ERROR);
-
         }
 
 
