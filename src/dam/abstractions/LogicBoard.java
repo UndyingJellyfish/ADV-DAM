@@ -331,6 +331,8 @@ public class LogicBoard {
             String msg = "Game is a draw";
             System.out.println("No legal moves remain: " + msg);
 
+            // we don't play winning sounds when both people lose
+
             CheckersGame.infoBox(msg, "No one wins :(");
 
 
@@ -339,9 +341,11 @@ public class LogicBoard {
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
             System.out.println(winnerMessage);
 
+            new AudioPlayer(AudioPlayer.AUDIO.WON);
+
             CheckersGame.infoBox(winnerMessage, "Player wins!");
 
-            new AudioPlayer(AudioPlayer.AUDIO.WON);
+
         }
 
         PrintBoard();
