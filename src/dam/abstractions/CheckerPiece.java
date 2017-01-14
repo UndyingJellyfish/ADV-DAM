@@ -35,11 +35,11 @@ public class CheckerPiece implements Cloneable {
         return this.Identifier;
     }
 
-    protected boolean isSuperPiece() {
+    public boolean isSuperPiece() {
         return this.superPiece;
     }
 
-    protected void setSuperPiece(boolean b){
+    public void setSuperPiece(boolean b){
         this.superPiece = b;
     }
 

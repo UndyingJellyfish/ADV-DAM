@@ -129,6 +129,10 @@ public class LogicBoard {
 
 
     // methods for returning and setting fields and other properties
+    public int getBoardSize(){
+        return this.BoardSize;
+    }
+
     public CheckerPiece[][] getPiecePlacement() {
         return this.PiecePlacement;
     }
@@ -318,10 +322,6 @@ public class LogicBoard {
             // prompts a pop-up window notifying that a player has won
 
             CheckersGame.infoBox(winnerMessage, "Player wins!");
-
-            // plays winning sound
-            new AudioPlayer(AudioPlayer.AUDIO.WON);
-            // prompts a pop-up window notifying that a player has won
 
             return;
         }

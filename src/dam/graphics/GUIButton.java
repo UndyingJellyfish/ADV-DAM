@@ -47,6 +47,7 @@ public class GUIButton extends JButton {
     // methods for setting fields
     public void setFieldType(GUIBoard.FieldType newType) {
         this.Owner = newType;
+        drawField(this.Owner);
     }
 
     // methods for graphical interactions

@@ -2,6 +2,7 @@ package dam.control;
 
 import dam.abstractions.LogicBoard;
 import dam.graphics.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,80 +18,86 @@ public class ButtonListener implements ActionListener {
     // fields are final because they never change
     final private GUIButton RelevantButton;
     final private LogicBoard Board;
-    final private GUIBoard graphics;
+    final private GUIBoard Graphics;
+    private int BoardSize;
 
     // constructors
     public ButtonListener(GUIButton button, LogicBoard board, GUIBoard graphics) {
         this.RelevantButton = button;
         this.Board = board;
-        this.graphics = graphics;
+        this.Graphics = graphics;
+        this.BoardSize = Board.getBoardSize(); // no reason to make a parameter when board size is supposedly constant
     }
 
     // action on click
     public void actionPerformed(ActionEvent e) {
+        // TODO: this is much less awful as of 14 jan 2017, still needs optimization
         try {
-            // debug code
-            /*
-            // prints position of GUIButton clicked
-            System.out.println("Field pressed X: " + RelevantButton.getPosition().getX() + ", Y: " + RelevantButton.getPosition().getY());
-            // prints position of last click if it exists
-            if (Board.hasLastClicked()) {
-                System.out.println("Last pressed X: " + Board.getLastClickedGUIButton().getPosition().getX()
-                        + ", Y: " + Board.getLastClickedGUIButton().getPosition().getY());
-            }
-            */
             if (RelevantButton != null) {
-                // TODO: this is god awful and should be refactored immediately
-
                 // continue if lastClicked exists, else set as lastClick
                 if (Board.hasLastClicked()) {
 
-                    // uses isLegalMove method from logic to check if the move from lastClicked to button just clicked is legal
-                    if (Board.isLegalMove((int) Board.getLastClickedGUIButton().getPosition().getX(),
-                            (int) Board.getLastClickedGUIButton().getPosition().getY(),
-                            (int) RelevantButton.getPosition().getX(),
-                            (int) RelevantButton.getPosition().getY())) {
+                    // variables introduced because, else this section of code is close to unreadable and unmaintainable
+                    int fromX = (int) Board.getLastClickedGUIButton().getPosition().getX();
+                    int fromY = (int) Board.getLastClickedGUIButton().getPosition().getY();
+                    GUIBoard.FieldType fromField = Board.getLastClickedGUIButton().getFieldType();
+                    int thisX = (int) RelevantButton.getPosition().getX();
+                    int thisY = (int) RelevantButton.getPosition().getY();
 
-                        // sets button just licked as NewClickedGUIButton
+
+                    // checks whether move is legal
+                    if (Board.isLegalMove(fromX, fromY, thisX, thisY)) {
+
+                        // sets button just clicked as NewClickedGUIButton
                         Board.setNewClickedGUIButton(RelevantButton);
+                        int toX = (int) Board.getNewClickedGUIButton().getPosition().getX();
+                        int toY = (int) Board.getNewClickedGUIButton().getPosition().getY();
 
                         // set newClicked to same field type as lastClicked
-                        Board.getNewClickedGUIButton().setFieldType(Board.getLastClickedGUIButton().getFieldType());
+                        Board.getNewClickedGUIButton().setFieldType(fromField);
 
+
+
+                        // uses move method from logic with lastClicked position and newClicked position as arguments
+                        boolean moveFromSuper = Board.getPiecePlacement()[fromX][fromY].isSuperPiece();
+                        boolean moveToSuperPlayer0 = ( (toY == BoardSize - 1) && (fromField == PLAYER0) );
+                        boolean moveToSuperPlayer1 = ( (toY == 0) && (fromField == PLAYER1) );
+
+                        Board.Move(fromX, fromY, toX, toY);
+
+                        // checks piece jumps over another piece
+                        if ((Math.abs(toX - fromX) > 1 && Math.abs(toY - fromY) > 1)) {
+
+                            // dirX and dirY are the direction of jump
+                            int dirX = fromX > toX ? -1 : 1;
+                            int dirY = fromY > toY ? -1 : 1;
+
+                            // sets the field type of piece jumped over to empty
+                            Graphics.getButtonArray()[fromX + dirX][fromY + dirY].setFieldType(GUIBoard.FieldType.EMPTY);
+                        }
+
+                        // sets the field type to king status if piece reaches opposite end or is already king
+                        if (moveFromSuper && fromField == PLAYER0){
+                            Board.getNewClickedGUIButton().setFieldType(PLAYER0_KING);
+                        } else if (moveFromSuper && fromField == PLAYER1){
+                            Board.getNewClickedGUIButton().setFieldType(PLAYER1_KING);
+                        } else if ( (toY == BoardSize - 1) && (fromField == PLAYER0) ){
+                            Board.getNewClickedGUIButton().setFieldType(PLAYER0_KING);
+                        } else if ( toY == 0 && (fromField == PLAYER1)){
+                            Board.getNewClickedGUIButton().setFieldType(PLAYER1_KING);
+                        }
                         // set lastClicked to empty field type
                         Board.getLastClickedGUIButton().setFieldType(EMPTY);
 
-                        // uses move method from logic with lastClicked position and newClicked position as arguments
-                        Board.Move((int) Board.getLastClickedGUIButton().getPosition().getX(),
-                                (int) Board.getLastClickedGUIButton().getPosition().getY(),
-                                (int) Board.getNewClickedGUIButton().getPosition().getX(),
-                                (int) Board.getNewClickedGUIButton().getPosition().getY());
+                        boolean shouldBeSuperPiece = moveFromSuper || moveToSuperPlayer0 || moveToSuperPlayer1;
 
-
-
-                        // checks piece jumps over another piece
-                        if ((Math.abs(Board.getNewClickedGUIButton().getPosition().getX() - Board.getLastClickedGUIButton().getPosition().getX()) > 1 &&
-                                Math.abs(Board.getNewClickedGUIButton().getPosition().getY() - Board.getLastClickedGUIButton().getPosition().getY()) > 1)) {
-
-                            // dirX and dirY are the direction of jump
-                            int dirX = (int) Board.getLastClickedGUIButton().getPosition().getX() > (int) Board.getNewClickedGUIButton().getPosition().getX() ? -1 : 1;
-                            int dirY = (int) Board.getLastClickedGUIButton().getPosition().getY() > (int) Board.getNewClickedGUIButton().getPosition().getY() ? -1 : 1;
-
-                            // sets the field type of piece jumped over to empty
-                            graphics.getButtonArray()[(int) Board.getLastClickedGUIButton().getPosition().getX() + dirX]
-                                    [(int) Board.getLastClickedGUIButton().getPosition().getY() + dirY].setFieldType(GUIBoard.FieldType.EMPTY);
-
-                        }
-
-                        // sets the field type to king status if piece reaches opposite end
-                        if ((Board.getNewClickedGUIButton().getPosition().getY() == Board.getNewClickedGUIButton().getN() - 1) && (Board.getNewClickedGUIButton().getFieldType() == PLAYER0))
-                            Board.getNewClickedGUIButton().setFieldType(PLAYER0_KING);
-                        else if ((Board.getNewClickedGUIButton().getPosition().getY()) == 0 && (Board.getNewClickedGUIButton().getFieldType() == PLAYER1))
-                            Board.getNewClickedGUIButton().setFieldType(PLAYER1_KING);
+                        Board.getPiecePlacement()[toX][toY].setSuperPiece(shouldBeSuperPiece);
 
                         // draws the lastClicked and newClicked according to field type
                         Board.getNewClickedGUIButton().drawField(Board.getNewClickedGUIButton().getFieldType());
                         Board.getLastClickedGUIButton().drawField(Board.getLastClickedGUIButton().getFieldType());
+
+
 
                         // plays sound for movement (aka. satisfying wooden *click*)
                         new AudioPlayer(AudioPlayer.AUDIO.MOVE);
@@ -98,7 +105,7 @@ public class ButtonListener implements ActionListener {
                         // calls the endTurn method from logic, which changes turn of players
                         Board.endTurn();
 
-                        // resets lastClicked
+                        // resets lastClicked and newClicked
                         Board.setLastClickedGUIButton(null);
                         Board.setNewClickedGUIButton(null);
 
@@ -116,10 +123,6 @@ public class ButtonListener implements ActionListener {
                         System.out.println("Not your turn!");
                         new AudioPlayer(AudioPlayer.AUDIO.ERROR);
                     }
-                    // empty fields can not be set as lastClicked
-                    else if ((RelevantButton.getFieldType() != PLAYER0 && RelevantButton.getFieldType() != PLAYER0_KING)
-                            && (RelevantButton.getFieldType() != PLAYER1 && RelevantButton.getFieldType() != PLAYER1_KING))
-                        System.out.println("Ignoring click as first click");
                     else
                         Board.setLastClickedGUIButton(this.RelevantButton);
                 }
@@ -127,9 +130,12 @@ public class ButtonListener implements ActionListener {
             }
 
 
-        } catch (NullPointerException ex) {
-            System.out.println("Clicking returned: " + ex.getClass().getName());
+        } catch (NullPointerException npex) {
+            System.out.println("Clicking returned NullPointerException, the develeoper should be ashamed of himself");
+        } catch (Exception ex){
+            System.out.println("Unspecified error occurred");
         }
+
 
     }
 }

@@ -42,15 +42,17 @@ public class AudioPlayer implements LineListener {
             @Override
             public void run() {
                 try {
-                    InputStream is = getClass().getResourceAsStream(url);
-                    InputStream bufferedIn = new BufferedInputStream(is);
+                    // the input stream needs to be gotten as resoruce, else it won't properly pack into the .jar
+                    // AudioInput needs to support a mark/reset-functionality, so we need to use a BufferedInputStream
+                    // which marks resource as using mark/reset
+                    InputStream bufferedIn = new BufferedInputStream(getClass().getResourceAsStream(url));
                     AudioInputStream audioStream = AudioSystem.getAudioInputStream(bufferedIn);
 
-                    AudioFormat format = audioStream.getFormat();
-                    DataLine.Info info = new DataLine.Info(Clip.class, format);
+                    DataLine.Info info = new DataLine.Info(Clip.class, audioStream.getFormat());
 
                     Clip audioClip = (Clip) AudioSystem.getLine(info);
 
+                    // plays the audio clip using default audio output
                     audioClip.open(audioStream);
                     audioClip.start();
 
@@ -60,15 +62,19 @@ public class AudioPlayer implements LineListener {
                             Thread.sleep(500);
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
+                            System.out.println("Send the above to a developer.");
                         }
                     }
-
+                    // required catches
                 } catch (UnsupportedAudioFileException aud) {
-                    System.out.println("File format is unsupported");
+                    System.out.println("Audio file format is unsupported");
                 } catch (IOException io) {
-                    System.out.println("File could not be found, error code: " + io.getMessage());
+                    System.out.println("Audio file could not be found, give this error code to a developer: "
+                            + io.getMessage());
                 } catch (LineUnavailableException line) {
-                    System.out.println("Clip could not be obtained");
+                    System.out.println("Audio clip could not be obtained");
+                } catch (Exception ex) {
+                    System.out.println("Unexpected error occured, please give this to a developer" + ex.getMessage());
                 }
             }
         }).start();
@@ -77,14 +83,13 @@ public class AudioPlayer implements LineListener {
 
     @Override
     public void update(LineEvent event) {
+        // this really isn't ever used, but it's required because we're implementing LineListener
         LineEvent.Type type = event.getType();
 
         if (type == LineEvent.Type.START) {
-            System.out.println("Playback started.");
 
         } else if (type == LineEvent.Type.STOP) {
             playCompleted = true;
-            System.out.println("Playback completed.");
         }
     }
 }
