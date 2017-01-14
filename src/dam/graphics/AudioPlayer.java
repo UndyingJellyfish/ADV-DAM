@@ -1,8 +1,11 @@
 package dam.graphics;
 
 import javax.sound.sampled.*;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 /**
  * Created by Emil Damsbo on 12-01-2017.
@@ -11,9 +14,9 @@ import java.io.IOException;
 public class AudioPlayer implements LineListener {
     public enum AUDIO {
         // binds enum values to a string, which is the relative file path of sound files
-        ERROR("/Resources\\Sounds\\Error.wav"),
-        MOVE("/Resources\\Sounds\\On_move.wav"),
-        WON("/Resources\\Sounds\\Game_won.wav");
+        ERROR("/Sounds/Error.wav"),
+        MOVE("/Sounds/On_move.wav"),
+        WON("/Sounds/Game_won.wav");
 
         final private String text;
 
@@ -39,8 +42,9 @@ public class AudioPlayer implements LineListener {
             @Override
             public void run() {
                 try {
-                    File audioFile = new File(url);
-                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+                    InputStream is = getClass().getResourceAsStream(url);
+                    InputStream bufferedIn = new BufferedInputStream(is);
+                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(bufferedIn);
 
                     AudioFormat format = audioStream.getFormat();
                     DataLine.Info info = new DataLine.Info(Clip.class, format);

@@ -5,6 +5,7 @@ import dam.control.ButtonListener;
 import dam.abstractions.LogicBoard;
 import dam.menus.GameSetup;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
@@ -25,11 +26,11 @@ public class GUIBoard extends JPanel {
         // indicates ownership of a particular button
         // binds enum values to a string, which is the relative file path of sound files
 
-        EMPTY("Textures\\Empty.png"),
-        PLAYER0("Textures\\CheckerBlack.png"),
-        PLAYER1("Textures\\CheckerWhite.png"),
-        PLAYER0_KING("Textures\\CheckerBlackKing.png"),
-        PLAYER1_KING("Textures\\CheckerWhiteKing.png");
+        EMPTY("Textures/Empty.png"),
+        PLAYER0("Textures/CheckerBlack.png"),
+        PLAYER1("Textures/CheckerWhite.png"),
+        PLAYER0_KING("Textures/CheckerBlackKing.png"),
+        PLAYER1_KING("Textures/CheckerWhiteKing.png");
 
         final private String path;
 

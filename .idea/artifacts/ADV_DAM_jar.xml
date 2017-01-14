@@ -3,6 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/ADV_DAM_jar</output-path>
     <root id="archive" name="ADV-DAM.jar">
       <element id="module-output" name="ADV-DAM" />
+      <element id="dir-copy" path="$PROJECT_DIR$/Resources" />
     </root>
   </artifact>
 </component>
