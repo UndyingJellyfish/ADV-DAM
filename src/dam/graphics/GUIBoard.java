@@ -25,21 +25,21 @@ public class GUIBoard extends JPanel {
         // indicates ownership of a particular button
         // binds enum values to a string, which is the relative file path of sound files
 
-        EMPTY("Resources\\Textures\\Empty.png"),
-        PLAYER0("Resources\\Textures\\CheckerBlack.png"),
-        PLAYER1("Resources\\Textures\\CheckerWhite.png"),
-        PLAYER0_KING("Resources\\Textures\\CheckerBlackKing.png"),
-        PLAYER1_KING("Resources\\Textures\\CheckerWhiteKing.png");
+        EMPTY("Textures\\Empty.png"),
+        PLAYER0("Textures\\CheckerBlack.png"),
+        PLAYER1("Textures\\CheckerWhite.png"),
+        PLAYER0_KING("Textures\\CheckerBlackKing.png"),
+        PLAYER1_KING("Textures\\CheckerWhiteKing.png");
 
-        final private String text;
+        final private String path;
 
-        FieldType(String text) {
-            this.text = text;
+        FieldType(String path) {
+            this.path = path;
         }
 
-        public String getText() {
+        public String getPath() {
             // returns the associated file path
-            return this.text;
+            return this.path;
         }
     }
 

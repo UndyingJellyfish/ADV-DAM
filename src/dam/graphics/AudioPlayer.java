@@ -11,9 +11,9 @@ import java.io.IOException;
 public class AudioPlayer implements LineListener {
     public enum AUDIO {
         // binds enum values to a string, which is the relative file path of sound files
-        ERROR("Resources\\Sounds\\Error.wav"),
-        MOVE("Resources\\Sounds\\On_move.wav"),
-        WON("Resources\\Sounds\\Game_won.wav");
+        ERROR("/Resources\\Sounds\\Error.wav"),
+        MOVE("/Resources\\Sounds\\On_move.wav"),
+        WON("/Resources\\Sounds\\Game_won.wav");
 
         final private String text;
 

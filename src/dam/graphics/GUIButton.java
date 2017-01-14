@@ -4,6 +4,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 
 
 /**
@@ -47,22 +50,22 @@ public class GUIButton extends JButton {
     }
 
     // methods for graphical interactions
-    private void drawImage(GUIBoard.FieldType field) {
+
+    public void drawField(GUIBoard.FieldType field) {
         int PREFERRED_SIZE = (int) Math.floor(this.getWidth() * 0.9);// pixel width and height of a field
 
         // drawImage function which draws image on button depending on file name and scales to preferred size
         try {
-            Image img = ImageIO.read(new File(field.getText()));
+            URL imgResource = getClass().getClassLoader().getResource(field.getPath());
+            //System.out.println(field.getPath());
+            Image img = ImageIO.read(imgResource);
+
             Image newImg = img.getScaledInstance(PREFERRED_SIZE, PREFERRED_SIZE, Image.SCALE_SMOOTH);
             ImageIcon image = new ImageIcon(newImg);
             this.setIcon(image);
-        } catch (Exception e) {
+        } catch (IOException e) {
             this.setIcon(null);
         }
-    }
-
-    public void drawField(GUIBoard.FieldType field) {
-        drawImage(field);
 
         // colors the grid black and white
         if ((position.getX() % 2 == 0 && position.getY() % 2 == 0) ||
