@@ -1,25 +1,26 @@
 package dam.abstractions;
 
-import java.awt.*;
+import dam.graphics.AudioPlayer;
+
 
 /**
  * Created by Emil Damsbo on 04-01-2017.
  * Member primarily responsible for file: Emil Damsbo
  */
-public class CheckerPiece {
+public class CheckerPiece implements Cloneable {
     // fields
-    private Player Owner;
-    private int Identifier;
-    private Point Location;
+    // final because these two should never need to be changed unless the code is faulty anyway
+    final private Player Owner;
+    final private int Identifier;
+
     private boolean superPiece;
 
 
     // constructors
-    public CheckerPiece(Player owner, int id, Point place, boolean superPiece) {
+    public CheckerPiece(Player owner, int id) {
         this.Owner = owner;
         this.Identifier = id;
-        this.Location = place;
-        this.superPiece = superPiece;
+        this.superPiece = false;
 
     }
 
@@ -28,24 +29,30 @@ public class CheckerPiece {
         return this.Owner;
     }
 
-    public int getIdentifier() {
+
+    // the following 3 methods are protected since only this package should be allowed access
+    protected int getIdentifier() {
         return this.Identifier;
     }
 
-    public void setLocation(int x, int y) {
-        this.Location = new Point(x, y);
-    }
-
-    public boolean isSuperPiece() {
+    protected boolean isSuperPiece() {
         return this.superPiece;
     }
 
-    public void setSuperPiece(boolean b){
+    protected void setSuperPiece(boolean b){
         this.superPiece = b;
     }
 
     public CheckerPiece clone() {
-        // completely clones the instance of CheckerPiece
-        return new CheckerPiece(Owner, Identifier, Location, superPiece);
+        try {
+            return (CheckerPiece) super.clone();
+        } catch (CloneNotSupportedException ex) {
+            System.out.println("ERROR: We couldn't clone one or more pieces");
+            new AudioPlayer(AudioPlayer.AUDIO.ERROR);
+
+        }
+
+
+        return null;
     }
 }

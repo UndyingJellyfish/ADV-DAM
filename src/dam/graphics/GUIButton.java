@@ -1,7 +1,5 @@
 package dam.graphics;
 
-import dam.abstractions.Player;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +16,7 @@ public class GUIButton extends JButton {
     private final int N;
 
     private GUIBoard.FieldType Owner;
-    private Point position;
+    final private Point position; // we probably shouldn't start moving the buttons, so this is final
 
     // constructors
     public GUIButton(int N, GUIBoard.FieldType field, Point pos) {
@@ -52,7 +50,7 @@ public class GUIButton extends JButton {
     private void drawImage(GUIBoard.FieldType field) {
         int PREFERRED_SIZE = (int) Math.floor(this.getWidth() * 0.9);// pixel width and height of a field
 
-        // drawImage function which draws image on button depending on file name and scales to preffered size
+        // drawImage function which draws image on button depending on file name and scales to preferred size
         try {
             Image img = ImageIO.read(new File(field.getText()));
             Image newImg = img.getScaledInstance(PREFERRED_SIZE, PREFERRED_SIZE, Image.SCALE_SMOOTH);

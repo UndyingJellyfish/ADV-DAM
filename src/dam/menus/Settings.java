@@ -13,16 +13,19 @@ import java.awt.event.*;
 public class Settings extends JDialog {
     // fields
     private JPanel contentPane;
-    private JButton buttonExit;
-    private JLabel labelSettingsheader;
+
+    // TODO: Did any of these have a purpose? Or were they supposed to?
+
     private JPanel JPanelOptionsSize;
+    private JLabel labelSettingsHeader;
     private JLabel labelSetSize;
+    private JLabel labelBoardSize;
+
+    private JButton buttonExit;
     private JRadioButton radioMinSize;
     private JRadioButton radioMedSize;
     private JRadioButton radioMaxSize;
-    private JLabel labelBoardSize;
     private JSlider sliderBoardSize;
-    private ButtonGroup RadioGroup = new ButtonGroup();
     private GameSetup setup;
 
     // constructor
@@ -30,9 +33,10 @@ public class Settings extends JDialog {
         this.setup = setup;
 
         // adding the radio buttons to a ButtonGroup to make only one of them selected
-        RadioGroup.add(radioMinSize);
-        RadioGroup.add(radioMedSize);
-        RadioGroup.add(radioMaxSize);
+        ButtonGroup radioGroup = new ButtonGroup();
+        radioGroup.add(radioMinSize);
+        radioGroup.add(radioMedSize);
+        radioGroup.add(radioMaxSize);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonExit);

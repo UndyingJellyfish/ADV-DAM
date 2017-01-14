@@ -6,8 +6,8 @@ package dam.abstractions;
  */
 public class Player {
     // fields
-    private String PlayerName;
-    private int Identifier;
+    final private String PlayerName; // you're not allowed to change name while a game is going on
+    final private int Identifier; // changing your identification also seems reckless
 
     // constructors
 
@@ -16,16 +16,9 @@ public class Player {
         this.Identifier = id;
     }
 
-    public Player(String name) {
-        this(name, 0);
-    }
-
-    public Player(int id) {
-        this(("player " + id), id);
-    }
 
     // methods for returning fields
-    public String getPlayerName() {
+    protected String getPlayerName() {
         return this.PlayerName;
     }
 

@@ -15,7 +15,7 @@ public class AudioPlayer implements LineListener {
         MOVE("Resources\\Sounds\\On_move.wav"),
         WON("Resources\\Sounds\\Game_won.wav");
 
-        private String text;
+        final private String text;
 
         AUDIO(String text) {
             this.text = text;
@@ -31,9 +31,9 @@ public class AudioPlayer implements LineListener {
         play(clipToPlay.getText());
     }
 
-    boolean playCompleted;
+    private boolean playCompleted;
 
-    public synchronized void play(final String url) {
+    private synchronized void play(final String url) {
         // http://www.codejava.net/coding/how-to-play-back-audio-in-java-with-examples
         new Thread(new Runnable() {
             @Override

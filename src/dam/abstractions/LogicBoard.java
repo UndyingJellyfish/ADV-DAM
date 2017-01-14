@@ -13,10 +13,15 @@ import java.awt.*;
 
 public class LogicBoard {
     // fields
+    // essential parts of the fields
+    final private int BoardSize; // board size never changes in game
     private CheckerPiece[][] PiecePlacement;
+
+    // used for tracking where to move from and to, i.e. how pieces move
     private GUIButton LastClickedGUIButton;
     private GUIButton NewClickedGUIButton;
-    private int BoardSize;
+
+    // used for owners of pieces
     private Player Player0;
     private Player Player1;
     private Player CurrentPlayer;
@@ -40,83 +45,77 @@ public class LogicBoard {
                 // initializes the board as being full of placeholders
                 // this prevents accidental NullPointerException's, also allows ButtonListener interactions
                 for (int xn = 0; xn < BoardSize; xn++) {
-                    PiecePlacement[xn][yn] = new CheckerPiece(placeholder, -1, new Point(xn, yn), false);
+                    PiecePlacement[xn][yn] = new CheckerPiece(placeholder, -1);
                 }
             }
             if (BoardSize == 3) {
                 // board size is 3
                 for (int yn = 0; yn < BoardSize / 2; yn++) {
-                    // creates each column of player 1's game pieces
+                    // creates each column of player 0's game pieces
                     for (int xn = 0; xn < BoardSize; xn++) {
-                        // creates each row of player 2's game pieces
+                        // creates each row of player 0's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner0, id.getNextIdentifier(), new Point(xn, yn), false);
+                            PiecePlacement[xn][yn] = new CheckerPiece(owner0, id.getNextIdentifier());
                         }
                     }
                 }
-                for (int yn = BoardSize / 2 + 1; yn < BoardSize; yn++) {
-                    // creates each column of player 2's game pieces
-                    for (int xn = 0; xn < BoardSize; xn++) {
-                        // creates each row of player 2's game pieces
-                        if ((xn + yn) % 2 == 0) {
-                            // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner1, id.getNextIdentifier(), new Point(xn, yn), false);
-                        }
-                    }
-                }
+                CreatePlayer1Pieces(owner1, id);
             } else if (BoardSize % 2 == 1) {
                 // board size is odd and higher than 3
-                for (int yn = 0; yn < BoardSize / 2 - 1; yn++) {
+                CreatePlayer0Pieces(owner0, id);
+                for (int yn = BoardSize / 2 + 2; yn < BoardSize; yn++) {
                     // creates each column of player 1's game pieces
                     for (int xn = 0; xn < BoardSize; xn++) {
                         // creates each row of player 1's game pieces
                         if ((xn + yn) % 2 == 0) {
                             // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner0, id.getNextIdentifier(), new Point(xn, yn), false);
-                        }
-                    }
-                }
-                for (int yn = BoardSize / 2 + 2; yn < BoardSize; yn++) {
-                    // creates each column of player 2's game pieces
-                    for (int xn = 0; xn < BoardSize; xn++) {
-                        // creates each row of player 2's game pieces
-                        if ((xn + yn) % 2 == 0) {
-                            // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner1, id.getNextIdentifier(), new Point(xn, yn), false);
+                            PiecePlacement[xn][yn] = new CheckerPiece(owner1, id.getNextIdentifier());
                         }
                     }
                 }
             } else {
                 // board size is even
-                for (int yn = 0; yn < BoardSize / 2 - 1; yn++) {
-                    // creates each column of player 1's game pieces
-                    for (int xn = 0; xn < BoardSize; xn++) {
-                        // creates each row of player 1's game pieces
-                        if ((xn + yn) % 2 == 0) {
-                            // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner0, id.getNextIdentifier(), new Point(xn, yn), false);
-                        }
-                    }
+                CreatePlayer0Pieces(owner0, id);
+                CreatePlayer1Pieces(owner1, id);
+            }
+        }
+    }
+
+    // these two special cases were created because the exact same lines of code was used twice for the same purposes
+    // so we refactored them into their own methods, which are then called, this makes PopulateBoard less of a mess
+    private void CreatePlayer0Pieces(Player owner0, IdentifierGenerator id){
+        for (int yn = 0; yn < BoardSize / 2 - 1; yn++) {
+            // creates each column of player 0's game pieces
+            for (int xn = 0; xn < BoardSize; xn++) {
+                // creates each row of player 0's game pieces
+                if ((xn + yn) % 2 == 0) {
+                    // only places pieces at every even board field
+                    PiecePlacement[xn][yn] = new CheckerPiece(owner0, id.getNextIdentifier());
                 }
-                for (int yn = BoardSize / 2 + 1; yn < BoardSize; yn++) {
-                    // creates each column of player 2's game pieces
-                    for (int xn = 0; xn < BoardSize; xn++) {
-                        // creates each row of player 2's game pieces
-                        if ((xn + yn) % 2 == 0) {
-                            // only places pieces at every even board field
-                            PiecePlacement[xn][yn] = new CheckerPiece(owner1, id.getNextIdentifier(), new Point(xn, yn), false);
-                        }
-                    }
+            }
+        }
+    }
+
+    private void CreatePlayer1Pieces(Player owner1, IdentifierGenerator id){
+        for (int yn = BoardSize / 2 + 1; yn < BoardSize; yn++) {
+            // creates each column of player 1's game pieces
+            for (int xn = 0; xn < BoardSize; xn++) {
+                // creates each row of player 1's game pieces
+                if ((xn + yn) % 2 == 0) {
+                    // only places pieces at every even board field
+                    PiecePlacement[xn][yn] = new CheckerPiece(owner1, id.getNextIdentifier());
                 }
             }
         }
     }
 
     // creating console output
-    public void PrintBoard() {
 
-        // prints the board identifiers in the console, also uses t/f to indicate whether piece is king
+    public void PrintBoard() {
+        // used for debugging purposes, prints the identifiers of pieces on logic board
+        // this was used to compare graphics and logic, to make sure they were 100 % alike
+        // also uses t/f to indicate whether piece is king
         for (int yn = 0; yn < this.BoardSize; yn++) {
             System.out.print("[");
             for (int xn = 0; xn < this.BoardSize; xn++) {
@@ -127,6 +126,7 @@ public class LogicBoard {
         }
         System.out.println();
     }
+
 
     // methods for returning and setting fields and other properties
     public CheckerPiece[][] getPiecePlacement() {
@@ -151,17 +151,6 @@ public class LogicBoard {
 
     public GUIButton getNewClickedGUIButton() {
         return this.NewClickedGUIButton;
-    }
-
-    // counts all the pieces on the board which belongs to either player
-    public int countAllPieces() {
-        int sum = 0;
-        for (int i = 0; i < BoardSize; i++) {
-            for (int j = 0; j < BoardSize; j++) {
-                if (PiecePlacement[i][j] != null) sum++;
-            }
-        }
-        return sum;
     }
 
     public int countPiecesForPlayer(Player targetPlayer) {
@@ -191,17 +180,6 @@ public class LogicBoard {
         boolean playerDirection = (playerToMove == Player0);
         boolean moveDirection = (fromY < toY);
         return ((playerDirection == moveDirection) || superPiece);
-    }
-
-    private void isSuperPositionReached(int fromX, int fromY, int toY, Player playerToMove) {
-        // used for checking whether a piece has reached the state of "king" or "super"
-        if (((playerToMove == Player0) &&
-                (toY == BoardSize - 1)) ||
-                ((playerToMove == Player1) &&
-                        (toY == 0))) {
-            //System.out.println("A piece has achieved super");
-            PiecePlacement[fromX][fromY].setSuperPiece(true);
-        }
     }
 
     public boolean isLegalMove(int fromX, int fromY, int toX, int toY) {
@@ -256,14 +234,10 @@ public class LogicBoard {
             int dirY = fromY > toY ? -1 : 1;
             if ((PiecePlacement[fromX + dirX][fromY + dirY].getIdentifier() != -1)) {
                 // another piece is between fromLocation and toLocation
-                if (PiecePlacement[fromX][fromY].getOwner().getIdentifier() != PiecePlacement[fromX + dirX][fromY + dirY].getOwner().getIdentifier()) {
-                    // owners of the piece between and the moving piece are different
-
-                    return true;
-                } else {
-
-                    return false;
-                }
+                // owners of the piece between and the moving piece are different
+                int idFrom = PiecePlacement[fromX][fromY].getOwner().getIdentifier();
+                int idDir = PiecePlacement[fromX + dirX][fromY + dirY].getOwner().getIdentifier();
+                return idFrom != idDir;
             }
         }
         return false;
@@ -276,7 +250,7 @@ public class LogicBoard {
             if (isJumpMove(fromX, fromY, toX, toY)) {
                 int dirX = fromX > toX ? -1 : 1;
                 int dirY = fromY > toY ? -1 : 1;
-                PiecePlacement[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1),-1, new Point(fromX + dirX, fromY + dirY), false);
+                PiecePlacement[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1),-1);
 
             }
             // change places at logic board
@@ -284,11 +258,8 @@ public class LogicBoard {
             PiecePlacement[fromX][fromY] = PiecePlacement[toX][toY];
             PiecePlacement[toX][toY] = pieceClone;
 
-            // update piece Location fields
-            PiecePlacement[fromX][fromY].setLocation(toX, toY);
-            PiecePlacement[toX][toY].setLocation(fromX, fromY);
 
-            // sets as super piece if moving to "endzone"
+            // sets as super piece if moving to "end zone"
             int endZone = PiecePlacement[toX][toY].getOwner().getIdentifier() == 1 ? 0 : BoardSize - 1;
             PiecePlacement[toX][toY].setSuperPiece(toY == endZone);
 
@@ -360,10 +331,9 @@ public class LogicBoard {
             String msg = "Game is a draw";
             System.out.println("No legal moves remain: " + msg);
 
-            CheckersGame.infoBox(msg, "Player wins!");
+            CheckersGame.infoBox(msg, "No one wins :(");
 
 
-            return;
         } else if (!PlayerHasLegalMove(CurrentPlayer)) {
             // if the current player has no legal moves, the other player wins
             String winnerMessage = (CurrentPlayer == Player0 ? Player1.getPlayerName() : Player0.getPlayerName()) + " has won!";
@@ -372,10 +342,9 @@ public class LogicBoard {
             CheckersGame.infoBox(winnerMessage, "Player wins!");
 
             new AudioPlayer(AudioPlayer.AUDIO.WON);
-            return;
         }
 
-        //PrintBoard();
+        PrintBoard();
 
     }
 

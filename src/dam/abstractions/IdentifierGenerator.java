@@ -13,10 +13,6 @@ public class IdentifierGenerator {
         this.Counter = n;
     }
 
-    public IdentifierGenerator() {
-        this.Counter = 0;
-    }
-
     // methods for returning fields
     public int getNextIdentifier() {
         return this.Counter++;

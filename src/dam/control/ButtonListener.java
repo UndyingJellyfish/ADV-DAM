@@ -14,10 +14,10 @@ import static dam.graphics.GUIBoard.FieldType.*;
 
 
 public class ButtonListener implements ActionListener {
-    // fields
-    private GUIButton RelevantButton;
-    private LogicBoard Board;
-    private GUIBoard graphics;
+    // fields are final because they never change
+    final private GUIButton RelevantButton;
+    final private LogicBoard Board;
+    final private GUIBoard graphics;
 
     // constructors
     public ButtonListener(GUIButton button, LogicBoard board, GUIBoard graphics) {
@@ -39,7 +39,7 @@ public class ButtonListener implements ActionListener {
                         + ", Y: " + Board.getLastClickedGUIButton().getPosition().getY());
             }
             */
-            if (RelevantButton instanceof GUIButton) {
+            if (RelevantButton != null) {
                 // TODO: this is god awful and should be refactored immediately
 
                 // continue if lastClicked exists, else set as lastClick
@@ -80,9 +80,6 @@ public class ButtonListener implements ActionListener {
                             graphics.getButtonArray()[(int) Board.getLastClickedGUIButton().getPosition().getX() + dirX]
                                     [(int) Board.getLastClickedGUIButton().getPosition().getY() + dirY].setFieldType(GUIBoard.FieldType.EMPTY);
 
-                            // draws the field jumped over according to field type, which is empty
-                            graphics.getButtonArray()[(int) Board.getLastClickedGUIButton().getPosition().getX() + dirX]
-                                    [(int) Board.getLastClickedGUIButton().getPosition().getY() + dirY].drawField(GUIBoard.FieldType.EMPTY);
                         }
 
                         // sets the field type to king status if piece reaches opposite end
@@ -126,7 +123,6 @@ public class ButtonListener implements ActionListener {
                     else
                         Board.setLastClickedGUIButton(this.RelevantButton);
                 }
-                return;
 
             }
 

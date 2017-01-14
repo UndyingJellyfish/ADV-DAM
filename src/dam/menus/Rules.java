@@ -11,8 +11,8 @@ public class Rules extends JDialog {
     // fields
     private JPanel contentPane;
     private JButton buttonExit;
-    private JLabel labelHeader;
-    private JTextArea textRules;
+    private JLabel labelHeader; // TODO: Was this supposed to do something?
+    private JTextArea textRules; // TODO: Was this supposed to do something?
 
     // rules constructor
     public Rules() {
