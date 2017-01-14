@@ -13,7 +13,13 @@ public class Launcher {
 
     public static void main(String[] args) {
         // default board size is argument from terminal
-        int boardSize = Integer.parseInt(args[0]);
+        int boardSize = 6;
+        try{
+            boardSize = Integer.parseInt(args[0]);
+        } catch (ArrayIndexOutOfBoundsException arr) {
+            System.out.println("You didn't provide a valid argument; using default " + boardSize);
+        }
+
         GameSetup setup = new GameSetup(boardSize);
 
         // the checkers game continues while game done is false
