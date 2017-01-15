@@ -16,7 +16,7 @@ public class CheckersGame {
     private JFrame f;
 
     public CheckersGame(GameSetup setup) {
-        int boardSize = setup.boardSquares;
+        int boardSize = setup.BoardSquares;
 
 
         // creating players and "empty" player

@@ -17,7 +17,7 @@ public class GUIBoard extends JPanel {
     // fields
     final private int BoardSize;    // number of fields on one dimension
                                     // is final because it never changes while in game
-    private GUIButton[][] buttonArray; // button array of all buttons on board
+    private GUIButton[][] GUIButtonArray; // button array of all buttons on board
     private GameBoard Logic; // logic board for game board
 
     // list of field types
@@ -46,8 +46,8 @@ public class GUIBoard extends JPanel {
     // constructor
     public GUIBoard(GameBoard board, GameSetup setup) {
         // new BoardSize*BoardSize gridlayout using number of board squares from game setup
-        super(new GridLayout(setup.boardSquares, setup.boardSquares));
-        this.BoardSize = setup.boardSquares;
+        super(new GridLayout(setup.BoardSquares, setup.BoardSquares));
+        this.BoardSize = setup.BoardSquares;
 
         this.Logic = board;
         // sets preferred size of game board to 90% of screen resolution
@@ -77,7 +77,7 @@ public class GUIBoard extends JPanel {
         this.setPreferredSize(new Dimension(ScreenSize, ScreenSize));
 
         // button array is 2d of length BoardSize and BoardSize
-        buttonArray = new GUIButton[BoardSize][BoardSize];
+        GUIButtonArray = new GUIButton[BoardSize][BoardSize];
 
         // fills board with pieces of both players and empty fields. Uses logic board to place pieces at right locations
         fillBoard(board);
@@ -85,8 +85,8 @@ public class GUIBoard extends JPanel {
 
     // methods for returning fields
 
-    public GUIButton[][] getButtonArray() {
-        return this.buttonArray;
+    public GUIButton[][] getGUIButtonArray() {
+        return this.GUIButtonArray;
     }
 
 
@@ -94,7 +94,7 @@ public class GUIBoard extends JPanel {
     public void fillInAllActionHandlers() {
         for (int yn = 0; yn < BoardSize; yn++) {
             for (int xn = 0; xn < BoardSize; xn++) {
-                buttonArray[xn][yn].addActionListener(new ButtonListener(buttonArray[xn][yn], Logic, this));
+                GUIButtonArray[xn][yn].addActionListener(new ButtonListener(GUIButtonArray[xn][yn], Logic, this));
             }
         }
     }
@@ -107,15 +107,15 @@ public class GUIBoard extends JPanel {
             for (int xn = 0; xn < BoardSize; xn++) {
                 try {
                     if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 0) {
-                        buttonArray[xn][yn] = new GUIButton(FieldType.PLAYER0, new Point(xn, yn));
+                        GUIButtonArray[xn][yn] = new GUIButton(FieldType.PLAYER0, new Point(xn, yn));
                     } else if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 1) {
-                        buttonArray[xn][yn] = new GUIButton(FieldType.PLAYER1, new Point(xn, yn));
+                        GUIButtonArray[xn][yn] = new GUIButton(FieldType.PLAYER1, new Point(xn, yn));
                     } else {
-                        buttonArray[xn][yn] = new GUIButton(FieldType.EMPTY, new Point(xn, yn));
+                        GUIButtonArray[xn][yn] = new GUIButton(FieldType.EMPTY, new Point(xn, yn));
                     }
-                    this.add(buttonArray[xn][yn]);
+                    this.add(GUIButtonArray[xn][yn]);
                 } catch (NullPointerException e) {
-                    buttonArray[xn][yn] = new GUIButton(FieldType.EMPTY, new Point(xn, yn));
+                    GUIButtonArray[xn][yn] = new GUIButton(FieldType.EMPTY, new Point(xn, yn));
                 }
             }
         }
@@ -126,7 +126,7 @@ public class GUIBoard extends JPanel {
     public void paintBoard() {
         for (int yn = 0; yn < BoardSize; yn++) {
             for (int xn = 0; xn < BoardSize; xn++) {
-                buttonArray[xn][yn].drawField(buttonArray[xn][yn].getFieldType());
+                GUIButtonArray[xn][yn].drawField(GUIButtonArray[xn][yn].getFieldType());
             }
         }
     }

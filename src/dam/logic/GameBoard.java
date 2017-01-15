@@ -4,6 +4,8 @@ import dam.control.CheckersGame;
 import dam.graphics.AudioPlayer;
 import dam.graphics.GUIButton;
 import dam.menus.GameSetup;
+
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -26,10 +28,13 @@ public class GameBoard {
     private Player Player1;
     private Player CurrentPlayer;
 
+
+    private int turnsSinceLastKill = 0;
+
     // logic board constructor
     public GameBoard(CheckerPiece[][] pieces, GameSetup setup) {
         this.PiecePlacement = pieces;
-        BoardSize = setup.boardSquares;
+        BoardSize = setup.BoardSquares;
     }
 
     // board essentials
@@ -255,7 +260,7 @@ public class GameBoard {
                 int dirX = fromX > toX ? -1 : 1;
                 int dirY = fromY > toY ? -1 : 1;
                 PiecePlacement[fromX + dirX][fromY + dirY] = new CheckerPiece(new Player("This guy does not exist", -1),-1);
-
+                turnsSinceLastKill = 0;
             }
             // change places at logic board
             CheckerPiece pieceClone = PiecePlacement[fromX][fromY].clone();
@@ -328,11 +333,9 @@ public class GameBoard {
 
         if (PlayerHasNoLegalMove(Player0) && PlayerHasNoLegalMove(Player1)) {
             // if no player has any legal moves left, the game is a draw
-            String msg = "Game is a draw";
-            System.out.println("No legal moves remain: " + msg);
+            String msg = "Game is a draw since no legal moves remain";
 
             // we don't play winning sounds when both people lose
-
             CheckersGame.infoBox(msg, "No one wins :(");
 
 
@@ -344,11 +347,16 @@ public class GameBoard {
             new AudioPlayer(AudioPlayer.AUDIO.WON);
 
             CheckersGame.infoBox(winnerMessage, "Player wins!");
-
-
+        } else if (turnsSinceLastKill == 12) {
+            // warn about upcoming force tie
+            JOptionPane.showMessageDialog(null, "3 turns until forced draw due to inactive play", "Draw is imminent", JOptionPane.INFORMATION_MESSAGE);
+        } else if (turnsSinceLastKill >= 15) {
+            // force draw after 15 turns of inactive play
+            CheckersGame.infoBox("Game is a draw", "No one wins :(");
         }
 
-        PrintBoard();
+        //PrintBoard();
+        turnsSinceLastKill++;
 
     }
 

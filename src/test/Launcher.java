@@ -12,7 +12,7 @@ public class Launcher {
 
 
     public static void main(String[] args) {
-        // default board size is argument from terminal
+        // default board size is 6 if argument from terminal doesn't work
         int boardSize = 6;
         try{
             boardSize = Integer.parseInt(args[0]);

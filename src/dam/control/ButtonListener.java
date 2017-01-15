@@ -31,7 +31,6 @@ public class ButtonListener implements ActionListener {
 
     // action on click
     public void actionPerformed(ActionEvent e) {
-        // TODO: this is much less awful as of 14 jan 2017, still needs optimization
         try {
             if (RelevantButton != null) {
                 // continue if lastClicked exists, else set as lastClick
@@ -73,10 +72,11 @@ public class ButtonListener implements ActionListener {
                             int dirY = fromY > toY ? -1 : 1;
 
                             // sets the field type of piece jumped over to empty
-                            Graphics.getButtonArray()[fromX + dirX][fromY + dirY].setFieldType(GUIBoard.FieldType.EMPTY);
+                            Graphics.getGUIButtonArray()[fromX + dirX][fromY + dirY].setFieldType(GUIBoard.FieldType.EMPTY);
                         }
 
                         // sets the field type to king status if piece reaches opposite end or is already king
+
                         if (moveFromSuper && fromField == PLAYER0){
                             Board.getNewClickedGUIButton().setFieldType(PLAYER0_KING);
                         } else if (moveFromSuper && fromField == PLAYER1){
@@ -86,6 +86,7 @@ public class ButtonListener implements ActionListener {
                         } else if ( toY == 0 && (fromField == PLAYER1)){
                             Board.getNewClickedGUIButton().setFieldType(PLAYER1_KING);
                         }
+
                         // set lastClicked to empty field type
                         Board.getLastClickedGUIButton().setFieldType(EMPTY);
 
@@ -111,16 +112,13 @@ public class ButtonListener implements ActionListener {
 
 
                     } else {
-                        System.out.println("Move is not legal");
                         // move is not legal and resets lastClicked
                         new AudioPlayer(AudioPlayer.AUDIO.ERROR);
                         Board.setLastClickedGUIButton(null);
                     }
                 } else {
-                    System.out.println("No lastClicked button exists");
                     // lastClicked can only be a piece of current player
                     if (Board.getPieceAtPosition(RelevantButton.getPosition()).getOwner() != Board.getCurrentPlayer()) {
-                        System.out.println("Not your turn!");
                         new AudioPlayer(AudioPlayer.AUDIO.ERROR);
                     }
                     else

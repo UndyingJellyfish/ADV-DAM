@@ -63,7 +63,7 @@ public class Settings extends JDialog {
             public void stateChanged(ChangeEvent e) {
                 e.getSource();
                 if(!sliderBoardSize.getValueIsAdjusting()) {
-                    setup.boardSquares = sliderBoardSize.getValue();
+                    setup.BoardSquares = sliderBoardSize.getValue();
                 }
 
             }
