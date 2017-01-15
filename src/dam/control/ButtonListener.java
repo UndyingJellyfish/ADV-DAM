@@ -19,7 +19,7 @@ public class ButtonListener implements ActionListener {
     final private GUIButton relevantButton;
     final private GameBoard board;
     final private GUIBoard graphics;
-    private int boardSize;
+    final private int boardSize;
 
     // constructors
     public ButtonListener(GUIButton button, GameBoard board, GUIBoard graphics) {
@@ -68,7 +68,7 @@ public class ButtonListener implements ActionListener {
                             // sets the field type of piece jumped over to empty
                             graphics.getArrayGUIButton()[fromX + dirX][fromY + dirY].setFieldType(GUIBoard.FieldType.EMPTY);
                         }
-                        relevantButton.setFieldType(fromField);
+
 
                         // set lastClicked to empty field type
                         board.getLastClickedGUIButton().setFieldType(EMPTY);
@@ -81,6 +81,8 @@ public class ButtonListener implements ActionListener {
                         if (shouldBeSuperPiece){
                             GUIBoard.FieldType toField = relevantButton.getFieldType();
                             relevantButton.setFieldType((toField == PLAYER0 || toField == PLAYER0_KING) ? PLAYER0_KING : PLAYER1_KING);
+                        } else {
+                            relevantButton.setFieldType(fromField);
                         }
 
                         // plays sound for movement (aka. satisfying wooden *click*)

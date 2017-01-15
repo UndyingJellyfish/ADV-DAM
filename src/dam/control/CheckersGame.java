@@ -13,7 +13,7 @@ import java.awt.*;
 public class CheckersGame {
     public static boolean continueGame = false;
     public static boolean gameDone = false;
-    private JFrame f;
+    private final JFrame f;
 
     public CheckersGame(GameSetup setup) {
         int boardSize = setup.boardSize;

@@ -17,7 +17,7 @@ public class GameBoard {
     // fields
     // essential parts of the fields
     final private int boardSize; // board size never changes in game
-    private CheckerPiece[][] piecePlacement;
+    private final CheckerPiece[][] piecePlacement;
 
     // used for tracking where to move from and to, i.e. how pieces move
     private GUIButton lastClickedGUIButton;

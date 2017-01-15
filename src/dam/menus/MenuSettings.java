@@ -22,7 +22,7 @@ public class MenuSettings extends JDialog {
     private JRadioButton radioMedSize;
     private JRadioButton radioMaxSize;
     private JSlider sliderBoardSize;
-    private GameSetup setup;
+    private final GameSetup setup;
 
     // constructor
     public MenuSettings(GameSetup setup) {

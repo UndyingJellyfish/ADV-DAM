@@ -29,6 +29,7 @@ public class Launcher {
         }
         while (CheckersGame.continueGame);
         // when no longer choosing to continue the game, close the program
+
         System.exit(0);
     }
 

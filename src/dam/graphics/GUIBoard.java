@@ -16,9 +16,8 @@ public class GUIBoard extends JPanel {
 
     // fields
     final private int boardSize;    // number of fields on one dimension
-                                    // is final because it never changes while in game
-    private GUIButton[][] arrayGUIButton; // button array of all buttons on board
-    private GameBoard logic; // logic board for game board
+    final private GUIButton[][] arrayGUIButton; // button array of all buttons on board
+    private final GameBoard logic; // logic board for game board
 
     // list of field types
     public enum FieldType {
