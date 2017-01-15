@@ -16,7 +16,7 @@ public class CheckersGame {
     private JFrame f;
 
     public CheckersGame(GameSetup setup) {
-        int boardSize = setup.BoardSquares;
+        int boardSize = setup.boardSize;
 
 
         // creating players and "empty" player
@@ -28,8 +28,8 @@ public class CheckersGame {
 
         // logicBoard creation
         GameBoard board = new GameBoard(pieces, setup);
-        board.PopulateBoard(player0, player1, placeholder);
-        board.PrintBoard();
+        board.populateBoard(player0, player1, placeholder);
+        board.printBoard();
 
         // start loading GUI elements
         GUIBoard graphicsBoard = new GUIBoard(board, setup);

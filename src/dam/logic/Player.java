@@ -6,28 +6,28 @@ package dam.logic;
  */
 public class Player {
     // fields
-    final private String PlayerName; // you're not allowed to change name while a game is going on
-    final private int Identifier; // changing your identification also seems reckless
+    final private String playerName; // you're not allowed to change name while a game is going on
+    final private int identifier; // changing your identification also seems reckless
 
     // constructors
 
     public Player(String name, int id) {
-        this.PlayerName = name;
-        this.Identifier = id;
+        this.playerName = name;
+        this.identifier = id;
     }
 
 
     // methods for returning fields
-    protected String getPlayerName() {
-        return this.PlayerName;
+    public String getPlayerName() {
+        return this.playerName;
     }
 
     public int getIdentifier() {
-        return this.Identifier;
+        return this.identifier;
     }
 
     public String toString() {
-        return ("Player named " + this.PlayerName + " has ID " + this.Identifier);
+        return ("Player named " + this.playerName + " has ID " + this.identifier);
     }
 
 }

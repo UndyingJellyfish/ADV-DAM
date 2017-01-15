@@ -15,10 +15,10 @@ import java.awt.*;
 public class GUIBoard extends JPanel {
 
     // fields
-    final private int BoardSize;    // number of fields on one dimension
+    final private int boardSize;    // number of fields on one dimension
                                     // is final because it never changes while in game
-    private GUIButton[][] GUIButtonArray; // button array of all buttons on board
-    private GameBoard Logic; // logic board for game board
+    private GUIButton[][] arrayGUIButton; // button array of all buttons on board
+    private GameBoard logic; // logic board for game board
 
     // list of field types
     public enum FieldType {
@@ -45,11 +45,11 @@ public class GUIBoard extends JPanel {
 
     // constructor
     public GUIBoard(GameBoard board, GameSetup setup) {
-        // new BoardSize*BoardSize gridlayout using number of board squares from game setup
-        super(new GridLayout(setup.BoardSquares, setup.BoardSquares));
-        this.BoardSize = setup.BoardSquares;
+        // new boardSize*boardSize gridlayout using number of board squares from game setup
+        super(new GridLayout(setup.boardSize, setup.boardSize));
+        this.boardSize = setup.boardSize;
 
-        this.Logic = board;
+        this.logic = board;
         // sets preferred size of game board to 90% of screen resolution
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         int maxWidth = gd.getDisplayMode().getWidth();
@@ -76,8 +76,8 @@ public class GUIBoard extends JPanel {
 
         this.setPreferredSize(new Dimension(ScreenSize, ScreenSize));
 
-        // button array is 2d of length BoardSize and BoardSize
-        GUIButtonArray = new GUIButton[BoardSize][BoardSize];
+        // button array is 2d of length boardSize and boardSize
+        arrayGUIButton = new GUIButton[boardSize][boardSize];
 
         // fills board with pieces of both players and empty fields. Uses logic board to place pieces at right locations
         fillBoard(board);
@@ -85,16 +85,16 @@ public class GUIBoard extends JPanel {
 
     // methods for returning fields
 
-    public GUIButton[][] getGUIButtonArray() {
-        return this.GUIButtonArray;
+    public GUIButton[][] getArrayGUIButton() {
+        return this.arrayGUIButton;
     }
 
 
     // methods of manipulating properties of the instance. Adds actionListener to each field on board
     public void fillInAllActionHandlers() {
-        for (int yn = 0; yn < BoardSize; yn++) {
-            for (int xn = 0; xn < BoardSize; xn++) {
-                GUIButtonArray[xn][yn].addActionListener(new ButtonListener(GUIButtonArray[xn][yn], Logic, this));
+        for (int yn = 0; yn < boardSize; yn++) {
+            for (int xn = 0; xn < boardSize; xn++) {
+                arrayGUIButton[xn][yn].addActionListener(new ButtonListener(arrayGUIButton[xn][yn], logic, this));
             }
         }
     }
@@ -103,19 +103,19 @@ public class GUIBoard extends JPanel {
 
     private void fillBoard(GameBoard boardToPopulate) {
         // fills the board with GUIButtons and field types according to board logic
-        for (int yn = 0; yn < BoardSize; yn++) {
-            for (int xn = 0; xn < BoardSize; xn++) {
+        for (int yn = 0; yn < boardSize; yn++) {
+            for (int xn = 0; xn < boardSize; xn++) {
                 try {
-                    if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 0) {
-                        GUIButtonArray[xn][yn] = new GUIButton(FieldType.PLAYER0, new Point(xn, yn));
-                    } else if (boardToPopulate.getPiecePlacement()[xn][yn].getOwner().getIdentifier() == 1) {
-                        GUIButtonArray[xn][yn] = new GUIButton(FieldType.PLAYER1, new Point(xn, yn));
+                    if (boardToPopulate.getPiecePlacement()[xn][yn].getPlayer().getIdentifier() == 0) {
+                        arrayGUIButton[xn][yn] = new GUIButton(FieldType.PLAYER0, new Point(xn, yn));
+                    } else if (boardToPopulate.getPiecePlacement()[xn][yn].getPlayer().getIdentifier() == 1) {
+                        arrayGUIButton[xn][yn] = new GUIButton(FieldType.PLAYER1, new Point(xn, yn));
                     } else {
-                        GUIButtonArray[xn][yn] = new GUIButton(FieldType.EMPTY, new Point(xn, yn));
+                        arrayGUIButton[xn][yn] = new GUIButton(FieldType.EMPTY, new Point(xn, yn));
                     }
-                    this.add(GUIButtonArray[xn][yn]);
+                    this.add(arrayGUIButton[xn][yn]);
                 } catch (NullPointerException e) {
-                    GUIButtonArray[xn][yn] = new GUIButton(FieldType.EMPTY, new Point(xn, yn));
+                    arrayGUIButton[xn][yn] = new GUIButton(FieldType.EMPTY, new Point(xn, yn));
                 }
             }
         }
@@ -124,9 +124,9 @@ public class GUIBoard extends JPanel {
 
     // draws each field on board using field type
     public void paintBoard() {
-        for (int yn = 0; yn < BoardSize; yn++) {
-            for (int xn = 0; xn < BoardSize; xn++) {
-                GUIButtonArray[xn][yn].drawField(GUIButtonArray[xn][yn].getFieldType());
+        for (int yn = 0; yn < boardSize; yn++) {
+            for (int xn = 0; xn < boardSize; xn++) {
+                arrayGUIButton[xn][yn].drawField(arrayGUIButton[xn][yn].getFieldType());
             }
         }
     }

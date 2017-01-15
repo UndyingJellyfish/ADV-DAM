@@ -6,15 +6,15 @@ package dam.logic;
  */
 public class IDGenerator {
     // fields
-    private int Counter;
+    private int counter;
 
     // constructors
     public IDGenerator(int n) {
-        this.Counter = n;
+        this.counter = n;
     }
 
     // methods for returning fields
     public int getNextIdentifier() {
-        return this.Counter++;
+        return this.counter++;
     }
 }

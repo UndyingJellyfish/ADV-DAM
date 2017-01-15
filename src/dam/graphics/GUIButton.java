@@ -13,32 +13,32 @@ import java.net.URL;
  */
 public class GUIButton extends JButton {
 
-    private GUIBoard.FieldType Owner;
-    final private Point Position; // we probably shouldn't start moving the buttons, so this is final
+    private GUIBoard.FieldType fieldType;
+    final private Point position; // we probably shouldn't start moving the buttons, so this is final
 
     // constructors
     public GUIButton(GUIBoard.FieldType field, Point pos) {
         this.setOpaque(true);
         this.setBorderPainted(false);
-        Position = pos;
-        Owner = field;
+        position = pos;
+        fieldType = field;
 
     }
 
     // methods for returning fields
 
     public Point getPosition() {
-        return Position;
+        return position;
     }
 
     public GUIBoard.FieldType getFieldType() {
-        return this.Owner;
+        return this.fieldType;
     }
 
     // methods for setting fields
     public void setFieldType(GUIBoard.FieldType newType) {
-        this.Owner = newType;
-        drawField(this.Owner);
+        this.fieldType = newType;
+        drawField(this.fieldType);
     }
 
     // methods for graphical interactions
@@ -62,8 +62,8 @@ public class GUIButton extends JButton {
         }
 
         // colors the grid black and white
-        if ((Position.getX() % 2 == 0 && Position.getY() % 2 == 0) ||
-                (Position.getX() % 2 == 1 && Position.getY() % 2 == 1)) {
+        if ((position.getX() % 2 == 0 && position.getY() % 2 == 0) ||
+                (position.getX() % 2 == 1 && position.getY() % 2 == 1)) {
             this.setBackground(Color.GRAY);
         } else
             this.setBackground(Color.WHITE);

@@ -5,9 +5,9 @@ package dam.menus;
  * Member primarily responsible for file: Søren Mousten
  */
 public class GameSetup {
-    public int BoardSquares;
+    public int boardSize;
     public GameSetup(int BoardSize) {
-        this.BoardSquares = BoardSize;
+        this.boardSize = BoardSize;
     }
 
     // enumeration to keep the different frame sizes.
@@ -19,7 +19,5 @@ public class GameSetup {
 
     // the default frame size is set to the max size
     public FrameSize frameSize = FrameSize.MAX_SIZE;
-
-    // default number of squares is 6 by 6
 
 }
