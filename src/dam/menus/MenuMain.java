@@ -9,7 +9,7 @@ import java.awt.event.*;
  */
 // main menu is the opening screen when you run the program. In this menu you can choose between some buttons which opens
 // new dialogs
-public class mainMenu extends JDialog {
+public class MenuMain extends JDialog {
     private JPanel contentPane;
     private JButton buttonNewGame;
     private JButton buttonSettings;
@@ -18,7 +18,7 @@ public class mainMenu extends JDialog {
     private JLabel labelWelcome;
 
     // main menu constructor with the game setup as argument to access the variables
-    public mainMenu(GameSetup setup) {
+    public MenuMain(GameSetup setup) {
         setContentPane(contentPane);
         // setModal to true so the checkers board will not open with main menu
         setModal(true);
@@ -73,20 +73,22 @@ public class mainMenu extends JDialog {
     // opens a new dialog when clicked on settings. The method has game setup as argument to keep access to the arguments
     // in that class
     private void onSettings(GameSetup setup) {
-        Settings settingsDialog = new Settings(setup);
+        MenuSettings settingsDialog = new MenuSettings(setup);
         settingsDialog.pack();
         settingsDialog.setResizable(false);
         settingsDialog.setLocationRelativeTo(null);
+        settingsDialog.setTitle("Main Menu -> Settings");
         settingsDialog.setVisible(true);
 
     }
 
     // opens a new dialog when clicked on rules.
     private void onRules() {
-        Rules rulesDialog = new Rules();
+        MenuRules rulesDialog = new MenuRules();
         rulesDialog.pack();
         rulesDialog.setResizable(false);
         rulesDialog.setLocationRelativeTo(null);
+        rulesDialog.setTitle("Main Menu -> Game rules");
         rulesDialog.setVisible(true);
     }
 

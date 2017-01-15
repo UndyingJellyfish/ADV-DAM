@@ -10,7 +10,7 @@ import java.awt.event.*;
  * Member primarily responsible for file: Nicklas Juul
  */
 
-public class Settings extends JDialog {
+public class MenuSettings extends JDialog {
     // fields
     private JPanel contentPane;
     private JPanel JPanelOptionsSize;
@@ -25,7 +25,7 @@ public class Settings extends JDialog {
     private GameSetup setup;
 
     // constructor
-    public Settings(GameSetup setup) {
+    public MenuSettings(GameSetup setup) {
         this.setup = setup;
 
         // adding the radio buttons to a ButtonGroup to make only one of them selected

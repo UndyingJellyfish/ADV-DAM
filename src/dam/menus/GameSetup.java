@@ -19,5 +19,4 @@ public class GameSetup {
 
     // the default frame size is set to the max size
     public FrameSize frameSize = FrameSize.MAX_SIZE;
-
 }

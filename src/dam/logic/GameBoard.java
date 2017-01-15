@@ -21,7 +21,6 @@ public class GameBoard {
 
     // used for tracking where to move from and to, i.e. how pieces move
     private GUIButton lastClickedGUIButton;
-    private GUIButton newClickedGUIButton;
 
     // used for owners of pieces
     private Player player0;
@@ -151,14 +150,6 @@ public class GameBoard {
 
     public boolean hasLastClicked() {
         return (lastClickedGUIButton != null);
-    }
-
-    public void setNewClickedGUIButton(GUIButton button) {
-        this.newClickedGUIButton = button;
-    }
-
-    public GUIButton getNewClickedGUIButton() {
-        return this.newClickedGUIButton;
     }
 
     private int countPiecesForPlayer(Player targetPlayer) {

@@ -40,22 +40,16 @@ public class ButtonListener implements ActionListener {
                     int fromX = (int) board.getLastClickedGUIButton().getPosition().getX();
                     int fromY = (int) board.getLastClickedGUIButton().getPosition().getY();
                     GUIBoard.FieldType fromField = board.getLastClickedGUIButton().getFieldType();
-                    int thisX = (int) relevantButton.getPosition().getX();
-                    int thisY = (int) relevantButton.getPosition().getY();
+                    int toX = (int) relevantButton.getPosition().getX();
+                    int toY = (int) relevantButton.getPosition().getY();
 
 
                     // checks whether move is legal
-                    if (board.isLegalMove(fromX, fromY, thisX, thisY)) {
+                    if (board.isLegalMove(fromX, fromY, toX, toY)) {
 
-                        // sets button just clicked as NewClickedGUIButton
-                        board.setNewClickedGUIButton(relevantButton);
-                        int toX = (int) board.getNewClickedGUIButton().getPosition().getX();
-                        int toY = (int) board.getNewClickedGUIButton().getPosition().getY();
 
                         // set newClicked to same field type as lastClicked
-                        board.getNewClickedGUIButton().setFieldType(fromField);
-
-
+                        relevantButton.setFieldType(fromField);
 
                         // uses move method from logic with lastClicked position and newClicked position as arguments
                         boolean moveFromSuper = board.getPiecePlacement()[fromX][fromY].isSuperPiece();
@@ -74,18 +68,7 @@ public class ButtonListener implements ActionListener {
                             // sets the field type of piece jumped over to empty
                             graphics.getArrayGUIButton()[fromX + dirX][fromY + dirY].setFieldType(GUIBoard.FieldType.EMPTY);
                         }
-
-                        // sets the field type to king status if piece reaches opposite end or is already king
-
-                        if (moveFromSuper && fromField == PLAYER0){
-                            board.getNewClickedGUIButton().setFieldType(PLAYER0_KING);
-                        } else if (moveFromSuper && fromField == PLAYER1){
-                            board.getNewClickedGUIButton().setFieldType(PLAYER1_KING);
-                        } else if ( (toY == boardSize - 1) && (fromField == PLAYER0) ){
-                            board.getNewClickedGUIButton().setFieldType(PLAYER0_KING);
-                        } else if ( toY == 0 && (fromField == PLAYER1)){
-                            board.getNewClickedGUIButton().setFieldType(PLAYER1_KING);
-                        }
+                        relevantButton.setFieldType(fromField);
 
                         // set lastClicked to empty field type
                         board.getLastClickedGUIButton().setFieldType(EMPTY);
@@ -94,11 +77,11 @@ public class ButtonListener implements ActionListener {
 
                         board.getPiecePlacement()[toX][toY].setSuperPiece(shouldBeSuperPiece);
 
-                        // draws the lastClicked and newClicked according to field type
-                        board.getNewClickedGUIButton().drawField(board.getNewClickedGUIButton().getFieldType());
-                        board.getLastClickedGUIButton().drawField(board.getLastClickedGUIButton().getFieldType());
-
-
+                        // sets the field type to king status if piece reaches opposite end or is already king
+                        if (shouldBeSuperPiece){
+                            GUIBoard.FieldType toField = relevantButton.getFieldType();
+                            relevantButton.setFieldType((toField == PLAYER0 || toField == PLAYER0_KING) ? PLAYER0_KING : PLAYER1_KING);
+                        }
 
                         // plays sound for movement (aka. satisfying wooden *click*)
                         new AudioPlayer(AudioPlayer.AUDIO.MOVE);
@@ -108,7 +91,6 @@ public class ButtonListener implements ActionListener {
 
                         // resets lastClicked and newClicked
                         board.setLastClickedGUIButton(null);
-                        board.setNewClickedGUIButton(null);
 
 
                     } else {

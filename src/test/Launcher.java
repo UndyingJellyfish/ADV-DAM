@@ -2,7 +2,7 @@ package test;
 
 import dam.control.CheckersGame;
 import dam.menus.GameSetup;
-import dam.menus.mainMenu;
+import dam.menus.MenuMain;
 
 /**
  * Created by Emil Damsbo on 09-01-2017.
@@ -33,10 +33,11 @@ public class Launcher {
     }
 
     private static void gameSession(GameSetup setup) {
-        mainMenu dialog = new mainMenu(setup);
+        MenuMain dialog = new MenuMain(setup);
         dialog.pack();
         dialog.setResizable(false);
         dialog.setLocationRelativeTo(null);
+        dialog.setTitle("Main Menu - Avanceret Dam, gruppe 4");
         dialog.setVisible(true);
         CheckersGame game = new CheckersGame(setup);
 
@@ -51,7 +52,5 @@ public class Launcher {
         }
         // closes frame
         game.closeGame();
-
     }
-
 }

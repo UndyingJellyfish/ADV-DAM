@@ -45,6 +45,7 @@ public class CheckersGame {
         f.pack();
         graphicsBoard.paintBoard(); // loads all textures for game pieces
         f.setLocationRelativeTo(null);
+        f.setTitle("Avanceret Dam, gruppe 4");
 
         // finally shows window
         f.setVisible(true);

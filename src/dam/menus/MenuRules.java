@@ -7,7 +7,7 @@ import java.awt.event.*;
  * Member primarily responsible for file: Nicklas Juul
  */
 
-public class Rules extends JDialog {
+public class MenuRules extends JDialog {
     // fields
     private JPanel contentPane;
     private JButton buttonExit;
@@ -15,7 +15,7 @@ public class Rules extends JDialog {
     private JTextArea textRules;
 
     // rules constructor
-    public Rules() {
+    public MenuRules() {
         // the content panel contains a text area with rules
         setContentPane(contentPane);
         setModal(true);

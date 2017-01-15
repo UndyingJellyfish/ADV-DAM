@@ -16,7 +16,6 @@ public class Player {
         this.identifier = id;
     }
 
-
     // methods for returning fields
     public String getPlayerName() {
         return this.playerName;
@@ -29,5 +28,4 @@ public class Player {
     public String toString() {
         return ("Player named " + this.playerName + " has ID " + this.identifier);
     }
-
 }

@@ -73,6 +73,9 @@ public class GUIBoard extends JPanel {
         }
 
         int ScreenSize = (int) Math.floor((maxHeight < maxWidth ? maxHeight : maxWidth) * relativeSize);
+        // this pickes the smaller of the two screen dimensions and finds the floor of product with the relative size
+        // this ensures that the screen as a maximum can take up 90 % of the samllest screen dimension
+        // meaning that the entire window should be viewable when opened at the center of the screen
 
         this.setPreferredSize(new Dimension(ScreenSize, ScreenSize));
 

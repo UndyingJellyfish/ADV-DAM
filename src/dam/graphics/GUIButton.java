@@ -70,7 +70,5 @@ public class GUIButton extends JButton {
             this.setEnabled(false); // white fields are now unclickable, allowed us to remove a couple lines of code
                                     // mis-clicking is also harder now, which won't play the error sound
         }
-
-
     }
 }
