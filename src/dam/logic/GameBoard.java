@@ -116,7 +116,6 @@ public class GameBoard {
     }
 
     // creating console output
-
     public void printBoard() {
         // used for debugging purposes, prints the identifiers of pieces on logic board
         // this was used to compare graphics and logic, to make sure they were 100 % alike
@@ -196,27 +195,15 @@ public class GameBoard {
         try {
             if (piecePlacement[fromX][fromY].getIdentifier() == -1) {
                 // clicking on a non-player-owned piece
-                // System.out.println("Identifier of fromClicked is " + piecePlacement[fromX][fromY].getIdentifier());
                 return false;
             } else if (!(validDirection(fromY, toY, piecePlacement[fromX][fromY].getPlayer(), piecePlacement[fromX][fromY].isSuperPiece()))) {
                 // clicking on a wrong direction without being king piece
-                //System.out.println("Moving backwards is not allowed");
                 return false;
             } else if (fromX == toX && fromY == toY) {
                 // trying to move to and from the same location
-                //System.out.println("From and to is the same");
-                return false;
-            } else if (toX > boardSize - 1 || toX < 0) {
-                // trying to move outside the board along x-axis
-                //System.out.println("Out of bounds in direction x");
-                return false;
-            } else if (toY > boardSize - 1 || toY < 0) {
-                // trying to move outside the board along y-axis
-                //System.out.println("Out of bounds in direction y");
                 return false;
             } else if (Math.abs(toX - fromX) != Math.abs(toY - fromY)) {
                 // trying to move non-diagonally
-                //System.out.println("move is not diagonal");
                 return false;
             } else if (piecePlacement[toX][toY].getIdentifier() != -1) {
                 //System.out.println("There is another piece at target location");

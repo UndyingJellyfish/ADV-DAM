@@ -29,7 +29,7 @@ public class CheckersGame {
         // logicBoard creation
         GameBoard board = new GameBoard(pieces, setup);
         board.populateBoard(player0, player1, placeholder);
-        board.printBoard();
+        //board.printBoard();
 
         // start loading GUI elements
         GUIBoard graphicsBoard = new GUIBoard(board, setup);

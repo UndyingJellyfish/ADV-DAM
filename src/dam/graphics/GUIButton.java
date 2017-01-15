@@ -65,7 +65,12 @@ public class GUIButton extends JButton {
         if ((position.getX() % 2 == 0 && position.getY() % 2 == 0) ||
                 (position.getX() % 2 == 1 && position.getY() % 2 == 1)) {
             this.setBackground(Color.GRAY);
-        } else
+        } else{
             this.setBackground(Color.WHITE);
+            this.setEnabled(false); // white fields are now unclickable, allowed us to remove a couple lines of code
+                                    // mis-clicking is also harder now, which won't play the error sound
+        }
+
+
     }
 }
