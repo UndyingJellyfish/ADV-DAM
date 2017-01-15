@@ -43,7 +43,7 @@ public class GameBoard {
         this.player0 = owner0;
         this.player1 = owner1;
         this.currentPlayer = player0;
-        IDGenerator id = new IDGenerator(2);
+        IDGenerator id = new IDGenerator(2); // starts at 2 because players are 0 and 1
         if (this.boardSize > 2) {
             for (int yn = 0; yn < boardSize; yn++) {
                 // initializes the board as being full of placeholders
@@ -118,7 +118,7 @@ public class GameBoard {
     public void printBoard() {
         // used for debugging purposes, prints the identifiers of pieces on logic board
         // this was used to compare graphics and logic, to make sure they were 100 % alike
-        // also uses t/f to indicate whether piece is king
+        // also uses t/f to indicate whether piece is king/super
         for (int yn = 0; yn < this.boardSize; yn++) {
             System.out.print("[");
             for (int xn = 0; xn < this.boardSize; xn++) {
@@ -129,7 +129,6 @@ public class GameBoard {
         }
         System.out.println();
     }
-
 
     // methods for returning and setting fields and other properties
     public int getBoardSize(){
@@ -212,7 +211,7 @@ public class GameBoard {
         return true;
     }
 
-    private boolean isJumpMove(int fromX, int fromY, int toX, int toY) {
+    public boolean isJumpMove(int fromX, int fromY, int toX, int toY) {
         if ((piecePlacement[toX][toY].getIdentifier() == -1) && (Math.abs(toX - fromX) < 3 && Math.abs(toY - fromY) < 3)) {
             // trying to move less than 3 fields to an empty field
 
@@ -258,6 +257,8 @@ public class GameBoard {
 
     private boolean playerHasNoLegalMove(Player player) {
         // used for checking whether a player has any legal moves left
+        // this method is inverted, due to always being called with negation
+        // also makes sense since most of the time the player has a moce, so the faster it returns false the better
         for (int fromY = 0; fromY < boardSize; fromY++) {
             for (int fromX = 0; fromX < boardSize; fromX++) {
                 if ((fromX % 2 == 0 && fromY % 2 == 0) || (fromX % 2 == 1 && fromY % 2 == 1)) {
@@ -285,12 +286,16 @@ public class GameBoard {
 
     public void endTurn() {
         // method to end to turn for each player
-        // if current player is player0, then set current player to player1
+        this.setLastClickedGUIButton(null); // now that the turn has ended we don't need which button was last clicked
+
+        // if current player is player0, then set current player to player1 or vice versa
         currentPlayer = (currentPlayer == player0 ? player1 : player0);
 
-        // winner message shows up when someone has 0 pieces left
+
         int n = countPiecesForPlayer(currentPlayer);
         if (n == 0) {
+            // winner message shows up when someone has 0 pieces left
+
             // counts winning players pieces
             currentPlayer = (currentPlayer == player0 ? player1 : player0);
             int piecesLeft = countPiecesForPlayer(getCurrentPlayer());
@@ -302,12 +307,12 @@ public class GameBoard {
             // plays winning sound
             new AudioPlayer(AudioPlayer.AUDIO.WON);
             // prompts a pop-up window notifying that a player has won
-
             CheckersGame.infoBox(winnerMessage, "Player wins!");
 
             return;
         }
 
+        //
         if (playerHasNoLegalMove(player0) && playerHasNoLegalMove(player1)) {
             // if no player has any legal moves left, the game is a draw
             String msg = "Game is a draw since no legal moves remain";

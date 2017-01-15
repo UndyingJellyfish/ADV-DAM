@@ -48,6 +48,7 @@ public class GUIButton extends JButton {
 
         // drawImage function which draws image on button depending on file name and scales to preferred size
         try {
+            // read as resource, else packaging so that the .jar works after the fact
             URL imgResource = getClass().getClassLoader().getResource(field.getPath());
             //System.out.println(field.getPath());
 
