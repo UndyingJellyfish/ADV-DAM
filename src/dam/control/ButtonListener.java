@@ -70,7 +70,6 @@ public class ButtonListener implements ActionListener {
                             graphics.getArrayGUIButton()[fromX + dirX][fromY + dirY].setFieldType(GUIBoard.FieldType.EMPTY);
                         }
 
-
                         // set lastClicked to empty field type
                         // which updates the graphics
                         gameBoard.getLastClickedGUIButton().setFieldType(EMPTY);

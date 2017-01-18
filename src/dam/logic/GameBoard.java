@@ -258,7 +258,7 @@ public class GameBoard {
     private boolean playerHasNoLegalMove(Player player) {
         // used for checking whether a player has any legal moves left
         // this method is inverted, due to always being called with negation
-        // also makes sense since most of the time the player has a moce, so the faster it returns false the better
+        // also makes sense since most of the time the player has a move, so the faster it returns false the better
         for (int fromY = 0; fromY < boardSize; fromY++) {
             for (int fromX = 0; fromX < boardSize; fromX++) {
                 if ((fromX % 2 == 0 && fromY % 2 == 0) || (fromX % 2 == 1 && fromY % 2 == 1)) {

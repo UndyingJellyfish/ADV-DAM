@@ -130,7 +130,7 @@ public class GUIBoard extends JPanel {
 
     // this had some problems, but would more effective at updating graphics than current solution
     // would save a bunch of code in ButtonListener
-    /*
+
     public void updateGraphics(int fromX, int fromY, int toX, int toY, boolean setSuper) {
         if ((Math.abs(toX - fromX) > 1 && Math.abs(toY - fromY) > 1)){
             // happens only in case of jump moves
@@ -151,7 +151,7 @@ public class GUIBoard extends JPanel {
         arrayGUIButton[toX][toY].drawField(fromField);
         arrayGUIButton[fromX][fromY].drawField(FieldType.EMPTY);
     }
-    */
+
 
 
 
